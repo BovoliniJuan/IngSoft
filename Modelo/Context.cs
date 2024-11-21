@@ -15,9 +15,8 @@ namespace Modelo
             get
             {
                 if (instancia == null)
-                
-                    instancia = new Context ();
-                    return instancia;   
+                    instancia = new Context();
+                    return instancia;
             }
         }
 
