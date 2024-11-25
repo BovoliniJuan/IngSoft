@@ -22,7 +22,9 @@ namespace Modelo
 
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Grupo> Grupos { get; set; }
-        public DbSet<Permisos> Permisos { get; set; }
+        public DbSet<Permiso> Permisos { get; set; }
+        public DbSet<PermisoGrupo> PermisoGrupos { get; set; }
+        //public DbSet<Permisos> Permisos { get; set; }
         public DbSet<Vendedor> Vendedores { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Producto> Productos { get; set; }
@@ -38,7 +40,16 @@ namespace Modelo
             options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AgroGestion;
              Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;
              Application Intent=ReadWrite;Multi Subnet Failover=False");
-        } 
-         
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PermisoComponent>()
+                        .HasDiscriminator<string>("TipoPermiso")
+                        .HasValue<Permiso>("Permiso")
+                        .HasValue<PermisoGrupo>("PermisoGrupo");
+
+            base.OnModelCreating(modelBuilder);
+        }
+
     }
 }

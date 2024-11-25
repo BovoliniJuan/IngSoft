@@ -11,15 +11,15 @@ namespace Entidades
     {
         private int idGrupo;
         private string nombreGrupo;
-        private Permisos permisos;
+        private PermisoGrupo permisos;
 
         [Key]
         public int IdGrupo {get { return idGrupo;} set { idGrupo = value; } }
         public string NombreGrupo { get { return nombreGrupo; }set {nombreGrupo = value; } }
-        public Permisos Permisos { get { return permisos; } set { permisos = value; } }
+        public PermisoGrupo Permisos { get; set; } = new PermisoGrupo();
 
         public Grupo() { }
 
-        public void AgregarPermisos() { }
+        //public void AgregarPermisos() { }
     }
 }

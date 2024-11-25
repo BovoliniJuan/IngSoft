@@ -64,8 +64,82 @@ namespace Controladoras
             _context.SaveChanges();
             Console.WriteLine("Usuario registrado exitosamente.");
         }
-
         private string VerificarAcceso(Usuario usuario)
+        {
+            if (usuario.Grupo?.Permisos == null)
+            {
+                Console.WriteLine("El usuario no tiene permisos asignados.");
+                return null;
+            }
+
+            // Verificar el permiso de vendedor
+            if (usuario.Grupo.Permisos.Obtener(0)?.TieneAcceso() == true)
+            {
+                Console.WriteLine("Redirigiendo al formulario de vendedores.");
+                return "FormularioVendedores";
+            }
+
+            // Verificar el permiso de cliente
+            if (usuario.Grupo.Permisos.Obtener(1)?.TieneAcceso() == true)
+            {
+                Console.WriteLine("Redirigiendo al formulario de clientes.");
+                return "FormularioClientes";
+            }
+
+            Console.WriteLine("El usuario no tiene acceso a ninguna sección específica.");
+            return null;
+        }
+        public List<Usuario> ObtenerUsuariosConGrupoTemporal()
+        {
+            return _context.Usuarios
+                           .Include(u => u.Grupo)
+                           .Where(u => u.Grupo != null && u.Grupo.NombreGrupo == "Temporal")
+                           .ToList();
+        }
+
+        public void AsignarGrupo(Usuario usuario, Grupo nuevoGrupo)
+        {
+            var usuarioDb = _context.Usuarios
+                                    .Include(u => u.Grupo)
+                                    .FirstOrDefault(u => u.IdUsuario == usuario.IdUsuario);
+
+            if (usuarioDb != null)
+            {
+                usuarioDb.Grupo = nuevoGrupo;
+                _context.SaveChanges();
+                Console.WriteLine($"El grupo '{nuevoGrupo.NombreGrupo}' ha sido asignado al usuario '{usuarioDb.NombreUsuario}'.");
+            }
+            else
+            {
+                Console.WriteLine("Usuario no encontrado en la base de datos.");
+            }
+        }
+
+        public Grupo CrearGrupo(string nombreGrupo, List<PermisoComponent> permisos)
+        {
+            var grupo = new Grupo
+            {
+                NombreGrupo = nombreGrupo,
+                Permisos = new PermisoGrupo()
+            };
+
+            foreach (var permiso in permisos)
+            {
+                grupo.Permisos.Agregar(permiso);
+            }
+
+            _context.Grupos.Add(grupo);
+            _context.SaveChanges();
+            Console.WriteLine($"Grupo '{nombreGrupo}' creado exitosamente.");
+            return grupo;
+        }
+
+        public List<Grupo> ObtenerGrupos()
+        {
+            return _context.Grupos.Include(g => g.Permisos).ToList();
+        }
+
+        /*private string VerificarAcceso(Usuario usuario)
         {
             if (usuario.Grupo == null || usuario.Grupo.Permisos == null)
             {
@@ -87,6 +161,6 @@ namespace Controladoras
 
             Console.WriteLine("El usuario no tiene acceso a ninguna sección específica.");
             return null;
-        }
+        }*/
     }
 }
