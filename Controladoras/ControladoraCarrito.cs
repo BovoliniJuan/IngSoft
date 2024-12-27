@@ -1,4 +1,4 @@
-﻿using Entidades;
+﻿using Entidades.EntidadesClientes;
 using Modelo;
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace Controladoras
                 return instancia;
             }
         }
-        public ReadOnlyCollection<Entidades.CarritoDeCompra> RecuperarCarrito()
+        public ReadOnlyCollection<CarritoDeCompra> RecuperarCarrito()
         {
             try
             {

@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entidades.EntidadesClientes;
 
-namespace Entidades
+namespace Entidades.EntidadesVenta
 {
     public class Pago
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entidades
+namespace Entidades.EntidadesVenta
 {
     public class MetodoDePago
     {
@@ -13,8 +13,8 @@ namespace Entidades
         private string descripcion;
 
         [Key]
-        public int IdMetodoDePago { get {  return idMetodoDePago; } set {  idMetodoDePago = value; } }
-        public string Descripcion { get {  return descripcion; } set {  descripcion = value; } }
+        public int IdMetodoDePago { get { return idMetodoDePago; } set { idMetodoDePago = value; } }
+        public string Descripcion { get { return descripcion; } set { descripcion = value; } }
 
         public MetodoDePago() { }
     }

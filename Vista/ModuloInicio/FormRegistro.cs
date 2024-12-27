@@ -1,6 +1,7 @@
 ﻿using Controladoras;
 using Entidades;
 using Entidades.Seguridad;
+using Entidades.Seguridad2;
 using Modelo;
 using System;
 using System.Collections.Generic;

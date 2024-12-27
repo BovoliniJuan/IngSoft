@@ -35,22 +35,26 @@ namespace Vista
             label2 = new Label();
             txtboxUsuario = new TextBox();
             txtboxContra = new TextBox();
+            groupBox1 = new GroupBox();
+            linkOlvidarContra = new LinkLabel();
+            btnCancelar = new Button();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // btnIniciar
             // 
-            btnIniciar.Location = new Point(78, 187);
+            btnIniciar.Location = new Point(66, 171);
             btnIniciar.Name = "btnIniciar";
             btnIniciar.Size = new Size(92, 29);
             btnIniciar.TabIndex = 0;
-            btnIniciar.Text = "Iniciar Sesion";
+            btnIniciar.Text = "Aceptar";
             btnIniciar.UseVisualStyleBackColor = true;
             btnIniciar.Click += btnIniciar_Click;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(97, 26);
+            label1.Location = new Point(17, 34);
             label1.Name = "label1";
             label1.Size = new Size(47, 15);
             label1.TabIndex = 2;
@@ -59,7 +63,7 @@ namespace Vista
             // linkRegistro
             // 
             linkRegistro.AutoSize = true;
-            linkRegistro.Location = new Point(97, 245);
+            linkRegistro.Location = new Point(66, 235);
             linkRegistro.Name = "linkRegistro";
             linkRegistro.Size = new Size(64, 15);
             linkRegistro.TabIndex = 3;
@@ -70,7 +74,7 @@ namespace Vista
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(94, 105);
+            label2.Location = new Point(17, 87);
             label2.Name = "label2";
             label2.Size = new Size(67, 15);
             label2.TabIndex = 4;
@@ -78,33 +82,65 @@ namespace Vista
             // 
             // txtboxUsuario
             // 
-            txtboxUsuario.Location = new Point(78, 63);
+            txtboxUsuario.Location = new Point(161, 34);
             txtboxUsuario.Name = "txtboxUsuario";
-            txtboxUsuario.Size = new Size(100, 23);
+            txtboxUsuario.Size = new Size(214, 23);
             txtboxUsuario.TabIndex = 5;
             // 
             // txtboxContra
             // 
-            txtboxContra.Location = new Point(78, 136);
+            txtboxContra.Location = new Point(161, 87);
             txtboxContra.Name = "txtboxContra";
-            txtboxContra.Size = new Size(100, 23);
+            txtboxContra.Size = new Size(214, 23);
             txtboxContra.TabIndex = 6;
             // 
-            // InicioSesion
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(btnCancelar);
+            groupBox1.Controls.Add(linkOlvidarContra);
+            groupBox1.Controls.Add(txtboxContra);
+            groupBox1.Controls.Add(btnIniciar);
+            groupBox1.Controls.Add(txtboxUsuario);
+            groupBox1.Controls.Add(label1);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(linkRegistro);
+            groupBox1.Location = new Point(12, 12);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(461, 276);
+            groupBox1.TabIndex = 7;
+            groupBox1.TabStop = false;
+            // 
+            // linkOlvidarContra
+            // 
+            linkOlvidarContra.AutoSize = true;
+            linkOlvidarContra.Location = new Point(161, 137);
+            linkOlvidarContra.Name = "linkOlvidarContra";
+            linkOlvidarContra.Size = new Size(119, 15);
+            linkOlvidarContra.TabIndex = 7;
+            linkOlvidarContra.TabStop = true;
+            linkOlvidarContra.Text = "Olvide mi contraseña";
+            linkOlvidarContra.LinkClicked += linkOlvidarContra_LinkClicked;
+            // 
+            // btnCancelar
+            // 
+            btnCancelar.Location = new Point(225, 171);
+            btnCancelar.Name = "btnCancelar";
+            btnCancelar.Size = new Size(88, 29);
+            btnCancelar.TabIndex = 8;
+            btnCancelar.Text = "Cancelar";
+            btnCancelar.UseVisualStyleBackColor = true;
+            // 
+            // FormInicioSesion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(269, 300);
-            Controls.Add(txtboxContra);
-            Controls.Add(txtboxUsuario);
-            Controls.Add(label2);
-            Controls.Add(linkRegistro);
-            Controls.Add(label1);
-            Controls.Add(btnIniciar);
-            Name = "InicioSesion";
+            ClientSize = new Size(485, 300);
+            Controls.Add(groupBox1);
+            Name = "FormInicioSesion";
             Text = "Form1";
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
 
@@ -117,5 +153,8 @@ namespace Vista
         private Label label2;
         private TextBox txtboxUsuario;
         private TextBox txtboxContra;
+        private GroupBox groupBox1;
+        private LinkLabel linkOlvidarContra;
+        private Button btnCancelar;
     }
 }

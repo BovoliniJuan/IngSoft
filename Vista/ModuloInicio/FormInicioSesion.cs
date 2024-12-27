@@ -1,14 +1,18 @@
 using Controladoras;
+using Controladoras.Seguridad;
+using Entidades.Seguridad2;
+using Vista.ModuloInicio;
 
 namespace Vista
 {
     public partial class FormInicioSesion : Form
     {
-        private readonly ControladoraSeguridad _controladoraSeguridad;
+        private readonly ControladoraInicioSesion _controladoraInicioSesion;
 
         public FormInicioSesion()
         {
             InitializeComponent();
+            _controladoraInicioSesion = ControladoraInicioSesion.Instancia;
         }
 
         private void btnIniciar_Click(object sender, EventArgs e)
@@ -16,49 +20,75 @@ namespace Vista
             string nombreUsuario = txtboxUsuario.Text.Trim();
             string contrasenia = txtboxContra.Text.Trim();
 
-            // Validar campos vacíos
             if (string.IsNullOrEmpty(nombreUsuario) || string.IsNullOrEmpty(contrasenia))
             {
                 MessageBox.Show("Por favor, complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Intentar iniciar sesión
-            string formularioRedirigir = _controladoraSeguridad.IniciarSesion(nombreUsuario, contrasenia);
-
-            if (formularioRedirigir == null)
+            try
             {
-                // Si no se obtiene un formulario, mostrar mensaje de error
-                MessageBox.Show("Credenciales incorrectas o usuario sin permisos asignados.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                var usuario = _controladoraInicioSesion.VerificarCredenciales(nombreUsuario, contrasenia);
 
-            // Redirigir al formulario correspondiente
-            switch (formularioRedirigir)
+                if (usuario == null)
+                {
+                    MessageBox.Show("Credenciales incorrectas.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                var acciones = usuario.ObtenerAcciones();
+
+                if (acciones.Count == 0)
+                {
+                    MessageBox.Show("El usuario no tiene acciones asignadas.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                AbrirFormulariosSegunAcciones(acciones);
+
+                this.Close();
+            }
+            catch (Exception ex)
             {
-                case "FormularioVendedores":
-                    FormVendedores formVendedores = new FormVendedores();
-                    formVendedores.Show();
-                    break;
-
-                case "FormularioClientes":
-                    FormClientes formClientes = new FormClientes();
-                    formClientes.Show();
-                    break;
-
-                default:
-                    MessageBox.Show("No se pudo determinar la sección a la que tiene acceso el usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    break;
+                MessageBox.Show($"Error al iniciar sesión: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            // Cerrar el formulario de inicio de sesión
-            this.Close();
         }
+
+        private void AbrirFormulariosSegunAcciones(List<Accion> acciones)
+        {
+            var formulariosDisponibles = new Dictionary<string, Func<Form>>
+            {
+            { "FormularioVendedores", () => new FormVendedores() },
+            { "FormularioClientes", () => new FormClientes() }
+            };
+
+            foreach (var accion in acciones)
+            {
+                if (accion.Formulario != null && formulariosDisponibles.TryGetValue(accion.Formulario.NombreFormulario, out var crearFormulario))
+                {
+                    var formulario = crearFormulario();
+                    formulario.Show();
+                }
+                else
+                {
+                    MessageBox.Show($"Formulario no reconocido: {accion.Formulario?.NombreFormulario}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
 
         private void linkRegistro_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             FormRegistro formRegistro = new FormRegistro(this);
             formRegistro.Show();
         }
+
+        private void linkOlvidarContra_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            FormRecuperarClave formRecuperarClave = new FormRecuperarClave(this);
+            formRecuperarClave.Show();
+        }
     }
+
+
 }
