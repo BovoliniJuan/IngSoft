@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entidades;
+using Entidades.Seguridad;
 namespace Modelo
 {
     public class Context:DbContext
