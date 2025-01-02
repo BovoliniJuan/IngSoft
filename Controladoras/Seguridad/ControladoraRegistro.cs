@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Controladoras.Mensajeria;
 
 namespace Controladoras.Seguridad
 {
@@ -32,47 +33,53 @@ namespace Controladoras.Seguridad
                 _passwordHasher = new PasswordHasher<Usuario>();
             }
 
-            public string RegistrarUsuario(string nombreUsuario, string email, string contrasenia)
+        public string RegistrarUsuario(string nombreUsuario, string email, string contrasenia)
+        {
+            try
             {
-                try
+                // Validaciones básicas
+                if (string.IsNullOrWhiteSpace(nombreUsuario))
+                    return "El nombre de usuario no puede estar vacío.";
+
+                if (string.IsNullOrWhiteSpace(email))
+                    return "El email no puede estar vacío.";
+
+                if (string.IsNullOrWhiteSpace(contrasenia))
+                    return "La contraseña no puede estar vacía.";
+
+                if (Context.Instancia.Usuarios.Any(u => u.NombreUsuario == nombreUsuario))
+                    return "El nombre de usuario ya está en uso.";
+
+                if (Context.Instancia.Usuarios.Any(u => u.Email == email))
+                    return "El email ya está registrado.";
+
+                // Crear el nuevo usuario
+                var nuevoUsuario = new Usuario
                 {
-                    // Validaciones básicas
-                    if (string.IsNullOrWhiteSpace(nombreUsuario))
-                        return "El nombre de usuario no puede estar vacío.";
+                    NombreUsuario = nombreUsuario,
+                    Email = email,
+                    EstadoUsuario = new EstadoUsuario { EstadoUsuarioNombre = "Pendiente" }
+                };
 
-                    if (string.IsNullOrWhiteSpace(email))
-                        return "El email no puede estar vacío.";
+                // Encriptar la contraseña
+                nuevoUsuario.Contrasenia = _passwordHasher.HashPassword(nuevoUsuario, contrasenia);
 
-                    if (string.IsNullOrWhiteSpace(contrasenia))
-                        return "La contraseña no puede estar vacía.";
+                // Guardar en la base de datos
+                Context.Instancia.Usuarios.Add(nuevoUsuario);
+                Context.Instancia.SaveChanges();
 
-                    if (Context.Instancia.Usuarios.Any(u => u.NombreUsuario == nombreUsuario))
-                        return "El nombre de usuario ya está en uso.";
+                // Enviar notificación de registro
+                var controladoraMails = new ControladoraMails();
+                controladoraMails.NotificarRegistroExitoso(email, nombreUsuario);
 
-                    if (Context.Instancia.Usuarios.Any(u => u.Email == email))
-                        return "El email ya está registrado.";
-
-                    // Crear el nuevo usuario
-                    var nuevoUsuario = new Usuario
-                    {
-                        NombreUsuario = nombreUsuario,
-                        Email = email,
-                        EstadoUsuario = new EstadoUsuario { EstadoUsuarioNombre = "Activo" } // Estado inicial
-                    };
-
-                    // Encriptar la contraseña
-                    nuevoUsuario.Contrasenia = _passwordHasher.HashPassword(nuevoUsuario, contrasenia);
-
-                    // Guardar en la base de datos
-                    Context.Instancia.Usuarios.Add(nuevoUsuario);
-                    Context.Instancia.SaveChanges();
-
-                    return "Usuario registrado exitosamente.";
-                }
-                catch (Exception ex)
-                {
-                    return $"Error al registrar el usuario: {ex.Message}";
-                }
+                return "Usuario registrado exitosamente. Pendiente de aprobación del administrador.";
+            }
+            catch (Exception ex)
+            {
+                return $"Error al registrar el usuario: {ex.Message}";
             }
         }
+
+
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using Modelo;
 using Entidades;
 using System.Collections.ObjectModel;
+using Entidades.EntidadesVendedores;
 
 namespace Controladoras
 {
@@ -24,7 +25,7 @@ namespace Controladoras
                 return instancia;
             }
         }
-        public ReadOnlyCollection<Entidades.Producto> RecuperarProductos()
+        public ReadOnlyCollection<Producto> RecuperarProductos()
         {
             try
             {

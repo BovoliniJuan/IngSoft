@@ -1,4 +1,5 @@
 ﻿using Controladoras;
+using Controladoras.Seguridad;
 using Entidades;
 using Entidades.Seguridad;
 using Entidades.Seguridad2;
@@ -17,73 +18,66 @@ namespace Vista
 {
     public partial class FormRegistro : Form
     {
-        private readonly ControladoraSeguridad _controladoraSeguridad;
 
         private FormInicioSesion formInicioSesion;
         public FormRegistro(FormInicioSesion formInicioSesion)
         {
             InitializeComponent();
             this.formInicioSesion = formInicioSesion;
-            _controladoraSeguridad = new ControladoraSeguridad(Context.Instancia);
         }
-        /*
+
+
+        // Método auxiliar para validar el formato de email
+        private bool EsEmailValido(string email)
+        {
+            try
+            {
+                var mailAddress = new System.Net.Mail.MailAddress(email);
+                return mailAddress.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
-            string nombreUsuario = txtUsuario.Text.Trim();
-            string contrasenia = txtContrasenia.Text.Trim();
-            string email = txtEmail.Text.Trim();
-            bool esVendedor = chkVendedor.Checked;
-            bool esCliente = chkCliente.Checked;
+            var nombreUsuario = txtNombreUsuario.Text.Trim();
+            var email = txtEmail.Text.Trim();
+            var contrasenia = txtContra.Text.Trim();
 
-            // Validar campos vacíos
-            if (string.IsNullOrEmpty(nombreUsuario) || string.IsNullOrEmpty(contrasenia) || string.IsNullOrEmpty(email))
+            // Validaciones básicas
+            if (string.IsNullOrWhiteSpace(nombreUsuario))
             {
-                MessageBox.Show("Por favor, complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El nombre de usuario no puede estar vacío.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Crear un nuevo usuario sin grupo asignado
-            Usuario nuevoUsuario = new Usuario
+            if (string.IsNullOrWhiteSpace(email))
             {
-                NombreUsuario = nombreUsuario,
-                Contrasenia = contrasenia,
-                Email = email
-            };
-
-            // Crear un grupo de permisos para el usuario
-            PermisoGrupo grupoTemporal = new PermisoGrupo();
-
-            if (esVendedor)
-            {
-                grupoTemporal.Agregar(new Permiso("Vendedor", true));
+                MessageBox.Show("El email no puede estar vacío.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
-            if (esCliente)
+            if (string.IsNullOrWhiteSpace(contrasenia))
             {
-                grupoTemporal.Agregar(new Permiso("Cliente", true));
+                MessageBox.Show("La contraseña no puede estar vacía.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
-            // Asignar el grupo temporal al usuario
-            Grupo grupo = new Grupo
+            // Validar formato de email
+            if (!EsEmailValido(email))
             {
-                NombreGrupo = "Temporal",
-                Permisos = grupoTemporal
-            };
-
-            nuevoUsuario.Grupo = grupo;
-
-            try
-            {
-                _controladoraSeguridad.RegistrarUsuario(nuevoUsuario);
-                MessageBox.Show("Usuario registrado exitosamente. Pendiente de aprobación del administrador.",
-                    "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close(); // Cerrar el formulario después de registrar
+                MessageBox.Show("El formato del email no es válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al registrar el usuario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }*/
+
+            // Llamar al método de registro
+            var resultado = ControladoraRegistro.Instancia.RegistrarUsuario(nombreUsuario, email, contrasenia);
+
+            MessageBox.Show(resultado, "Registro de Usuario", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 
 }
