@@ -21,9 +21,9 @@ namespace Vista
         {
             InitializeComponent();
             _controladoraSeguridad = new ControladoraSeguridad(Context.Instancia);
-            CargarUsuariosPendientes();
+           // CargarUsuariosPendientes();
         }
-
+        /*
         private void CargarUsuariosPendientes()
         {
             var usuariosPendientes = _controladoraSeguridad.ObtenerUsuariosConGrupoTemporal();
@@ -43,6 +43,6 @@ namespace Vista
         {
             // Lógica para asignar un grupo final según el rol del usuario
             return new Grupo { NombreGrupo = "Final", Permisos = new PermisoGrupo() }; // Ejemplo
-        }
+        }*/
     }
 }

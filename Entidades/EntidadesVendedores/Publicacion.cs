@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Entidades.EntidadesVendedores;
+using Entidades;
 
-namespace Entidades
+namespace Entidades.EntidadesVendedores
 {
     public class Publicacion
     {

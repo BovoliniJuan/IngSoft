@@ -68,6 +68,7 @@ namespace Vista
                 {
                     var formulario = crearFormulario();
                     formulario.Show();
+                    this.Hide();
                 }
                 else
                 {
@@ -87,6 +88,11 @@ namespace Vista
         {
             FormRecuperarClave formRecuperarClave = new FormRecuperarClave(this);
             formRecuperarClave.Show();
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 

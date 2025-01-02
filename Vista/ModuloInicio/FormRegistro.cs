@@ -26,7 +26,7 @@ namespace Vista
             this.formInicioSesion = formInicioSesion;
             _controladoraSeguridad = new ControladoraSeguridad(Context.Instancia);
         }
-
+        /*
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
             string nombreUsuario = txtUsuario.Text.Trim();
@@ -83,7 +83,7 @@ namespace Vista
             {
                 MessageBox.Show($"Error al registrar el usuario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
+        }*/
     }
 
 }

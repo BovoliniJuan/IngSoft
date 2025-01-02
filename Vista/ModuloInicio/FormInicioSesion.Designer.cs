@@ -36,8 +36,8 @@ namespace Vista
             txtboxUsuario = new TextBox();
             txtboxContra = new TextBox();
             groupBox1 = new GroupBox();
-            linkOlvidarContra = new LinkLabel();
             btnCancelar = new Button();
+            linkOlvidarContra = new LinkLabel();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -110,6 +110,16 @@ namespace Vista
             groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
             // 
+            // btnCancelar
+            // 
+            btnCancelar.Location = new Point(225, 171);
+            btnCancelar.Name = "btnCancelar";
+            btnCancelar.Size = new Size(88, 29);
+            btnCancelar.TabIndex = 8;
+            btnCancelar.Text = "Cancelar";
+            btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.Click += btnCancelar_Click;
+            // 
             // linkOlvidarContra
             // 
             linkOlvidarContra.AutoSize = true;
@@ -120,15 +130,6 @@ namespace Vista
             linkOlvidarContra.TabStop = true;
             linkOlvidarContra.Text = "Olvide mi contraseña";
             linkOlvidarContra.LinkClicked += linkOlvidarContra_LinkClicked;
-            // 
-            // btnCancelar
-            // 
-            btnCancelar.Location = new Point(225, 171);
-            btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(88, 29);
-            btnCancelar.TabIndex = 8;
-            btnCancelar.Text = "Cancelar";
-            btnCancelar.UseVisualStyleBackColor = true;
             // 
             // FormInicioSesion
             // 

@@ -159,6 +159,13 @@ namespace Controladoras.Seguridad
             }
         }
 
+        public static string GenerarCodigo()
+        {
+            var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var random = new Random();
+            return new string(Enumerable.Repeat(caracteres, 6)
+                                        .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
 
 
 

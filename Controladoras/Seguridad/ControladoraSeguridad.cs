@@ -18,7 +18,7 @@ namespace Controladoras
 
         }
 
-        public string IniciarSesion(string nombreUsuario, string contrasenia)
+       /* public string IniciarSesion(string nombreUsuario, string contrasenia)
         {
             // Buscar el usuario por nombre de usuario, incluyendo su grupo y permisos
             var usuario = _context.Usuarios

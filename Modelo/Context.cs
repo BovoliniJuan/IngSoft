@@ -8,6 +8,7 @@ using Entidades;
 using Entidades.Seguridad;
 using Entidades.EntidadesClientes;
 using Entidades.EntidadesVenta;
+using Entidades.EntidadesVendedores;
 using Entidades.Seguridad2;
 namespace Modelo
 {
