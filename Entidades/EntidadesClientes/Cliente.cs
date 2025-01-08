@@ -12,14 +12,12 @@ namespace Entidades.EntidadesClientes
     {
         public Cliente() { }
 
-        private int idCliente;
-        private string nombreCompleto;
-        private int telefono;
+        //private int idCliente;
+        private long telefono;
         private List<Pago> pagos;
-        [Key]
-        public int IdCliente { get { return idCliente; } set { } }
-        public string NombreCompleto { get { return nombreCompleto; } set { nombreCompleto = value; } }
-        public int Telefono { get { return telefono; } }
+        
+        //public int IdCliente { get { return idCliente; } set { value = idCliente; } }
+        public long Telefono { get { return telefono; } set { value = telefono; } }
         public ICollection<Pago> Pagos { get; set; } = new List<Pago>();
 
         public void VerCarrito() { }

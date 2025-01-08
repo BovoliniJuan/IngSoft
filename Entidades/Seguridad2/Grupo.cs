@@ -15,7 +15,6 @@ namespace Entidades
         private EstadoGrupo estadoGrupo;
         private List<Componente> componentes;
 
-        [Key]
         public int IdGrupo {get { return idGrupo;} set { idGrupo = value; } }
         public string NombreGrupo { get { return nombreGrupo; }set {nombreGrupo = value; } }
 

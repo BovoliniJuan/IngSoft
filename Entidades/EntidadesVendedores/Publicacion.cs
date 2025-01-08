@@ -22,7 +22,11 @@ namespace Entidades.EntidadesVendedores
         public DateTime FechaInicio { get {  return fechaInicio; } set {  fechaInicio = value; } }
         public DateTime FechaFin { get {  return fechaFin; } set { fechaFin = value; } }
         public bool Estado { get { return estado; } set {  estado = value; } }
+        public int IdProducto { get; set; }
+
         public Producto Producto { get {  return producto; } set {  producto = value; } }
+        public int VendedorIdPersona { get; set; }
+
         public Vendedor Vendedor { get {  return vendedor; } set {  vendedor = value; } }
         public Publicacion() { }
         

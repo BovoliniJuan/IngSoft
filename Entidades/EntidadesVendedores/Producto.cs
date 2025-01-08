@@ -21,7 +21,10 @@ namespace Entidades.EntidadesVendedores
         public int IdProducto {get { return idProducto;} set { idProducto = value; } }
         public string Nombre { get {  return nombre; } set {  nombre = value; } }
         public string Descripcion { get {  return descripcion; } set {  descripcion = value; } }
+        public int Cantidad { get { return cantidad; }set { cantidad = value; } }
         public float Precio { get {  return precio; } set {  precio = value; } }
+        public int VendedorIdPersona { get; set; }
+
         public Vendedor Vendedor { get {  return vendedor; } set {  vendedor = value; } }
         public Producto() { }
 

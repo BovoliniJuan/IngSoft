@@ -25,6 +25,7 @@ namespace Entidades.EntidadesVenta
         public float Monto { get { return monto; } set { monto = value; } }
         public MetodoDePago MetodoDePago { get { return metodoDePago; } set { metodoDePago = value; } }
         public bool EstadoPago { get { return estadoPago; } set { estadoPago = value; } }
+        public int PedidoId { get; set; } // Clave externa explícita
         public Pedido Pedido { get { return pedido; } set { pedido = value; } }
         public Cliente Cliente { get { return cliente; } set { cliente = value; } }
         public int ReferenciaTransaccion { get { return referenciaTransaccion; } set { referenciaTransaccion = value; } }

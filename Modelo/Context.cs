@@ -55,18 +55,80 @@ namespace Modelo
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Configuración de herencia
+            modelBuilder.Entity<Persona>()
+                .HasDiscriminator<string>("TipoPersona")
+                .HasValue<Cliente>("Cliente")
+                .HasValue<Vendedor>("Vendedor");
+
+            // Relación Publicacion -> Producto
+            modelBuilder.Entity<Publicacion>()
+                .HasOne(p => p.Producto)
+                .WithMany()
+                .HasForeignKey(p=> p.IdProducto)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Relación Publicacion -> Vendedor
+            modelBuilder.Entity<Publicacion>()
+                .HasOne(p => p.Vendedor)
+                .WithMany()
+                .HasForeignKey(p => p.VendedorIdPersona)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Relación Producto -> Vendedor
+            modelBuilder.Entity<Producto>()
+                .HasOne(p => p.Vendedor)
+                .WithMany()
+                .HasForeignKey(p => p.VendedorIdPersona)
+                .OnDelete(DeleteBehavior.Restrict);
+            // Relación Pedido -> Cliente
+            modelBuilder.Entity<Pedido>()
+                .HasOne(p => p.Cliente)
+                .WithMany()
+                .HasForeignKey(p => p.ClienteIdPersona)
+                .OnDelete(DeleteBehavior.Restrict); // Cambiar a Restrict para evitar cascadas
+
+            // Relación Pedido -> Vendedor
+            modelBuilder.Entity<Pedido>()
+                .HasOne(p => p.Vendedor)
+                .WithMany()
+                .HasForeignKey(p => p.VendedorIdPersona)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Relación Pedido -> CarritoDeCompra
+            modelBuilder.Entity<Pedido>()
+                .HasOne(p => p.CarritoDeCompra)
+                .WithMany()
+                .HasForeignKey(p => p.CarritoDeCompraIdCarritoDeCompras)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Relación Pedido -> EstadoPedido
+            modelBuilder.Entity<Pedido>()
+                .HasOne(p => p.EstadoPedido)
+                .WithMany()
+                .HasForeignKey(p => p.EstadoPedidoIdEstadoPedido)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configuración adicional para Pago
+            modelBuilder.Entity<Pedido>()
+                .HasOne(p => p.Pago)
+                .WithOne(p => p.Pedido)
+                .HasForeignKey<Pago>(p => p.PedidoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configuración adicional para relaciones de grupos y componentes
             modelBuilder.Entity<Grupo>().HasMany(g => g.Componentes).WithMany(c => c.Grupos).UsingEntity<Dictionary<string, object>>(
-                 "ComponenteGrupo",
-                 j => j
-                     .HasOne<Componente>()
-                     .WithMany()
-                     .HasForeignKey("ComponentesId")
-                     .OnDelete(DeleteBehavior.Restrict),
-                 j => j
-                     .HasOne<Grupo>()
-                     .WithMany()
-                     .HasForeignKey("GruposId")
-                     .OnDelete(DeleteBehavior.Cascade));
+                "ComponenteGrupo",
+                j => j
+                    .HasOne<Componente>()
+                    .WithMany()
+                    .HasForeignKey("ComponentesId")
+                    .OnDelete(DeleteBehavior.Restrict),
+                j => j
+                    .HasOne<Grupo>()
+                    .WithMany()
+                    .HasForeignKey("GruposId")
+                    .OnDelete(DeleteBehavior.Restrict));
         }
 
     }

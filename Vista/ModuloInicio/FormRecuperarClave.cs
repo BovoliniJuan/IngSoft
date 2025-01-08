@@ -50,8 +50,7 @@ namespace Vista.ModuloInicio
 
             // Generar y enviar el código
             _codigoRecuperacion = ControladoraInicioSesion.GenerarCodigo();
-            var controladoraMails = new ControladoraMails();
-            controladoraMails.EnviarCodigoRecuperacion(emailUsuario, _codigoRecuperacion);
+            ControladoraMails.Instancia.EnviarCodigoRecuperacion(emailUsuario, _codigoRecuperacion);
 
             MessageBox.Show("Se ha enviado un código de recuperación a su correo.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

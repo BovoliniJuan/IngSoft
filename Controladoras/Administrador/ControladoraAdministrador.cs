@@ -58,7 +58,7 @@ namespace Controladoras.Administrador
 
                 usuario.Componentes.Add(grupo);
                 Context.Instancia.SaveChanges();
-
+                Mensajeria.ControladoraMails.Instancia.NotificarAsignacionGrupo(usuario.Email,usuario.NombreUsuario, grupo.NombreGrupo);
                 return "Grupo asignado exitosamente.";
             }
             catch (Exception ex)

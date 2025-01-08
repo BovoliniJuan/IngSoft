@@ -6,18 +6,34 @@ using System.Net.Mail;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Controladoras.Administrador;
 
 namespace Controladoras.Mensajeria
 {
     public class ControladoraMails
-    {
+    {        
         private readonly string smtpHost = "smtp.gmail.com";
         private readonly int smtpPort = 587;
         private readonly string emailFrom = "trabajopoo123@gmail.com";
         private readonly string emailPassword = "cdlp ibty kidi nyev";
         private readonly string displayName = "TrabajoPOO";
 
-        // Servicio genérico de envío de correos
+        private static ControladoraMails instancia;
+
+        public static ControladoraMails Instancia
+        {
+            get
+            {
+                if (instancia == null)
+                {
+                    instancia = new ControladoraMails();
+                }
+                return instancia;
+            }
+        }
+
+        private ControladoraMails() { }
+        // Servicio de envío de correos
         public void EnviarCorreo(string destinatario, string asunto, string cuerpo, bool esHtml = false)
         {
             using (var client = new SmtpClient())
@@ -42,47 +58,53 @@ namespace Controladoras.Mensajeria
             }
         }
 
-        // Método para enviar un mensaje predefinido
-        public void MandarMails()
-        {
-            string destinatario = "kratos2319t@gmail.com";
-            string asunto = "Control de stock";
-            string cuerpo = "Este es un mensaje de prueba para el control de stock.";
-
-            EnviarCorreo(destinatario, asunto, cuerpo);
-        }
-
-        // Método para enviar un código de recuperación de contraseña
         public void EnviarCodigoRecuperacion(string email, string codigo)
         {
             string asunto = "Código de Recuperación de Contraseña";
-            string cuerpo = $"Su código de recuperación es: {codigo}";
+            string cuerpo = $@"
+            <div style='font-family: Arial, sans-serif; color: #333;'>
+                <h2 style='color: #2e7d32;'>Recuperación de Contraseña</h2>
+                <p>Hola,</p>
+                <p>Tu código de recuperación es:</p>
+                <p style='font-size: 24px; font-weight: bold; color: #2e7d32;'>{codigo}</p>
+                <p>Por favor, usa este código para restablecer tu contraseña.</p>
+                <p style='color: #555;'>Gracias,</p>
+                <p style='color: #2e7d32;'>Equipo TrabajoPOO</p>
+            </div>";
 
-            EnviarCorreo(email, asunto, cuerpo);
+            EnviarCorreo(email, asunto, cuerpo, true);
         }
 
-        // Método para enviar notificación de asignación de grupo
         public void NotificarAsignacionGrupo(string email, string nombreUsuario, string nombreGrupo)
         {
             string asunto = "Notificación de Asignación de Grupo";
-            string cuerpo = $@"Hola {nombreUsuario},
+            string cuerpo = $@"
+            <div style='font-family: Arial, sans-serif; color: #333;'>
+                <h2 style='color: #2e7d32;'>Asignación de Grupo</h2>
+                <p>Hola <b>{nombreUsuario}</b>,</p>
+                <p>Tu cuenta ha sido activada y se te ha asignado al grupo:</p>
+                <p style='font-size: 18px; font-weight: bold; color: #2e7d32;'>{nombreGrupo}</p>
+                <p style='color: #555;'>Gracias por formar parte de nuestra plataforma.</p>
+                <p style='color: #2e7d32;'>Equipo TrabajoPOO</p>
+            </div>";
 
-                Tu cuenta ha sido activada y se te ha asignado al grupo: {nombreGrupo}.
-
-                Gracias por formar parte de nuestra plataforma.";
-
-            EnviarCorreo(email, asunto, cuerpo);
+            EnviarCorreo(email, asunto, cuerpo, true);
         }
 
-        // Método para enviar notificación de registro exitoso
         public void NotificarRegistroExitoso(string email, string nombreUsuario)
         {
             string asunto = "Registro Exitoso";
-            string cuerpo = $@"Hola {nombreUsuario},
+            string cuerpo = $@"
+            <div style='font-family: Arial, sans-serif; color: #333;'>
+                <h2 style='color: #2e7d32;'>Registro Exitoso</h2>
+                <p>Hola <b>{nombreUsuario}</b>,</p>
+                <p>Tu registro en nuestra plataforma ha sido exitoso.</p>
+                <p>Un administrador revisará tu solicitud y te asignará un grupo en breve.</p>
+                <p style='color: #555;'>Gracias por registrarte.</p>
+                <p style='color: #2e7d32;'>Equipo TrabajoPOO</p>
+            </div>";
 
-                Tu registro en nuestra plataforma ha sido exitoso. Un administrador revisará tu solicitud y te asignará un grupo en breve.";
-
-            EnviarCorreo(email, asunto, cuerpo);
+            EnviarCorreo(email, asunto, cuerpo, true);
         }
 
 
