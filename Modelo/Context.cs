@@ -55,11 +55,11 @@ namespace Modelo
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configuración de herencia
+            /*
             modelBuilder.Entity<Persona>()
                 .HasDiscriminator<string>("TipoPersona")
                 .HasValue<Cliente>("Cliente")
-                .HasValue<Vendedor>("Vendedor");
+                .HasValue<Vendedor>("Vendedor");*/
 
             // Relación Publicacion -> Producto
             modelBuilder.Entity<Publicacion>()

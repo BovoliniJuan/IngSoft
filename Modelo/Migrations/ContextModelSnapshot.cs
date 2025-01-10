@@ -60,7 +60,7 @@ namespace Modelo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCarritoDeCompras"));
 
-                    b.Property<int>("ClienteIdPersona")
+                    b.Property<int>("ClienteIdCliente")
                         .HasColumnType("int");
 
                     b.Property<bool>("Estado")
@@ -74,9 +74,40 @@ namespace Modelo.Migrations
 
                     b.HasKey("IdCarritoDeCompras");
 
-                    b.HasIndex("ClienteIdPersona");
+                    b.HasIndex("ClienteIdCliente");
 
                     b.ToTable("CarritoDeCompras");
+                });
+
+            modelBuilder.Entity("Entidades.EntidadesClientes.Cliente", b =>
+                {
+                    b.Property<int>("IdCliente")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCliente"));
+
+                    b.Property<int>("DNI")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NombreCompleto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Telefono")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("UsuarioIdUsuario")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdCliente");
+
+                    b.HasIndex("UsuarioIdUsuario");
+
+                    b.ToTable("Clientes");
                 });
 
             modelBuilder.Entity("Entidades.EntidadesVendedores.Producto", b =>
@@ -104,14 +135,14 @@ namespace Modelo.Migrations
                     b.Property<int>("VendedorIdPersona")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VendedorIdPersona1")
+                    b.Property<int?>("VendedorIdVendedor")
                         .HasColumnType("int");
 
                     b.HasKey("IdProducto");
 
                     b.HasIndex("VendedorIdPersona");
 
-                    b.HasIndex("VendedorIdPersona1");
+                    b.HasIndex("VendedorIdVendedor");
 
                     b.ToTable("Productos");
                 });
@@ -151,6 +182,41 @@ namespace Modelo.Migrations
                     b.HasIndex("VendedorIdPersona");
 
                     b.ToTable("Publicaciones");
+                });
+
+            modelBuilder.Entity("Entidades.EntidadesVendedores.Vendedor", b =>
+                {
+                    b.Property<int>("IdVendedor")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdVendedor"));
+
+                    b.Property<int>("DNI")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NombreCompleto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NombreEmpresa")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TelefonoEmpresa")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("UsuarioIdUsuario")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdVendedor");
+
+                    b.HasIndex("UsuarioIdUsuario");
+
+                    b.ToTable("Vendedores");
                 });
 
             modelBuilder.Entity("Entidades.EntidadesVenta.EstadoPedido", b =>
@@ -195,7 +261,7 @@ namespace Modelo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPago"));
 
-                    b.Property<int>("ClienteIdPersona")
+                    b.Property<int>("ClienteIdCliente")
                         .HasColumnType("int");
 
                     b.Property<bool>("EstadoPago")
@@ -218,7 +284,7 @@ namespace Modelo.Migrations
 
                     b.HasKey("IdPago");
 
-                    b.HasIndex("ClienteIdPersona");
+                    b.HasIndex("ClienteIdCliente");
 
                     b.HasIndex("MetodoDePagoIdMetodoDePago");
 
@@ -268,43 +334,6 @@ namespace Modelo.Migrations
                     b.HasIndex("VendedorIdPersona");
 
                     b.ToTable("Pedidos");
-                });
-
-            modelBuilder.Entity("Entidades.Persona", b =>
-                {
-                    b.Property<int>("IdPersona")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPersona"));
-
-                    b.Property<int>("DNI")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Direccion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NombreCompleto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TipoPersona")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UsuarioIdUsuario")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdPersona");
-
-                    b.HasIndex("UsuarioIdUsuario");
-
-                    b.ToTable("Persona");
-
-                    b.HasDiscriminator<string>("TipoPersona").HasValue("Persona");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Entidades.Seguridad.EstadoUsuario", b =>
@@ -435,30 +464,6 @@ namespace Modelo.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("Entidades.EntidadesClientes.Cliente", b =>
-                {
-                    b.HasBaseType("Entidades.Persona");
-
-                    b.Property<long>("Telefono")
-                        .HasColumnType("bigint");
-
-                    b.HasDiscriminator().HasValue("Cliente");
-                });
-
-            modelBuilder.Entity("Entidades.EntidadesVendedores.Vendedor", b =>
-                {
-                    b.HasBaseType("Entidades.Persona");
-
-                    b.Property<string>("NombreEmpresa")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("TelefonoEmpresa")
-                        .HasColumnType("bigint");
-
-                    b.HasDiscriminator().HasValue("Vendedor");
-                });
-
             modelBuilder.Entity("Entidades.Grupo", b =>
                 {
                     b.HasBaseType("Entidades.Seguridad2.Componente");
@@ -524,11 +529,22 @@ namespace Modelo.Migrations
                 {
                     b.HasOne("Entidades.EntidadesClientes.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("ClienteIdPersona")
+                        .HasForeignKey("ClienteIdCliente")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cliente");
+                });
+
+            modelBuilder.Entity("Entidades.EntidadesClientes.Cliente", b =>
+                {
+                    b.HasOne("Entidades.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioIdUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Entidades.EntidadesVendedores.Producto", b =>
@@ -541,7 +557,7 @@ namespace Modelo.Migrations
 
                     b.HasOne("Entidades.EntidadesVendedores.Vendedor", null)
                         .WithMany("Productos")
-                        .HasForeignKey("VendedorIdPersona1");
+                        .HasForeignKey("VendedorIdVendedor");
 
                     b.Navigation("Vendedor");
                 });
@@ -569,11 +585,22 @@ namespace Modelo.Migrations
                     b.Navigation("Vendedor");
                 });
 
+            modelBuilder.Entity("Entidades.EntidadesVendedores.Vendedor", b =>
+                {
+                    b.HasOne("Entidades.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioIdUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("Entidades.EntidadesVenta.Pago", b =>
                 {
                     b.HasOne("Entidades.EntidadesClientes.Cliente", "Cliente")
                         .WithMany("Pagos")
-                        .HasForeignKey("ClienteIdPersona")
+                        .HasForeignKey("ClienteIdCliente")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -631,17 +658,6 @@ namespace Modelo.Migrations
                     b.Navigation("Vendedor");
                 });
 
-            modelBuilder.Entity("Entidades.Persona", b =>
-                {
-                    b.HasOne("Entidades.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioIdUsuario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Usuario");
-                });
-
             modelBuilder.Entity("Entidades.Seguridad2.Formulario", b =>
                 {
                     b.HasOne("Entidades.Seguridad2.Modulo", "Modulo")
@@ -691,6 +707,16 @@ namespace Modelo.Migrations
                     b.Navigation("Publicaciones");
                 });
 
+            modelBuilder.Entity("Entidades.EntidadesClientes.Cliente", b =>
+                {
+                    b.Navigation("Pagos");
+                });
+
+            modelBuilder.Entity("Entidades.EntidadesVendedores.Vendedor", b =>
+                {
+                    b.Navigation("Productos");
+                });
+
             modelBuilder.Entity("Entidades.EntidadesVenta.Pedido", b =>
                 {
                     b.Navigation("Pago")
@@ -700,16 +726,6 @@ namespace Modelo.Migrations
             modelBuilder.Entity("Entidades.Seguridad2.Formulario", b =>
                 {
                     b.Navigation("AccionesPosibles");
-                });
-
-            modelBuilder.Entity("Entidades.EntidadesClientes.Cliente", b =>
-                {
-                    b.Navigation("Pagos");
-                });
-
-            modelBuilder.Entity("Entidades.EntidadesVendedores.Vendedor", b =>
-                {
-                    b.Navigation("Productos");
                 });
 #pragma warning restore 612, 618
         }

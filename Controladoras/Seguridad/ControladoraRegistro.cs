@@ -35,6 +35,39 @@ namespace Controladoras.Seguridad
                 _passwordHasher = new PasswordHasher<Usuario>();
             }
 
+        public string CrearUsuario(Usuario usuario, string contrasenia)
+        {
+           var listaUsuarios = Context.Instancia.Usuarios.ToList().AsReadOnly();
+           var usuarioEncontrado = listaUsuarios.FirstOrDefault(x => x.NombreUsuario == usuario.NombreUsuario);
+           if (usuarioEncontrado == null)
+           {
+                usuario.Contrasenia = _passwordHasher.HashPassword(usuario, contrasenia);
+                Context.Instancia.Usuarios.Add(usuario);
+                Context.Instancia.SaveChanges();
+                return null;
+           }
+            return "El nombre de usuario ya existe";
+        }
+        public string RegistrarCliente(Cliente cliente)
+        {
+            try
+            {
+                var listaClientes = Context.Instancia.Clientes.ToList().AsReadOnly();
+                var clienteEncontrado = listaClientes.FirstOrDefault(x => x.DNI == cliente.DNI);
+                if (clienteEncontrado == null)
+                {
+                    Context.Instancia.Clientes.Add(cliente); 
+                    Context.Instancia.SaveChanges();
+                    return "Usuario registrado exitosamente. Pendiente de aprobación del administrador.";
+                }
+                return "El usuario ya existe";
+
+            }
+            catch (Exception ex)
+            {
+                return $"Error al registrar el usuario: {ex.Message}. Detalles: {ex.InnerException?.Message}";
+            }
+        }
         public string RegistrarUsuario(
         string nombreUsuario, string email, string contrasenia,
         string nombreCompleto, string direccion, int dni,
@@ -57,7 +90,8 @@ namespace Controladoras.Seguridad
 
                 if (Context.Instancia.Usuarios.Any(u => u.Email == email))
                     return "El email ya está registrado.";
-
+                if (string.IsNullOrWhiteSpace(nombreCompleto))
+                    return "El nombre completo no puede estar vacío.";
                 // Crear el usuario
                 var nuevoUsuario = new Usuario
                 {
@@ -68,7 +102,8 @@ namespace Controladoras.Seguridad
 
                 // Encriptar la contraseña
                 nuevoUsuario.Contrasenia = _passwordHasher.HashPassword(nuevoUsuario, contrasenia);
-
+                Context.Instancia.Usuarios.Add(nuevoUsuario);
+                Context.Instancia.SaveChanges();
                 // Crear Persona (Cliente o Vendedor)
                 if (esVendedor)
                 {
@@ -82,7 +117,7 @@ namespace Controladoras.Seguridad
                         NombreCompleto = nombreCompleto,
                         DNI = dni,
                         Direccion = direccion,
-                        Usuario = nuevoUsuario,
+                        Usuario = nuevoUsuario, // Asegúrate de que UsuarioId se asigna correctamente
                         NombreEmpresa = nombreEmpresa,
                         TelefonoEmpresa = telefonoE
                     };
@@ -93,6 +128,7 @@ namespace Controladoras.Seguridad
                 {
                     if (telefonoP <= 0)
                         return "El teléfono personal debe ser un número válido.";
+                   
 
                     var cliente = new Cliente
                     {
@@ -107,7 +143,7 @@ namespace Controladoras.Seguridad
                 }
 
                 // Guardar en la base de datos
-                Context.Instancia.Usuarios.Add(nuevoUsuario);
+                //Context.Instancia.Usuarios.Add(nuevoUsuario);
                 Context.Instancia.SaveChanges();
 
                 // Enviar notificación de registro
@@ -117,7 +153,7 @@ namespace Controladoras.Seguridad
             }
             catch (Exception ex)
             {
-                return $"Error al registrar el usuario: {ex.Message}";
+                return $"Error al registrar el usuario: {ex.Message}. Detalles: {ex.InnerException?.Message}";
             }
         }
 

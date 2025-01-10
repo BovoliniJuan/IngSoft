@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Modelo.Migrations
 {
     /// <inheritdoc />
-    public partial class inicial : Migration
+    public partial class creo : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -119,26 +119,46 @@ namespace Modelo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Persona",
+                name: "Clientes",
                 columns: table => new
                 {
-                    IdPersona = table.Column<int>(type: "int", nullable: false)
+                    IdCliente = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NombreCompleto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Telefono = table.Column<long>(type: "bigint", nullable: false),
+                    NombreCompleto = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DNI = table.Column<int>(type: "int", nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UsuarioIdUsuario = table.Column<int>(type: "int", nullable: false),
-                    TipoPersona = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdCliente = table.Column<int>(type: "int", nullable: true),
-                    IdVendedor = table.Column<int>(type: "int", nullable: true),
-                    NombreEmpresa = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TelefonoEmpresa = table.Column<int>(type: "int", nullable: true)
+                    UsuarioIdUsuario = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Persona", x => x.IdPersona);
+                    table.PrimaryKey("PK_Clientes", x => x.IdCliente);
                     table.ForeignKey(
-                        name: "FK_Persona_Usuarios_UsuarioIdUsuario",
+                        name: "FK_Clientes_Usuarios_UsuarioIdUsuario",
+                        column: x => x.UsuarioIdUsuario,
+                        principalTable: "Usuarios",
+                        principalColumn: "IdUsuario",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vendedores",
+                columns: table => new
+                {
+                    IdVendedor = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NombreEmpresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TelefonoEmpresa = table.Column<long>(type: "bigint", nullable: false),
+                    NombreCompleto = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DNI = table.Column<int>(type: "int", nullable: false),
+                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UsuarioIdUsuario = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vendedores", x => x.IdVendedor);
+                    table.ForeignKey(
+                        name: "FK_Vendedores_Usuarios_UsuarioIdUsuario",
                         column: x => x.UsuarioIdUsuario,
                         principalTable: "Usuarios",
                         principalColumn: "IdUsuario",
@@ -182,7 +202,7 @@ namespace Modelo.Migrations
                     IdCarritoDeCompras = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ClienteIdPersona = table.Column<int>(type: "int", nullable: false),
+                    ClienteIdCliente = table.Column<int>(type: "int", nullable: false),
                     Total = table.Column<float>(type: "real", nullable: false),
                     Estado = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -190,10 +210,10 @@ namespace Modelo.Migrations
                 {
                     table.PrimaryKey("PK_CarritoDeCompras", x => x.IdCarritoDeCompras);
                     table.ForeignKey(
-                        name: "FK_CarritoDeCompras_Persona_ClienteIdPersona",
-                        column: x => x.ClienteIdPersona,
-                        principalTable: "Persona",
-                        principalColumn: "IdPersona",
+                        name: "FK_CarritoDeCompras_Clientes_ClienteIdCliente",
+                        column: x => x.ClienteIdCliente,
+                        principalTable: "Clientes",
+                        principalColumn: "IdCliente",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -208,22 +228,22 @@ namespace Modelo.Migrations
                     Cantidad = table.Column<int>(type: "int", nullable: false),
                     Precio = table.Column<float>(type: "real", nullable: false),
                     VendedorIdPersona = table.Column<int>(type: "int", nullable: false),
-                    VendedorIdPersona1 = table.Column<int>(type: "int", nullable: true)
+                    VendedorIdVendedor = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Productos", x => x.IdProducto);
                     table.ForeignKey(
-                        name: "FK_Productos_Persona_VendedorIdPersona",
+                        name: "FK_Productos_Vendedores_VendedorIdPersona",
                         column: x => x.VendedorIdPersona,
-                        principalTable: "Persona",
-                        principalColumn: "IdPersona",
+                        principalTable: "Vendedores",
+                        principalColumn: "IdVendedor",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Productos_Persona_VendedorIdPersona1",
-                        column: x => x.VendedorIdPersona1,
-                        principalTable: "Persona",
-                        principalColumn: "IdPersona");
+                        name: "FK_Productos_Vendedores_VendedorIdVendedor",
+                        column: x => x.VendedorIdVendedor,
+                        principalTable: "Vendedores",
+                        principalColumn: "IdVendedor");
                 });
 
             migrationBuilder.CreateTable(
@@ -298,22 +318,22 @@ namespace Modelo.Migrations
                         principalColumn: "IdCarritoDeCompras",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_Pedidos_Clientes_ClienteIdPersona",
+                        column: x => x.ClienteIdPersona,
+                        principalTable: "Clientes",
+                        principalColumn: "IdCliente",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Pedidos_EstadoPedidos_EstadoPedidoIdEstadoPedido",
                         column: x => x.EstadoPedidoIdEstadoPedido,
                         principalTable: "EstadoPedidos",
                         principalColumn: "IdEstadoPedido",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Pedidos_Persona_ClienteIdPersona",
-                        column: x => x.ClienteIdPersona,
-                        principalTable: "Persona",
-                        principalColumn: "IdPersona",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Pedidos_Persona_VendedorIdPersona",
+                        name: "FK_Pedidos_Vendedores_VendedorIdPersona",
                         column: x => x.VendedorIdPersona,
-                        principalTable: "Persona",
-                        principalColumn: "IdPersona",
+                        principalTable: "Vendedores",
+                        principalColumn: "IdVendedor",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -339,16 +359,16 @@ namespace Modelo.Migrations
                         principalTable: "CarritoDeCompras",
                         principalColumn: "IdCarritoDeCompras");
                     table.ForeignKey(
-                        name: "FK_Publicaciones_Persona_VendedorIdPersona",
-                        column: x => x.VendedorIdPersona,
-                        principalTable: "Persona",
-                        principalColumn: "IdPersona",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Publicaciones_Productos_IdProducto",
                         column: x => x.IdProducto,
                         principalTable: "Productos",
                         principalColumn: "IdProducto",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Publicaciones_Vendedores_VendedorIdPersona",
+                        column: x => x.VendedorIdPersona,
+                        principalTable: "Vendedores",
+                        principalColumn: "IdVendedor",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -363,12 +383,18 @@ namespace Modelo.Migrations
                     MetodoDePagoIdMetodoDePago = table.Column<int>(type: "int", nullable: false),
                     EstadoPago = table.Column<bool>(type: "bit", nullable: false),
                     PedidoId = table.Column<int>(type: "int", nullable: false),
-                    ClienteIdPersona = table.Column<int>(type: "int", nullable: false),
+                    ClienteIdCliente = table.Column<int>(type: "int", nullable: false),
                     ReferenciaTransaccion = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pagos", x => x.IdPago);
+                    table.ForeignKey(
+                        name: "FK_Pagos_Clientes_ClienteIdCliente",
+                        column: x => x.ClienteIdCliente,
+                        principalTable: "Clientes",
+                        principalColumn: "IdCliente",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Pagos_MetodoDePagos_MetodoDePagoIdMetodoDePago",
                         column: x => x.MetodoDePagoIdMetodoDePago,
@@ -381,18 +407,17 @@ namespace Modelo.Migrations
                         principalTable: "Pedidos",
                         principalColumn: "IdPedido",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Pagos_Persona_ClienteIdPersona",
-                        column: x => x.ClienteIdPersona,
-                        principalTable: "Persona",
-                        principalColumn: "IdPersona",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CarritoDeCompras_ClienteIdPersona",
+                name: "IX_CarritoDeCompras_ClienteIdCliente",
                 table: "CarritoDeCompras",
-                column: "ClienteIdPersona");
+                column: "ClienteIdCliente");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clientes_UsuarioIdUsuario",
+                table: "Clientes",
+                column: "UsuarioIdUsuario");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Componente_EstadoGrupoId",
@@ -420,9 +445,9 @@ namespace Modelo.Migrations
                 column: "ModuloId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pagos_ClienteIdPersona",
+                name: "IX_Pagos_ClienteIdCliente",
                 table: "Pagos",
-                column: "ClienteIdPersona");
+                column: "ClienteIdCliente");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pagos_MetodoDePagoIdMetodoDePago",
@@ -456,19 +481,14 @@ namespace Modelo.Migrations
                 column: "VendedorIdPersona");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Persona_UsuarioIdUsuario",
-                table: "Persona",
-                column: "UsuarioIdUsuario");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Productos_VendedorIdPersona",
                 table: "Productos",
                 column: "VendedorIdPersona");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Productos_VendedorIdPersona1",
+                name: "IX_Productos_VendedorIdVendedor",
                 table: "Productos",
-                column: "VendedorIdPersona1");
+                column: "VendedorIdVendedor");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Publicaciones_CarritoDeCompraIdCarritoDeCompras",
@@ -489,6 +509,11 @@ namespace Modelo.Migrations
                 name: "IX_Usuarios_EstadoUsuarioId",
                 table: "Usuarios",
                 column: "EstadoUsuarioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vendedores_UsuarioIdUsuario",
+                table: "Vendedores",
+                column: "UsuarioIdUsuario");
         }
 
         /// <inheritdoc />
@@ -531,10 +556,13 @@ namespace Modelo.Migrations
                 name: "EstadoPedidos");
 
             migrationBuilder.DropTable(
+                name: "Vendedores");
+
+            migrationBuilder.DropTable(
                 name: "Modulos");
 
             migrationBuilder.DropTable(
-                name: "Persona");
+                name: "Clientes");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");

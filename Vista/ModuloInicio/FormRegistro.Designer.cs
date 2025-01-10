@@ -36,6 +36,7 @@
             label2 = new Label();
             btnRegistrar = new Button();
             pnlVendedores = new Panel();
+            txtTelEmpresa = new TextBox();
             label8 = new Label();
             label7 = new Label();
             txtNombreEmpresa = new TextBox();
@@ -47,11 +48,12 @@
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
-            txtTelPerso = new TextBox();
-            txtTelEmpresa = new TextBox();
-            txtDni = new TextBox();
+            numDNI = new NumericUpDown();
+            numTelefP = new NumericUpDown();
             pnlVendedores.SuspendLayout();
             pnlClientes.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numDNI).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numTelefP).BeginInit();
             SuspendLayout();
             // 
             // txtNombreUsuario
@@ -123,6 +125,13 @@
             pnlVendedores.Size = new Size(291, 101);
             pnlVendedores.TabIndex = 7;
             // 
+            // txtTelEmpresa
+            // 
+            txtTelEmpresa.Location = new Point(24, 70);
+            txtTelEmpresa.Name = "txtTelEmpresa";
+            txtTelEmpresa.Size = new Size(195, 23);
+            txtTelEmpresa.TabIndex = 4;
+            // 
             // label8
             // 
             label8.AutoSize = true;
@@ -150,7 +159,7 @@
             // 
             // pnlClientes
             // 
-            pnlClientes.Controls.Add(txtTelPerso);
+            pnlClientes.Controls.Add(numTelefP);
             pnlClientes.Controls.Add(label6);
             pnlClientes.Location = new Point(39, 354);
             pnlClientes.Name = "pnlClientes";
@@ -218,33 +227,28 @@
             label5.TabIndex = 15;
             label5.Text = "DNI";
             // 
-            // txtTelPerso
+            // numDNI
             // 
-            txtTelPerso.Location = new Point(24, 22);
-            txtTelPerso.Name = "txtTelPerso";
-            txtTelPerso.Size = new Size(196, 23);
-            txtTelPerso.TabIndex = 2;
+            numDNI.Location = new Point(65, 314);
+            numDNI.Maximum = new decimal(new int[] { -727379969, 232, 0, 0 });
+            numDNI.Name = "numDNI";
+            numDNI.Size = new Size(194, 23);
+            numDNI.TabIndex = 16;
             // 
-            // txtTelEmpresa
+            // numTelefP
             // 
-            txtTelEmpresa.Location = new Point(24, 70);
-            txtTelEmpresa.Name = "txtTelEmpresa";
-            txtTelEmpresa.Size = new Size(195, 23);
-            txtTelEmpresa.TabIndex = 4;
-            // 
-            // txtDni
-            // 
-            txtDni.Location = new Point(63, 314);
-            txtDni.Name = "txtDni";
-            txtDni.Size = new Size(195, 23);
-            txtDni.TabIndex = 16;
+            numTelefP.Location = new Point(24, 22);
+            numTelefP.Maximum = new decimal(new int[] { 1215752191, 23, 0, 0 });
+            numTelefP.Name = "numTelefP";
+            numTelefP.Size = new Size(196, 23);
+            numTelefP.TabIndex = 2;
             // 
             // FormRegistro
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(334, 512);
-            Controls.Add(txtDni);
+            Controls.Add(numDNI);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -266,6 +270,8 @@
             pnlVendedores.PerformLayout();
             pnlClientes.ResumeLayout(false);
             pnlClientes.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numDNI).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numTelefP).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -291,8 +297,8 @@
         private Label label8;
         private Label label7;
         private TextBox txtNombreEmpresa;
-        private TextBox txtTelPerso;
         private TextBox txtTelEmpresa;
-        private TextBox txtDni;
+        private NumericUpDown numTelefP;
+        private NumericUpDown numDNI;
     }
 }
