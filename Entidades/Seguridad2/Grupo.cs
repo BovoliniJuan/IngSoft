@@ -33,6 +33,25 @@ namespace Entidades
             set { componentes = value; }
         }
 
+        public List<Accion> Acciones
+        {
+            get
+            {
+                var acciones = new List<Accion>();
+                foreach (var componente in Componentes)
+                {
+                    if (componente is Accion accion)
+                    {
+                        acciones.Add(accion);
+                    }
+                    else if (componente is Grupo grupo)
+                    {
+                        acciones.AddRange(grupo.Acciones);
+                    }
+                }
+                return acciones;
+            }
+        }
 
         public Grupo()
         {

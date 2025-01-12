@@ -2,6 +2,7 @@ using Controladoras;
 using Controladoras.Seguridad;
 using Entidades.Seguridad2;
 using Vista.ModuloInicio;
+using Vista.ModuloSeguridad;
 
 namespace Vista
 {
@@ -59,7 +60,8 @@ namespace Vista
             var formulariosDisponibles = new Dictionary<string, Func<Form>>
             {
             { "FormularioVendedores", () => new FormVendedores() },
-            { "FormularioClientes", () => new FormClientes() }
+            { "FormularioClientes", () => new FormClientes() },
+            { "FormularioAdministrador",() => new FormAdministrador() },
             };
 
             foreach (var accion in acciones)

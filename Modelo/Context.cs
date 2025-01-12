@@ -60,6 +60,11 @@ namespace Modelo
                 .HasDiscriminator<string>("TipoPersona")
                 .HasValue<Cliente>("Cliente")
                 .HasValue<Vendedor>("Vendedor");*/
+           /* modelBuilder.Entity<Usuario>()
+                .HasOne(u => u.EstadoUsuario)
+                .WithMany()
+                .HasForeignKey(u => u.EstadoUsuarioId)
+                .OnDelete(DeleteBehavior.Restrict); */
 
             // Relación Publicacion -> Producto
             modelBuilder.Entity<Publicacion>()

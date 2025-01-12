@@ -122,35 +122,36 @@ namespace Controladoras.Seguridad
         {
             try
             {
-                // Buscar el usuario en la base de datos y cargar sus relaciones
+                /* Buscar el usuario en la base de datos y cargar sus relaciones
                 var usuario = Context.Instancia.Usuarios
                     .Include(u => u.EstadoUsuario) // Estado del usuario
                     .Include(u => u.Componentes)  // Componentes (Acciones y Grupos)
                         .ThenInclude(c => c.Grupos) // Grupos dentro de los componentes
                     .Include(u => u.Componentes)
                         .ThenInclude(c => (c as Accion).Formulario) // Formularios de las acciones
-                    .FirstOrDefault(u => u.NombreUsuario == nombreUsuario);
-
-                if (usuario == null)
+                    .FirstOrDefault(u => u.NombreUsuario == nombreUsuario);*/
+                var listaUsuarios = Context.Instancia.Usuarios.Include(u => u.EstadoUsuario).ToList().AsReadOnly();
+                var usuarioEncontrado = listaUsuarios.FirstOrDefault(x => x.NombreUsuario == nombreUsuario);
+                if (usuarioEncontrado == null)
                 {
                     throw new Exception("Usuario no encontrado.");
                 }
 
-                // Verificar el estado del usuario
-                if (usuario.EstadoUsuario.EstadoUsuarioNombre != "Activo")
-                {
-                    throw new Exception("El usuario no está activo.");
-                }
+               
 
                 // Validar la contraseña
-                var resultado = _passwordHasher.VerifyHashedPassword(usuario, usuario.Contrasenia, contrasenia);
+                var resultado = _passwordHasher.VerifyHashedPassword(usuarioEncontrado, usuarioEncontrado.Contrasenia, contrasenia);
                 if (resultado == PasswordVerificationResult.Failed)
                 {
                     throw new Exception("La contraseña es incorrecta.");
                 }
-
+                // Verificar el estado del usuario
+                if (usuarioEncontrado.EstadoUsuario.EstadoUsuarioNombre != "Activo")
+                {
+                    throw new Exception("El usuario no está activo.");
+                }
                 // Devolver el usuario con sus componentes cargados si las credenciales son válidas
-                return usuario;
+                return usuarioEncontrado;
             }
             catch (Exception ex)
             {

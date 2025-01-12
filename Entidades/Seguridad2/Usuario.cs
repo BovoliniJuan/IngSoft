@@ -15,6 +15,7 @@ namespace Entidades
         private string nombreUsuario;
         private string contrasenia;
         private string email;
+        //public int? EstadoUsuarioId { get; set; } 
         private EstadoUsuario estadoUsuario;
         private List<Componente> componentes;
 
@@ -32,9 +33,24 @@ namespace Entidades
         }
         public List<Accion> ObtenerAcciones()
         {
-            var acciones = new List<Accion>();
 
-            // Acciones personalizadas
+
+            var acciones = new List<Accion>();
+            foreach (var componente in Componentes)
+            {
+                if (componente is Grupo grupo)
+                {
+                    acciones.AddRange(grupo.Acciones);
+                }
+                else if (componente is Accion accion)
+                {
+                    acciones.Add(accion);
+                }
+            }
+            return acciones;
+            /* var acciones = new List<Accion>();
+
+             Acciones personalizadas
             acciones.AddRange(Componentes.OfType<Accion>());
 
             // Acciones de los grupos
@@ -44,8 +60,16 @@ namespace Entidades
                 var accionesDelGrupo = grupo.Componentes.OfType<Accion>();
                 acciones.AddRange(accionesDelGrupo);
             }
+            foreach (var componente in Componentes)
+            {
+                if (componente is Grupo grupo)
+                {
+                    acciones.AddRange(grupo.Acc);
+                }
+            }
 
-            return acciones.Distinct().ToList(); // Elimina duplicados si una acción está en varios grupos
+            return acciones;
+            return acciones.Distinct().ToList(); // Elimina duplicados si una acción está en varios grupos*/
         }
 
         private void RecogerAcciones(Componente componente, List<Accion> acciones)

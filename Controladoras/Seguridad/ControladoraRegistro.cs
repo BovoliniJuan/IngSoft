@@ -58,13 +58,42 @@ namespace Controladoras.Seguridad
                 {
                     Context.Instancia.Clientes.Add(cliente); 
                     Context.Instancia.SaveChanges();
+                    Mensajeria.ControladoraMails.Instancia.NotificarRegistroExitoso(cliente.Usuario.Email, cliente.NombreCompleto);
+
                     return "Usuario registrado exitosamente. Pendiente de aprobación del administrador.";
                 }
+                Context.Instancia.Usuarios.Remove(cliente.Usuario);
+                Context.Instancia.SaveChanges();
+                return "El usuario ya existe";
+                
+
+            }
+            catch (Exception ex)
+            {
+                return $"Error al registrar el usuario: {ex.Message}. Detalles: {ex.InnerException?.Message}";
+            }
+        }
+        public string RegistrarVendedor(Vendedor vendedor) 
+        {
+            try
+            {
+                var listaVendedores = Context.Instancia.Vendedores.ToList().AsReadOnly();
+                var vendedorEncontrado = listaVendedores.FirstOrDefault(x => x.DNI == vendedor.DNI);
+                if (vendedorEncontrado == null)
+                {
+                    Context.Instancia.Vendedores.Add(vendedor);
+                    Context.Instancia.SaveChanges();
+                    Mensajeria.ControladoraMails.Instancia.NotificarRegistroExitoso(vendedor.Usuario.Email, vendedor.NombreCompleto);
+                    return "Usuario registrado exitosamente. Pendiente de aprobación del administrador.";
+                }
+                Context.Instancia.Usuarios.Remove(vendedor.Usuario);
+                Context.Instancia.SaveChanges();
                 return "El usuario ya existe";
 
             }
             catch (Exception ex)
             {
+
                 return $"Error al registrar el usuario: {ex.Message}. Detalles: {ex.InnerException?.Message}";
             }
         }
@@ -117,7 +146,7 @@ namespace Controladoras.Seguridad
                         NombreCompleto = nombreCompleto,
                         DNI = dni,
                         Direccion = direccion,
-                        Usuario = nuevoUsuario, // Asegúrate de que UsuarioId se asigna correctamente
+                        Usuario = nuevoUsuario, 
                         NombreEmpresa = nombreEmpresa,
                         TelefonoEmpresa = telefonoE
                     };
