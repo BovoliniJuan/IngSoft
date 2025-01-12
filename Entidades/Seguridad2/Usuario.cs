@@ -33,44 +33,18 @@ namespace Entidades
         }
         public List<Accion> ObtenerAcciones()
         {
-
-
             var acciones = new List<Accion>();
-            foreach (var componente in Componentes)
-            {
-                if (componente is Grupo grupo)
-                {
-                    acciones.AddRange(grupo.Acciones);
-                }
-                else if (componente is Accion accion)
-                {
-                    acciones.Add(accion);
-                }
-            }
-            return acciones;
-            /* var acciones = new List<Accion>();
-
-             Acciones personalizadas
             acciones.AddRange(Componentes.OfType<Accion>());
 
             // Acciones de los grupos
-            var grupos = Componentes.OfType<Grupo>();
-            foreach (var grupo in grupos)
+            foreach (var componente in Componentes.OfType<Grupo>())
             {
-                var accionesDelGrupo = grupo.Componentes.OfType<Accion>();
-                acciones.AddRange(accionesDelGrupo);
-            }
-            foreach (var componente in Componentes)
-            {
-                if (componente is Grupo grupo)
-                {
-                    acciones.AddRange(grupo.Acc);
-                }
+                acciones.AddRange(componente.Acciones);
             }
 
-            return acciones;
-            return acciones.Distinct().ToList(); // Elimina duplicados si una acción está en varios grupos*/
+            return acciones.Distinct().ToList(); // Elimina duplicados
         }
+
 
         private void RecogerAcciones(Componente componente, List<Accion> acciones)
         {

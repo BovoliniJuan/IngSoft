@@ -122,23 +122,17 @@ namespace Controladoras.Seguridad
         {
             try
             {
-                /* Buscar el usuario en la base de datos y cargar sus relaciones
-                var usuario = Context.Instancia.Usuarios
-                    .Include(u => u.EstadoUsuario) // Estado del usuario
-                    .Include(u => u.Componentes)  // Componentes (Acciones y Grupos)
-                        .ThenInclude(c => c.Grupos) // Grupos dentro de los componentes
-                    .Include(u => u.Componentes)
-                        .ThenInclude(c => (c as Accion).Formulario) // Formularios de las acciones
-                    .FirstOrDefault(u => u.NombreUsuario == nombreUsuario);*/
-                var listaUsuarios = Context.Instancia.Usuarios.Include(u => u.EstadoUsuario).ToList().AsReadOnly();
+                
+                var listaUsuarios = Context.Instancia.Usuarios.Include(u => u.EstadoUsuario)
+                    .Include(u => u.Componentes).ToList().AsReadOnly();
+                
                 var usuarioEncontrado = listaUsuarios.FirstOrDefault(x => x.NombreUsuario == nombreUsuario);
                 if (usuarioEncontrado == null)
                 {
                     throw new Exception("Usuario no encontrado.");
                 }
 
-               
-
+            
                 // Validar la contraseña
                 var resultado = _passwordHasher.VerifyHashedPassword(usuarioEncontrado, usuarioEncontrado.Contrasenia, contrasenia);
                 if (resultado == PasswordVerificationResult.Failed)
@@ -159,7 +153,7 @@ namespace Controladoras.Seguridad
                 throw new Exception($"Error al verificar las credenciales: {ex.Message}");
             }
         }
-
+       
         public static string GenerarCodigo()
         {
             var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

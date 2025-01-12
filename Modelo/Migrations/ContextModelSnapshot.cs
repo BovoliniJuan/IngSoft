@@ -490,7 +490,12 @@ namespace Modelo.Migrations
                     b.Property<int>("FormularioId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("GrupoId")
+                        .HasColumnType("int");
+
                     b.HasIndex("FormularioId");
+
+                    b.HasIndex("GrupoId");
 
                     b.HasDiscriminator().HasValue("Accion");
                 });
@@ -500,13 +505,13 @@ namespace Modelo.Migrations
                     b.HasOne("Entidades.Seguridad2.Componente", null)
                         .WithMany()
                         .HasForeignKey("ComponentesId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Entidades.Grupo", null)
                         .WithMany()
                         .HasForeignKey("GruposId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
                 });
 
@@ -699,6 +704,10 @@ namespace Modelo.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Entidades.Grupo", null)
+                        .WithMany("Acciones")
+                        .HasForeignKey("GrupoId");
+
                     b.Navigation("Formulario");
                 });
 
@@ -726,6 +735,11 @@ namespace Modelo.Migrations
             modelBuilder.Entity("Entidades.Seguridad2.Formulario", b =>
                 {
                     b.Navigation("AccionesPosibles");
+                });
+
+            modelBuilder.Entity("Entidades.Grupo", b =>
+                {
+                    b.Navigation("Acciones");
                 });
 #pragma warning restore 612, 618
         }

@@ -121,7 +121,7 @@ namespace Modelo
                 .HasForeignKey<Pago>(p => p.PedidoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Configuración adicional para relaciones de grupos y componentes
+            /* Configuración adicional para relaciones de grupos y componentes
             modelBuilder.Entity<Grupo>().HasMany(g => g.Componentes).WithMany(c => c.Grupos).UsingEntity<Dictionary<string, object>>(
                 "ComponenteGrupo",
                 j => j
@@ -133,7 +133,7 @@ namespace Modelo
                     .HasOne<Grupo>()
                     .WithMany()
                     .HasForeignKey("GruposId")
-                    .OnDelete(DeleteBehavior.Restrict));
+                    .OnDelete(DeleteBehavior.Restrict));*/
         }
 
     }

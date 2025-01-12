@@ -1,5 +1,6 @@
 using Controladoras;
 using Controladoras.Seguridad;
+using Entidades;
 using Entidades.Seguridad2;
 using Vista.ModuloInicio;
 using Vista.ModuloSeguridad;
@@ -36,24 +37,40 @@ namespace Vista
                     MessageBox.Show("Credenciales incorrectas.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                Sesion sesion = CrearSesion(usuario);
 
-                var acciones = usuario.ObtenerAcciones();
+                var usuarioCompleto = ControladoraInicioSesion.Instancia.Buscar(nombreUsuario);
+                var acciones = usuarioCompleto.ObtenerAcciones();
+
 
                 if (acciones.Count == 0)
                 {
                     MessageBox.Show("El usuario no tiene acciones asignadas.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                /*if (!VerificarPermisos(sesion))
+                {
+                    MessageBox.Show("No tiene permisos para acceder al sistema.");
+                    return;
+                }*/
+               AbrirFormulariosSegunAcciones(acciones);
 
-                AbrirFormulariosSegunAcciones(acciones);
-
-                this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al iniciar sesión: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private Sesion CrearSesion(Usuario usuario)
+        {
+            return new Sesion
+            {
+                UsuarioSesion = usuario,
+                SesionPerfil = usuario.Componentes.OfType<Accion>().ToList()
+            };
+        }
+        
+        
 
         private void AbrirFormulariosSegunAcciones(List<Accion> acciones)
         {
@@ -78,6 +95,8 @@ namespace Vista
                 }
             }
         }
+            
+        
 
 
         private void linkRegistro_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

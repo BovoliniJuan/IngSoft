@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Modelo.Migrations
 {
     /// <inheritdoc />
-    public partial class creo : Migration
+    public partial class prueba : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -176,11 +176,17 @@ namespace Modelo.Migrations
                     IdGrupo = table.Column<int>(type: "int", nullable: true),
                     NombreGrupo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EstadoGrupoId = table.Column<int>(type: "int", nullable: true),
-                    FormularioId = table.Column<int>(type: "int", nullable: true)
+                    FormularioId = table.Column<int>(type: "int", nullable: true),
+                    GrupoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Componente", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Componente_Componente_GrupoId",
+                        column: x => x.GrupoId,
+                        principalTable: "Componente",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Componente_EstadosGrupo_EstadoGrupoId",
                         column: x => x.EstadoGrupoId,
@@ -261,13 +267,12 @@ namespace Modelo.Migrations
                         column: x => x.ComponentesId,
                         principalTable: "Componente",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ComponenteGrupo_Componente_GruposId",
                         column: x => x.GruposId,
                         principalTable: "Componente",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -428,6 +433,11 @@ namespace Modelo.Migrations
                 name: "IX_Componente_FormularioId",
                 table: "Componente",
                 column: "FormularioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Componente_GrupoId",
+                table: "Componente",
+                column: "GrupoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ComponenteGrupo_GruposId",
