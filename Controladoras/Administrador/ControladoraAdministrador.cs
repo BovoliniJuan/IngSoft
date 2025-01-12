@@ -56,7 +56,11 @@ namespace Controladoras.Administrador
                 if (usuario.Componentes.OfType<Grupo>().Any(g => g.IdGrupo == grupo.IdGrupo))
                     return "El usuario ya pertenece a este grupo.";
 
+                string estadoAct = "Activo";
+                var estado = Context.Instancia.EstadosUsuario.FirstOrDefault(u => u.EstadoUsuarioNombre == estadoAct);
                 usuario.Componentes.Add(grupo);
+                usuario.EstadoUsuario = estado;
+                Context.Instancia.Usuarios.Update(usuario);
                 Context.Instancia.SaveChanges();
                 Mensajeria.ControladoraMails.Instancia.NotificarAsignacionGrupo(usuario.Email,usuario.NombreUsuario, grupo.NombreGrupo);
                 return "Grupo asignado exitosamente.";

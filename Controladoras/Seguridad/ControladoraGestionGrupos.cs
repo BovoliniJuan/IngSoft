@@ -34,7 +34,7 @@ namespace Controladoras.Seguridad
         }
 
 
-
+       
         public ReadOnlyCollection<Grupo> RecuperarGrupos()
         {
             try

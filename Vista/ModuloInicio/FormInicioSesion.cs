@@ -76,8 +76,8 @@ namespace Vista
         {
             var formulariosDisponibles = new Dictionary<string, Func<Form>>
             {
-            { "FormularioVendedores", () => new FormVendedores() },
-            { "FormularioClientes", () => new FormClientes() },
+            { "FormularioVendedor", () => new FormVendedores() },
+            { "FormularioCliente", () => new FormClientes() },
             { "FormularioAdministrador",() => new FormAdministrador() },
             };
 

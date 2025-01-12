@@ -51,10 +51,12 @@
             // 
             // cmbGrupos
             // 
+            cmbGrupos.ForeColor = SystemColors.WindowText;
             cmbGrupos.FormattingEnabled = true;
             cmbGrupos.Location = new Point(6, 22);
             cmbGrupos.Name = "cmbGrupos";
             cmbGrupos.Size = new Size(188, 23);
+            cmbGrupos.Sorted = true;
             cmbGrupos.TabIndex = 1;
             // 
             // btnAsignarGrupo
@@ -65,6 +67,7 @@
             btnAsignarGrupo.TabIndex = 4;
             btnAsignarGrupo.Text = "Asignar grupo";
             btnAsignarGrupo.UseVisualStyleBackColor = true;
+            btnAsignarGrupo.Click += btnAsignarGrupo_Click;
             // 
             // groupBox1
             // 

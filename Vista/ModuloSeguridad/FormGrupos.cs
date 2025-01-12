@@ -1,5 +1,6 @@
 ﻿using Controladoras;
 using Controladoras.Administrador;
+using Controladoras.Seguridad;
 using Entidades;
 using Entidades.Seguridad;
 using Modelo;
@@ -26,12 +27,14 @@ namespace Vista
         private void CargarGrupos()
         {
             // Obtener los grupos desde la base de datos y cargarlos en el ComboBox
-            var grupos = Context.Instancia.Grupos.ToList();
-            cmbGrupos.DataSource = grupos;
-            cmbGrupos.DisplayMember = "NombreGrupo"; // Cambiar según tu modelo
-            cmbGrupos.ValueMember = "IdGrupo";
-        }
+            //var grupos = ControladoraGestionGrupos.Instancia.RecuperarGrupos();
 
+            cmbGrupos.DataSource = ControladoraGestionGrupos.Instancia.RecuperarGrupos();
+            /*cmbGrupos.DisplayMember = "NombreGrupo"; 
+            cmbGrupos.ValueMember = "IdGrupo";*/
+
+        }
+      
         private void CargarUsuarios()
         {
             // Cargar todos los usuarios inicialmente

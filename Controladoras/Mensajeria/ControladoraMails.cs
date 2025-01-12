@@ -69,7 +69,7 @@ namespace Controladoras.Mensajeria
                 <p style='font-size: 24px; font-weight: bold; color: #2e7d32;'>{codigo}</p>
                 <p>Por favor, usa este código para restablecer tu contraseña.</p>
                 <p style='color: #555;'>Gracias,</p>
-                <p style='color: #2e7d32;'>Equipo TrabajoPOO</p>
+                <p style='color: #2e7d32;'>Equipo AgroGestion</p>
             </div>";
 
             EnviarCorreo(email, asunto, cuerpo, true);
@@ -85,7 +85,7 @@ namespace Controladoras.Mensajeria
                 <p>Tu cuenta ha sido activada y se te ha asignado al grupo:</p>
                 <p style='font-size: 18px; font-weight: bold; color: #2e7d32;'>{nombreGrupo}</p>
                 <p style='color: #555;'>Gracias por formar parte de nuestra plataforma.</p>
-                <p style='color: #2e7d32;'>Equipo TrabajoPOO</p>
+                <p style='color: #2e7d32;'>Equipo AgroGestion</p>
             </div>";
 
             EnviarCorreo(email, asunto, cuerpo, true);
@@ -101,7 +101,7 @@ namespace Controladoras.Mensajeria
                 <p>Tu registro en nuestra plataforma ha sido exitoso.</p>
                 <p>Un administrador revisará tu solicitud y te asignará un grupo en breve.</p>
                 <p style='color: #555;'>Gracias por registrarte.</p>
-                <p style='color: #2e7d32;'>Equipo TrabajoPOO</p>
+                <p style='color: #2e7d32;'>Equipo AgroGestion</p>
             </div>";
 
             EnviarCorreo(email, asunto, cuerpo, true);
