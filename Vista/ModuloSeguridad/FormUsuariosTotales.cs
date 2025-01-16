@@ -14,6 +14,7 @@ namespace Vista.ModuloSeguridad
 {
     public partial class FormUsuariosTotales : Form
     {
+
         public FormUsuariosTotales()
         {
             InitializeComponent();
@@ -28,7 +29,7 @@ namespace Vista.ModuloSeguridad
                 u.IdUsuario,
                 u.NombreUsuario,
                 u.Email,
-                TieneGrupo = u.Componentes.OfType<Grupo>().Any() ? "Sí" : "No"
+                TieneGrupo = u.Componentes.OfType<Grupo>().Any()? "Sí" : "No"
             }).ToList();
         }
 
@@ -41,6 +42,8 @@ namespace Vista.ModuloSeguridad
         {
             AplicarFiltros();
         }
+       
+
         private void AplicarFiltros()
         {
             // Obtener todos los usuarios
@@ -50,19 +53,21 @@ namespace Vista.ModuloSeguridad
             if (chkVendedores.Checked && !chkClientes.Checked)
             {
                 usuarios = usuarios.Where(u =>
-                    u.Componentes.OfType<Grupo>().Any(g => g.NombreGrupo == "Vendedor")
+                    u.Componentes.OfType<Grupo>().Any(g => g.IdGrupo == 3)
                 ).ToList();
+               
             }
             else if (!chkVendedores.Checked && chkClientes.Checked)
             {
                 usuarios = usuarios.Where(u =>
-                    u.Componentes.OfType<Grupo>().Any(g => g.NombreGrupo == "Cliente")
+                    u.Componentes.OfType<Grupo>().Any(g => g.IdGrupo == 2)
                 ).ToList();
+              
             }
             else if (chkVendedores.Checked && chkClientes.Checked)
             {
                 usuarios = usuarios.Where(u =>
-                    u.Componentes.OfType<Grupo>().Any(g => g.NombreGrupo == "Vendedor" || g.NombreGrupo == "Cliente")
+                    u.Componentes.OfType<Grupo>().Any(g => g.IdGrupo == 3 || g.IdGrupo == 2)
                 ).ToList();
             }
 
@@ -72,7 +77,7 @@ namespace Vista.ModuloSeguridad
                 u.IdUsuario,
                 u.NombreUsuario,
                 u.Email,
-                Grupos = string.Join(", ", u.Componentes.OfType<Grupo>().Select(g => g.NombreGrupo))
+                TieneGrupo = u.Componentes.OfType<Grupo>().Any() ? "Sí" : "No"
             }).ToList();
         }
     }

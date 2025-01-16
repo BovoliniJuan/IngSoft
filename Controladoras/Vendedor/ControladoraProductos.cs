@@ -30,7 +30,33 @@ namespace Controladoras.Vendedor
         {
             try
             {
-                return new ReadOnlyCollection<Producto>(context.Productos.ToList());
+                return new ReadOnlyCollection<Producto>(Context.Instancia.Productos.ToList());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al recuperar productos: " + ex.Message);
+            }
+        }
+        public ReadOnlyCollection<Producto> RecuperarProductosVendedor(Sesion sesion)
+        {
+            try
+            {
+                // Buscar el vendedor asociado al usuario de la sesión
+                var buscarVendedor = Context.Instancia.Vendedores
+                    .FirstOrDefault(v => v.Usuario.IdUsuario == sesion.UsuarioSesion.IdUsuario);
+
+                if (buscarVendedor != null)
+                {
+                    // Filtrar los productos del vendedor
+                    var productosVendedor = Context.Instancia.Productos
+                        .Where(p => p.Vendedor.IdVendedor == buscarVendedor.IdVendedor)
+                        .ToList();
+
+                    // Retornar los productos como ReadOnlyCollection
+                    return new ReadOnlyCollection<Producto>(productosVendedor);
+                }
+
+                throw new Exception("No se encontró un vendedor asociado al usuario de la sesión.");
             }
             catch (Exception ex)
             {
@@ -52,8 +78,8 @@ namespace Controladoras.Vendedor
                     if (buscarVendedor != null)
                     {
                         producto.Vendedor = buscarVendedor;
-                        context.Productos.Add(producto);
-                        context.SaveChanges();
+                        Context.Instancia.Productos.Add(producto);
+                        Context.Instancia.SaveChanges();
                         return "El producto se agregó correctamente.";
                     }
                     
@@ -66,17 +92,17 @@ namespace Controladoras.Vendedor
                 throw new Exception("Error al agregar el producto: " + ex.Message);
             }
         }
-
+       
         public string EliminarProducto(Producto producto)
         {
             try
             {
-                var listaProductos = context.Productos.ToList().AsReadOnly();
+                var listaProductos = Context.Instancia.Productos.ToList().AsReadOnly();
                 var productoEncontrado = listaProductos.FirstOrDefault(x => x.IdProducto == producto.IdProducto);
                 if (productoEncontrado != null)
                 {
-                    context.Productos.Remove(producto);
-                    context.SaveChanges();
+                    Context.Instancia.Productos.Remove(producto);
+                    Context.Instancia.SaveChanges();
                     return $"El producto se elimino correctamente";
                 }
                 return $"El producto no se pudo eliminar correctamente";
@@ -87,27 +113,32 @@ namespace Controladoras.Vendedor
             }
         }
 
+       
         public string ModificarProducto(Producto producto)
         {
             try
             {
-                var listaProductos = context.Productos.ToList().AsReadOnly();
-                var productoEncontrado = listaProductos.FirstOrDefault(x => x.IdProducto == producto.IdProducto);
+                var productoEncontrado = Context.Instancia.Productos.FirstOrDefault(x => x.IdProducto == producto.IdProducto);
 
                 if (productoEncontrado != null)
                 {
-                    context.Productos.Update(producto);
-                    int insertados = context.SaveChanges();
+                    productoEncontrado.Nombre = producto.Nombre;
+                    productoEncontrado.Descripcion = producto.Descripcion;
+                    productoEncontrado.Cantidad = producto.Cantidad;
+                    productoEncontrado.Precio = producto.Precio;
 
-                    return $"El producto se modifico correctamente";
+                    int cambios = Context.Instancia.SaveChanges();
+
+                    return cambios > 0 ? "El producto se modificó correctamente" : "No se realizaron cambios en el producto";
                 }
-                return $"El producto no se ha podido modificar";
+
+                return "No se encontró el producto a modificar";
             }
             catch (Exception ex)
             {
                 throw new Exception("Error al modificar el producto: " + ex.Message);
             }
-
         }
+
     }
 }

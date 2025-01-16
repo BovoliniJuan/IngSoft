@@ -509,13 +509,13 @@ namespace Modelo.Migrations
                     b.HasOne("Entidades.Seguridad2.Componente", null)
                         .WithMany()
                         .HasForeignKey("ComponentesId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Entidades.Grupo", null)
                         .WithMany()
                         .HasForeignKey("GruposId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

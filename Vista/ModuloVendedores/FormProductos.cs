@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Controladoras.Cliente;
+using Controladoras.Vendedor;
+using Entidades.EntidadesVendedores;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +18,32 @@ namespace Vista.ModuloVendedores
         public FormProductos()
         {
             InitializeComponent();
+            CargarProductos();
+        }
+
+        private void CargarProductos()
+        {
+            dgvProductos.DataSource = null;
+            dgvProductos.DataSource = ControladoraProductos.Instancia.RecuperarProductos();
+        }
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            if (dgvProductos.CurrentRow != null)
+            {
+                var productoSeleccionado = (Producto)dgvProductos.CurrentRow.DataBoundItem;
+                var formModificar = new FormAgregarProd(productoSeleccionado);
+                formModificar.ShowDialog();
+                CargarProductos();
+            }
+            else
+            {
+                MessageBox.Show("No tienes ninguna producto seleccionado", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

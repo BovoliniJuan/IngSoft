@@ -2,6 +2,7 @@
 using Controladoras.Seguridad;
 using Entidades;
 using Entidades.EntidadesClientes;
+using Entidades.EntidadesVendedores;
 using Entidades.Seguridad;
 using Entidades.Seguridad2;
 using Microsoft.AspNetCore.Identity;
@@ -83,8 +84,14 @@ namespace Vista
             {
                 var nombreEmpresa = txtNombreEmpresa.Text.Trim();
                 var telefonoE = long.Parse(txtTelEmpresa.Text.Trim());
-                resultado = ControladoraRegistro.Instancia.RegistrarUsuario(
-                    nombreUsuario, email, contrasenia, nombreCompleto, direccion, dni, 0, nombreEmpresa, telefonoE, true);
+                Vendedor vendedor = new Vendedor();
+                vendedor.NombreCompleto = nombreCompleto;
+                vendedor.NombreEmpresa = nombreEmpresa;
+                vendedor.DNI = dni;
+                vendedor.Direccion = direccion;
+                vendedor.TelefonoEmpresa = telefonoE;
+                vendedor.Usuario = usuario;
+                resultado = ControladoraRegistro.Instancia.RegistrarVendedor(vendedor);
             }
             else
             {

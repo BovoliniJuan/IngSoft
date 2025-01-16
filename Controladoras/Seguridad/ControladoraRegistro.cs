@@ -43,7 +43,7 @@ namespace Controladoras.Seguridad
            {
                 usuario.Contrasenia = _passwordHasher.HashPassword(usuario, contrasenia);
                 Context.Instancia.Usuarios.Add(usuario);
-                Context.Instancia.SaveChanges();
+                //Context.Instancia.SaveChanges();
                 return null;
            }
             return "El nombre de usuario ya existe";

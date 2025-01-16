@@ -19,8 +19,12 @@ namespace Entidades.EntidadesVendedores
         public string NombreEmpresa { get {  return nombreEmpresa; } set {  nombreEmpresa = value; }}
         public long TelefonoEmpresa { get { return telefonoEmpresa; }  set {  telefonoEmpresa = value;} }
         public List<Producto> Productos { get {  return productos; } set {  productos = value; } }
-        
-        public Vendedor() { }
+
+        public Vendedor()
+        {
+            Productos = new List<Producto>();
+        }
+
         public void AgregarProductos() {}
     }
 }

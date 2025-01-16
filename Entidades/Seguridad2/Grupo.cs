@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Entidades
         private EstadoGrupo estadoGrupo;
         private List<Componente> componentes;
 
+     
         public int IdGrupo {get { return idGrupo;} set { idGrupo = value; } }
         public string NombreGrupo { get { return nombreGrupo; }set {nombreGrupo = value; } }
 
