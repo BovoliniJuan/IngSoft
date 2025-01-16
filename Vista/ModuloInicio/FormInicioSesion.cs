@@ -15,6 +15,7 @@ namespace Vista
         {
             InitializeComponent();
             _controladoraInicioSesion = ControladoraInicioSesion.Instancia;
+            txtboxContra.PasswordChar = '*';
         }
 
         private void btnIniciar_Click(object sender, EventArgs e)
@@ -53,7 +54,7 @@ namespace Vista
                     MessageBox.Show("No tiene permisos para acceder al sistema.");
                     return;
                 }*/
-               AbrirFormulariosSegunAcciones(acciones);
+               AbrirFormulariosSegunAcciones(acciones, sesion);
 
             }
             catch (Exception ex)
@@ -72,12 +73,12 @@ namespace Vista
         
         
 
-        private void AbrirFormulariosSegunAcciones(List<Accion> acciones)
+        private void AbrirFormulariosSegunAcciones(List<Accion> acciones, Sesion sesion)
         {
             var formulariosDisponibles = new Dictionary<string, Func<Form>>
             {
-            { "FormularioVendedor", () => new FormVendedores() },
-            { "FormularioCliente", () => new FormClientes() },
+            { "FormularioVendedor", () => new FormVendedores(sesion) },
+            { "FormularioCliente", () => new FormClientes(sesion) },
             { "FormularioAdministrador",() => new FormAdministrador() },
             };
 

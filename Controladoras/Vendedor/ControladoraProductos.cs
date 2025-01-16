@@ -2,8 +2,9 @@
 using Entidades;
 using System.Collections.ObjectModel;
 using Entidades.EntidadesVendedores;
+using Entidades.Seguridad2;
 
-namespace Controladoras
+namespace Controladoras.Vendedor
 {
     public class ControladoraProductos
     {
@@ -37,20 +38,28 @@ namespace Controladoras
             }
         }
 
-        public string AgregarProducto(Producto producto)
+        public string AgregarProducto(Producto producto, Sesion sesion)
         {
             try
             {
-                var listaProductos = context.Productos.ToList().AsReadOnly();
+                var listaProductos = Context.Instancia.Productos.ToList().AsReadOnly();
                 var productoEncontrado = listaProductos.FirstOrDefault(x => x.IdProducto == producto.IdProducto);
                 if (productoEncontrado == null)
                 {
-                    context.Productos.Add(producto);
-                    context.SaveChanges();
-                    return "La venta se agregó correctamente.";
+                    var listaVendedores = Context.Instancia.Vendedores.ToList().AsReadOnly();
+                    var buscarVendedor = listaVendedores.FirstOrDefault(x => x.Usuario == sesion.UsuarioSesion);
+
+                    if (buscarVendedor != null)
+                    {
+                        producto.Vendedor = buscarVendedor;
+                        context.Productos.Add(producto);
+                        context.SaveChanges();
+                        return "El producto se agregó correctamente.";
+                    }
+                    
 
                 }
-                return "La venta no se ha podido agregar.";
+                return "El producto no se ha podido agregar.";
             }
             catch (Exception ex)
             {

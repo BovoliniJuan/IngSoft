@@ -11,6 +11,7 @@ namespace Entidades.EntidadesVendedores
     public class Publicacion
     {
         private int idPublicacion;
+        private string descripcion;
         private DateTime fechaInicio;
         private DateTime fechaFin;
         private bool estado;
@@ -19,6 +20,7 @@ namespace Entidades.EntidadesVendedores
 
         [Key]
         public int IdPublicacion { get {  return idPublicacion; } set {  idPublicacion = value; } }
+        public string Descripcion { get { return descripcion; } set { descripcion = value; } }
         public DateTime FechaInicio { get {  return fechaInicio; } set {  fechaInicio = value; } }
         public DateTime FechaFin { get {  return fechaFin; } set { fechaFin = value; } }
         public bool Estado { get { return estado; } set {  estado = value; } }

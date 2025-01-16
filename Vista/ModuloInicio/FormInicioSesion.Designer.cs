@@ -43,6 +43,7 @@ namespace Vista
             // 
             // btnIniciar
             // 
+            btnIniciar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             btnIniciar.Location = new Point(66, 171);
             btnIniciar.Name = "btnIniciar";
             btnIniciar.Size = new Size(92, 29);
@@ -54,18 +55,21 @@ namespace Vista
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(17, 34);
+            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.Location = new Point(43, 40);
             label1.Name = "label1";
-            label1.Size = new Size(47, 15);
+            label1.Size = new Size(55, 17);
             label1.TabIndex = 2;
             label1.Text = "Usuario";
             // 
             // linkRegistro
             // 
             linkRegistro.AutoSize = true;
+            linkRegistro.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            linkRegistro.LinkColor = Color.Blue;
             linkRegistro.Location = new Point(66, 235);
             linkRegistro.Name = "linkRegistro";
-            linkRegistro.Size = new Size(64, 15);
+            linkRegistro.Size = new Size(94, 21);
             linkRegistro.TabIndex = 3;
             linkRegistro.TabStop = true;
             linkRegistro.Text = "Registrarse";
@@ -74,9 +78,10 @@ namespace Vista
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(17, 87);
+            label2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.Location = new Point(43, 90);
             label2.Name = "label2";
-            label2.Size = new Size(67, 15);
+            label2.Size = new Size(77, 17);
             label2.TabIndex = 4;
             label2.Text = "Contraseña";
             // 
@@ -96,6 +101,7 @@ namespace Vista
             // 
             // groupBox1
             // 
+            groupBox1.BackColor = Color.Gray;
             groupBox1.Controls.Add(btnCancelar);
             groupBox1.Controls.Add(linkOlvidarContra);
             groupBox1.Controls.Add(txtboxContra);
@@ -112,6 +118,7 @@ namespace Vista
             // 
             // btnCancelar
             // 
+            btnCancelar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             btnCancelar.Location = new Point(225, 171);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(88, 29);
@@ -123,9 +130,10 @@ namespace Vista
             // linkOlvidarContra
             // 
             linkOlvidarContra.AutoSize = true;
-            linkOlvidarContra.Location = new Point(161, 137);
+            linkOlvidarContra.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            linkOlvidarContra.Location = new Point(141, 128);
             linkOlvidarContra.Name = "linkOlvidarContra";
-            linkOlvidarContra.Size = new Size(119, 15);
+            linkOlvidarContra.Size = new Size(172, 21);
             linkOlvidarContra.TabIndex = 7;
             linkOlvidarContra.TabStop = true;
             linkOlvidarContra.Text = "Olvide mi contraseña";
@@ -135,10 +143,11 @@ namespace Vista
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Gray;
             ClientSize = new Size(485, 300);
             Controls.Add(groupBox1);
             Name = "FormInicioSesion";
-            Text = "Form1";
+            Text = "Inicio Sesion";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);

@@ -18,7 +18,6 @@ namespace Vista.ModuloInicio
 {
     public partial class FormRecuperarClave : Form
     {
-        private readonly ControladoraSeguridad _controladoraSeguridad;
         private string _codigoRecuperacion;
 
         private FormInicioSesion formInicioSesion;
@@ -26,7 +25,6 @@ namespace Vista.ModuloInicio
         {
             InitializeComponent();
             this.formInicioSesion = formInicioSesion;
-            _controladoraSeguridad = new ControladoraSeguridad(Context.Instancia);
             panel1.Visible = true;  // Mostrar panel de email y código
             panel2.Visible = false; // Ocultar panel de cambio de contraseña
         }

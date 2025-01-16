@@ -42,6 +42,7 @@
             // 
             // dgvUsuarios
             // 
+            dgvUsuarios.BackgroundColor = Color.Gray;
             dgvUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvUsuarios.Location = new Point(12, 12);
             dgvUsuarios.Name = "dgvUsuarios";
@@ -71,8 +72,10 @@
             // 
             // groupBox1
             // 
+            groupBox1.BackColor = Color.Gray;
             groupBox1.Controls.Add(chkConGrupo);
             groupBox1.Controls.Add(chkSinGrupo);
+            groupBox1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox1.Location = new Point(423, 12);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(200, 81);
@@ -85,7 +88,7 @@
             chkConGrupo.AutoSize = true;
             chkConGrupo.Location = new Point(8, 45);
             chkConGrupo.Name = "chkConGrupo";
-            chkConGrupo.Size = new Size(84, 19);
+            chkConGrupo.Size = new Size(85, 19);
             chkConGrupo.TabIndex = 7;
             chkConGrupo.Text = "Con Grupo";
             chkConGrupo.UseVisualStyleBackColor = true;
@@ -96,7 +99,7 @@
             chkSinGrupo.AutoSize = true;
             chkSinGrupo.Location = new Point(8, 20);
             chkSinGrupo.Name = "chkSinGrupo";
-            chkSinGrupo.Size = new Size(78, 19);
+            chkSinGrupo.Size = new Size(81, 19);
             chkSinGrupo.TabIndex = 6;
             chkSinGrupo.Text = "Sin Grupo";
             chkSinGrupo.UseVisualStyleBackColor = true;
@@ -104,8 +107,10 @@
             // 
             // groupBox2
             // 
+            groupBox2.BackColor = Color.Gray;
             groupBox2.Controls.Add(cmbGrupos);
             groupBox2.Controls.Add(btnAsignarGrupo);
+            groupBox2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox2.Location = new Point(423, 99);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(200, 100);
@@ -117,12 +122,13 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 384);
+            BackColor = Color.DarkGreen;
+            ClientSize = new Size(655, 379);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(dgvUsuarios);
             Name = "FormGrupos";
-            Text = "FormGrupos";
+            Text = "Asignacion Grupos";
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

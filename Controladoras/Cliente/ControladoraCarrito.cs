@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Controladoras
+namespace Controladoras.Cliente
 {
     public class ControladoraCarrito
     {

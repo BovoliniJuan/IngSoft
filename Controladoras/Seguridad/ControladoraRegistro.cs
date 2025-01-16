@@ -48,7 +48,7 @@ namespace Controladoras.Seguridad
            }
             return "El nombre de usuario ya existe";
         }
-        public string RegistrarCliente(Cliente cliente)
+        public string RegistrarCliente(Entidades.EntidadesClientes.Cliente cliente)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace Controladoras.Seguridad
                 return $"Error al registrar el usuario: {ex.Message}. Detalles: {ex.InnerException?.Message}";
             }
         }
-        public string RegistrarVendedor(Vendedor vendedor) 
+        public string RegistrarVendedor(Entidades.EntidadesVendedores.Vendedor vendedor) 
         {
             try
             {
@@ -141,7 +141,7 @@ namespace Controladoras.Seguridad
                     if (telefonoE <= 0)
                         return "El teléfono de la empresa debe ser un número válido.";
 
-                    var vendedor = new Vendedor
+                    var vendedor = new Entidades.EntidadesVendedores.Vendedor
                     {
                         NombreCompleto = nombreCompleto,
                         DNI = dni,
@@ -159,7 +159,7 @@ namespace Controladoras.Seguridad
                         return "El teléfono personal debe ser un número válido.";
                    
 
-                    var cliente = new Cliente
+                    var cliente = new Entidades.EntidadesClientes.Cliente
                     {
                         NombreCompleto = nombreCompleto,
                         DNI = dni,

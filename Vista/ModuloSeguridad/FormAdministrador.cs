@@ -18,22 +18,27 @@ namespace Vista.ModuloSeguridad
             InitializeComponent();
         }
 
-        private void btnGrupos_Click(object sender, EventArgs e)
-        {
-            FormCrearGrupos formCrearGrupos = new FormCrearGrupos();
-            formCrearGrupos.Show();
-        }
 
-        private void btnUsuarios_Click(object sender, EventArgs e)
-        {
-            FormUsuariosTotales formUsuariosTotales = new FormUsuariosTotales();
-            formUsuariosTotales.Show();
-        }
 
-        private void btnAsignar_Click(object sender, EventArgs e)
+        private void toolGrupos_Click(object sender, EventArgs e)
         {
             FormGrupos formGrupos = new FormGrupos();
-            formGrupos.Show();
+            formGrupos.ShowDialog();
         }
+
+        private void toolUsuariosTotales_Click(object sender, EventArgs e)
+        {
+            FormUsuariosTotales formUsuariosTotales = new FormUsuariosTotales();
+            formUsuariosTotales.ShowDialog();
+        }
+
+        private void toolCerrarSesion_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            FormInicioSesion formInicioSesion = new FormInicioSesion();
+            formInicioSesion.Show();
+        }
+
+     
     }
 }
