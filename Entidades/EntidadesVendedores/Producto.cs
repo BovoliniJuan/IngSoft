@@ -28,8 +28,5 @@ namespace Entidades.EntidadesVendedores
         public Vendedor Vendedor { get {  return vendedor; } set {  vendedor = value; } }
         public Producto() { }
 
-
-
-
     }
 }

@@ -12,11 +12,9 @@ namespace Controladoras.Cliente
     public class ControladoraCarrito
     {
         private static ControladoraCarrito instancia;
-        Context context;
 
         private ControladoraCarrito()
         {
-            context = new Context();
         }
 
         public static ControladoraCarrito Instancia
@@ -33,7 +31,7 @@ namespace Controladoras.Cliente
         {
             try
             {
-                return new ReadOnlyCollection<CarritoDeCompra>(context.CarritoDeCompras.ToList());
+                return new ReadOnlyCollection<CarritoDeCompra>(Context.Instancia.CarritoDeCompras.ToList());
             }
             catch (Exception ex)
             {
@@ -45,12 +43,12 @@ namespace Controladoras.Cliente
         {
             try
             {
-                var listaCarritos = context.CarritoDeCompras.ToList().AsReadOnly();
+                var listaCarritos = Context.Instancia.CarritoDeCompras.ToList().AsReadOnly();
                 var carritoEncontrado = listaCarritos.FirstOrDefault(x => x.IdCarritoDeCompras == carritoDeCompra.IdCarritoDeCompras);
                 if (carritoEncontrado == null)
                 {
-                    context.CarritoDeCompras.Add(carritoDeCompra);
-                    context.SaveChanges();
+                    Context.Instancia.CarritoDeCompras.Add(carritoDeCompra);
+                    Context.Instancia.SaveChanges();
 
                 }
             }
@@ -64,12 +62,12 @@ namespace Controladoras.Cliente
         {
             try
             {
-                var listaCarritos = context.CarritoDeCompras.ToList().AsReadOnly();
+                var listaCarritos = Context.Instancia.CarritoDeCompras.ToList().AsReadOnly();
                 var carritoEncontrado = listaCarritos.FirstOrDefault(x => x.IdCarritoDeCompras == carritoDeCompra.IdCarritoDeCompras);
                 if (carritoEncontrado != null)
                 {
-                    context.CarritoDeCompras.Remove(carritoDeCompra);
-                    context.SaveChanges();
+                    Context.Instancia.CarritoDeCompras.Remove(carritoDeCompra);
+                    Context.Instancia.SaveChanges();
                 }
             }
             catch (Exception ex)
@@ -82,13 +80,13 @@ namespace Controladoras.Cliente
         {
             try
             {
-                var listaCarritos = context.CarritoDeCompras.ToList().AsReadOnly();
+                var listaCarritos = Context.Instancia.CarritoDeCompras.ToList().AsReadOnly();
                 var carritoEncontrado = listaCarritos.FirstOrDefault(x => x.IdCarritoDeCompras == carritoDeCompra.IdCarritoDeCompras);
 
                 if (carritoEncontrado != null)
                 {
-                    context.CarritoDeCompras.Update(carritoDeCompra);
-                    int insertados = context.SaveChanges();
+                    Context.Instancia.CarritoDeCompras.Update(carritoDeCompra);
+                    int insertados = Context.Instancia.SaveChanges();
 
                     return $"El producto se agrego correctamente";
                 }

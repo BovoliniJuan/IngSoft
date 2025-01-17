@@ -37,22 +37,20 @@ namespace Controladoras.Vendedor
                 throw new Exception("Error al recuperar productos: " + ex.Message);
             }
         }
+
         public ReadOnlyCollection<Producto> RecuperarProductosVendedor(Sesion sesion)
         {
             try
             {
-                // Buscar el vendedor asociado al usuario de la sesión
-                var buscarVendedor = Context.Instancia.Vendedores
-                    .FirstOrDefault(v => v.Usuario.IdUsuario == sesion.UsuarioSesion.IdUsuario);
+                var listaVendedores = Context.Instancia.Vendedores.ToList().AsReadOnly();
+                var buscarVendedor = listaVendedores.FirstOrDefault(x => x.Usuario != null && x.Usuario.IdUsuario == sesion.UsuarioSesion.IdUsuario);
 
                 if (buscarVendedor != null)
                 {
-                    // Filtrar los productos del vendedor
                     var productosVendedor = Context.Instancia.Productos
-                        .Where(p => p.Vendedor.IdVendedor == buscarVendedor.IdVendedor)
+                        .Where(p => p.Vendedor != null && p.Vendedor.IdVendedor == buscarVendedor.IdVendedor)
                         .ToList();
 
-                    // Retornar los productos como ReadOnlyCollection
                     return new ReadOnlyCollection<Producto>(productosVendedor);
                 }
 
@@ -63,6 +61,8 @@ namespace Controladoras.Vendedor
                 throw new Exception("Error al recuperar productos: " + ex.Message);
             }
         }
+
+        
 
         public string AgregarProducto(Producto producto, Sesion sesion)
         {

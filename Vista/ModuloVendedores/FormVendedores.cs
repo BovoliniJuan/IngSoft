@@ -23,13 +23,13 @@ namespace Vista
 
         private void toolMisProductos_Click(object sender, EventArgs e)
         {
-            FormProductos formProductos = new FormProductos();
+            FormProductos formProductos = new FormProductos(_sesion);
             formProductos.ShowDialog();
         }
 
         private void toolMisPublicaciones_Click(object sender, EventArgs e)
         {
-            FormMisPublicaciones formPublicacions = new FormMisPublicaciones();   
+            FormMisPublicaciones formPublicacions = new FormMisPublicaciones(_sesion);   
             formPublicacions.ShowDialog();
         }
 

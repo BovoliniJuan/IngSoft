@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             groupBox1 = new GroupBox();
-            groupBox2 = new GroupBox();
             dgvProductos = new DataGridView();
-            chkMenorPrecio = new CheckBox();
-            chkMayorPrecio = new CheckBox();
-            chkMayorCantidad = new CheckBox();
+            groupBox2 = new GroupBox();
             chkMenorCantidad = new CheckBox();
+            chkMayorCantidad = new CheckBox();
+            chkMayorPrecio = new CheckBox();
+            chkMenorPrecio = new CheckBox();
             groupBox3 = new GroupBox();
-            btnModificar = new Button();
             btnEliminar = new Button();
+            btnModificar = new Button();
             groupBox1.SuspendLayout();
-            groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
+            groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             SuspendLayout();
             // 
@@ -53,6 +53,15 @@
             groupBox1.Size = new Size(474, 388);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
+            // 
+            // dgvProductos
+            // 
+            dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvProductos.Location = new Point(6, 11);
+            dgvProductos.Name = "dgvProductos";
+            dgvProductos.RowTemplate.Height = 25;
+            dgvProductos.Size = new Size(462, 371);
+            dgvProductos.TabIndex = 0;
             // 
             // groupBox2
             // 
@@ -69,34 +78,16 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Filtros";
             // 
-            // dgvProductos
+            // chkMenorCantidad
             // 
-            dgvProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProductos.Location = new Point(6, 11);
-            dgvProductos.Name = "dgvProductos";
-            dgvProductos.RowTemplate.Height = 25;
-            dgvProductos.Size = new Size(462, 371);
-            dgvProductos.TabIndex = 0;
-            // 
-            // chkMenorPrecio
-            // 
-            chkMenorPrecio.AutoSize = true;
-            chkMenorPrecio.Location = new Point(6, 28);
-            chkMenorPrecio.Name = "chkMenorPrecio";
-            chkMenorPrecio.Size = new Size(131, 25);
-            chkMenorPrecio.TabIndex = 0;
-            chkMenorPrecio.Text = "Menor Precio";
-            chkMenorPrecio.UseVisualStyleBackColor = true;
-            // 
-            // chkMayorPrecio
-            // 
-            chkMayorPrecio.AutoSize = true;
-            chkMayorPrecio.Location = new Point(6, 59);
-            chkMayorPrecio.Name = "chkMayorPrecio";
-            chkMayorPrecio.Size = new Size(130, 25);
-            chkMayorPrecio.TabIndex = 1;
-            chkMayorPrecio.Text = "Mayor Precio";
-            chkMayorPrecio.UseVisualStyleBackColor = true;
+            chkMenorCantidad.AutoSize = true;
+            chkMenorCantidad.Location = new Point(152, 28);
+            chkMenorCantidad.Name = "chkMenorCantidad";
+            chkMenorCantidad.Size = new Size(152, 25);
+            chkMenorCantidad.TabIndex = 3;
+            chkMenorCantidad.Text = "Menor Cantidad";
+            chkMenorCantidad.UseVisualStyleBackColor = true;
+            chkMenorCantidad.CheckedChanged += chkMenorCantidad_CheckedChanged;
             // 
             // chkMayorCantidad
             // 
@@ -107,16 +98,29 @@
             chkMayorCantidad.TabIndex = 2;
             chkMayorCantidad.Text = "Mayor Cantidad";
             chkMayorCantidad.UseVisualStyleBackColor = true;
+            chkMayorCantidad.CheckedChanged += chkMayorCantidad_CheckedChanged;
             // 
-            // chkMenorCantidad
+            // chkMayorPrecio
             // 
-            chkMenorCantidad.AutoSize = true;
-            chkMenorCantidad.Location = new Point(152, 28);
-            chkMenorCantidad.Name = "chkMenorCantidad";
-            chkMenorCantidad.Size = new Size(152, 25);
-            chkMenorCantidad.TabIndex = 3;
-            chkMenorCantidad.Text = "Menor Cantidad";
-            chkMenorCantidad.UseVisualStyleBackColor = true;
+            chkMayorPrecio.AutoSize = true;
+            chkMayorPrecio.Location = new Point(6, 59);
+            chkMayorPrecio.Name = "chkMayorPrecio";
+            chkMayorPrecio.Size = new Size(130, 25);
+            chkMayorPrecio.TabIndex = 1;
+            chkMayorPrecio.Text = "Mayor Precio";
+            chkMayorPrecio.UseVisualStyleBackColor = true;
+            chkMayorPrecio.CheckedChanged += chkMayorPrecio_CheckedChanged;
+            // 
+            // chkMenorPrecio
+            // 
+            chkMenorPrecio.AutoSize = true;
+            chkMenorPrecio.Location = new Point(6, 28);
+            chkMenorPrecio.Name = "chkMenorPrecio";
+            chkMenorPrecio.Size = new Size(131, 25);
+            chkMenorPrecio.TabIndex = 0;
+            chkMenorPrecio.Text = "Menor Precio";
+            chkMenorPrecio.UseVisualStyleBackColor = true;
+            chkMenorPrecio.CheckedChanged += chkMenorPrecio_CheckedChanged;
             // 
             // groupBox3
             // 
@@ -129,17 +133,6 @@
             groupBox3.TabIndex = 2;
             groupBox3.TabStop = false;
             // 
-            // btnModificar
-            // 
-            btnModificar.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            btnModificar.Location = new Point(17, 22);
-            btnModificar.Name = "btnModificar";
-            btnModificar.Size = new Size(86, 46);
-            btnModificar.TabIndex = 0;
-            btnModificar.Text = "Modificar";
-            btnModificar.UseVisualStyleBackColor = true;
-            btnModificar.Click += btnModificar_Click;
-            // 
             // btnEliminar
             // 
             btnEliminar.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
@@ -150,6 +143,17 @@
             btnEliminar.Text = "Eliminar";
             btnEliminar.UseVisualStyleBackColor = true;
             btnEliminar.Click += btnEliminar_Click;
+            // 
+            // btnModificar
+            // 
+            btnModificar.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            btnModificar.Location = new Point(17, 22);
+            btnModificar.Name = "btnModificar";
+            btnModificar.Size = new Size(86, 46);
+            btnModificar.TabIndex = 0;
+            btnModificar.Text = "Modificar";
+            btnModificar.UseVisualStyleBackColor = true;
+            btnModificar.Click += btnModificar_Click;
             // 
             // FormProductos
             // 
@@ -163,9 +167,9 @@
             Name = "FormProductos";
             Text = "FormProductos";
             groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvProductos).EndInit();
             groupBox3.ResumeLayout(false);
             ResumeLayout(false);
         }
