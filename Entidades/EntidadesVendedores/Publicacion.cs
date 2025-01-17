@@ -17,6 +17,8 @@ namespace Entidades.EntidadesVendedores
         private bool estado;
         private Producto producto;
         private Vendedor vendedor;
+        private int cantidad;
+        private float precio;
 
         [Key]
         public int IdPublicacion { get {  return idPublicacion; } set {  idPublicacion = value; } }
@@ -25,15 +27,14 @@ namespace Entidades.EntidadesVendedores
         public DateTime FechaFin { get {  return fechaFin; } set { fechaFin = value; } }
         public bool Estado { get { return estado; } set {  estado = value; } }
         public int IdProducto { get; set; }
-
         public Producto Producto { get {  return producto; } set {  producto = value; } }
+        public int Cantidad { get { return cantidad; } set { cantidad = value; } }
+        public float Precio { get { return precio; } set { precio = value; } }
         public int VendedorIdPersona { get; set; }
-
         public Vendedor Vendedor { get {  return vendedor; } set {  vendedor = value; } }
         public Publicacion() { }
         
         public void HabilitarPublicacion() { }
-        public void AgregarProducto(Producto producto) {}
-        public void EliminarProducto(Producto producto) { }
+      
     }
 }

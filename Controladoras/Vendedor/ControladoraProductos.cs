@@ -62,7 +62,19 @@ namespace Controladoras.Vendedor
             }
         }
 
-        
+        public Producto? ObtenerProductoPorId(int idProducto)
+        {
+            try
+            {
+                // Buscar el producto en el contexto usando su ID
+                return Context.Instancia.Productos.FirstOrDefault(p => p.IdProducto == idProducto);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al buscar el producto: " + ex.Message);
+            }
+        }
+
 
         public string AgregarProducto(Producto producto, Sesion sesion)
         {
@@ -137,6 +149,24 @@ namespace Controladoras.Vendedor
             catch (Exception ex)
             {
                 throw new Exception("Error al modificar el producto: " + ex.Message);
+            }
+        }
+        public bool ActualizarProducto(Producto producto)
+        {
+            try
+            {
+                var productoExistente = Context.Instancia.Productos.FirstOrDefault(p => p.IdProducto == producto.IdProducto);
+                if (productoExistente != null)
+                {
+                    productoExistente.Cantidad = producto.Cantidad; 
+                    Context.Instancia.SaveChanges(); 
+                    return true;
+                }
+                throw new Exception("Producto no encontrado.");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al actualizar el producto: " + ex.Message);
             }
         }
 

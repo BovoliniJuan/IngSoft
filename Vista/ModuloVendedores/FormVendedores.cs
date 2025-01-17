@@ -35,7 +35,7 @@ namespace Vista
 
         private void toolAgregarPub_Click(object sender, EventArgs e)
         {
-            FormAgregarPubli formAgregarPubli = new FormAgregarPubli();
+            FormAgregarPubli formAgregarPubli = new FormAgregarPubli(_sesion);
             formAgregarPubli.ShowDialog();
         }
 
