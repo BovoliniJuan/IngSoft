@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Vista.ModuloInicio;
 using Vista.ModuloVendedores;
 
 namespace Vista
@@ -47,7 +48,8 @@ namespace Vista
 
         private void toolMiPerfil_Click(object sender, EventArgs e)
         {
-
+            FormMiPerfil formMiPerfil = new FormMiPerfil(_sesion);
+            formMiPerfil.ShowDialog();
         }
 
         private void toolCerrarSesion_Click(object sender, EventArgs e)

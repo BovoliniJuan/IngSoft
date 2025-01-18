@@ -28,6 +28,12 @@ namespace Vista.ModuloInicio
             panel1.Visible = true;  // Mostrar panel de email y código
             panel2.Visible = false; // Ocultar panel de cambio de contraseña
         }
+        public FormRecuperarClave()
+        {
+            InitializeComponent();
+            panel1.Visible = true;  // Mostrar panel de email y código
+            panel2.Visible = false; // Ocultar panel de cambio de contraseña
+        }
         private void btnEnviarCodigo_Click_1(object sender, EventArgs e)
         {
             string emailUsuario = txtEmail.Text.Trim();

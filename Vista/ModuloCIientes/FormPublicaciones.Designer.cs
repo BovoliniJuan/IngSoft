@@ -40,6 +40,8 @@
             chkMayorP = new CheckBox();
             chkMenorP = new CheckBox();
             groupBox2 = new GroupBox();
+            btnSalir = new Button();
+            btnComprar = new Button();
             btnEliminar = new Button();
             dgvCarrito = new DataGridView();
             btnAgregar = new Button();
@@ -83,6 +85,7 @@
             // 
             // btnBuscar
             // 
+            btnBuscar.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             btnBuscar.Location = new Point(6, 69);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(75, 36);
@@ -117,9 +120,9 @@
             groupBox1.Controls.Add(chkMayorP);
             groupBox1.Controls.Add(chkMenorP);
             groupBox1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            groupBox1.Location = new Point(491, 133);
+            groupBox1.Location = new Point(800, -1);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(305, 131);
+            groupBox1.Size = new Size(305, 128);
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Filtros";
@@ -167,20 +170,41 @@
             // groupBox2
             // 
             groupBox2.BackColor = Color.Gray;
+            groupBox2.Controls.Add(btnSalir);
+            groupBox2.Controls.Add(btnComprar);
             groupBox2.Controls.Add(btnEliminar);
             groupBox2.Controls.Add(dgvCarrito);
             groupBox2.Controls.Add(btnAgregar);
             groupBox2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            groupBox2.Location = new Point(495, 276);
+            groupBox2.Location = new Point(491, 143);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(301, 162);
+            groupBox2.Size = new Size(624, 295);
             groupBox2.TabIndex = 3;
             groupBox2.TabStop = false;
             groupBox2.Text = "Carrito de Compras";
             // 
+            // btnSalir
+            // 
+            btnSalir.Location = new Point(465, 239);
+            btnSalir.Name = "btnSalir";
+            btnSalir.Size = new Size(130, 30);
+            btnSalir.TabIndex = 4;
+            btnSalir.Text = "Volver";
+            btnSalir.UseVisualStyleBackColor = true;
+            btnSalir.Click += btnSalir_Click;
+            // 
+            // btnComprar
+            // 
+            btnComprar.Location = new Point(315, 239);
+            btnComprar.Name = "btnComprar";
+            btnComprar.Size = new Size(131, 30);
+            btnComprar.TabIndex = 3;
+            btnComprar.Text = "Comprar Carrito";
+            btnComprar.UseVisualStyleBackColor = true;
+            // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(164, 126);
+            btnEliminar.Location = new Point(174, 239);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(131, 30);
             btnEliminar.TabIndex = 2;
@@ -194,12 +218,12 @@
             dgvCarrito.Location = new Point(6, 18);
             dgvCarrito.Name = "dgvCarrito";
             dgvCarrito.RowTemplate.Height = 25;
-            dgvCarrito.Size = new Size(289, 102);
+            dgvCarrito.Size = new Size(612, 215);
             dgvCarrito.TabIndex = 1;
             // 
             // btnAgregar
             // 
-            btnAgregar.Location = new Point(6, 126);
+            btnAgregar.Location = new Point(6, 239);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Size = new Size(152, 30);
             btnAgregar.TabIndex = 0;
@@ -212,7 +236,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkGreen;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1117, 449);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(groupBusqueda);
@@ -247,5 +271,7 @@
         private Button btnEliminar;
         private DataGridView dgvCarrito;
         private Button btnAgregar;
+        private Button btnComprar;
+        private Button btnSalir;
     }
 }

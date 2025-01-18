@@ -1,4 +1,6 @@
-﻿using Entidades.EntidadesClientes;
+﻿using Entidades;
+using Entidades.EntidadesClientes;
+using Microsoft.EntityFrameworkCore;
 using Modelo;
 using System;
 using System.Collections.Generic;
@@ -27,6 +29,41 @@ namespace Controladoras.Cliente
                 return instancia;
             }
         }
+        public Entidades.EntidadesClientes.Cliente ObtenerClientePorUsuario(Usuario usuario)
+        {
+            try
+            {
+                return Context.Instancia.Clientes.FirstOrDefault(c => c.Usuario.IdUsuario == usuario.IdUsuario);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener el cliente: " + ex.Message);
+            }
+        }
+        public CarritoDeCompra ObtenerCarritoPorCliente(Entidades.EntidadesClientes.Cliente cliente)
+        {
+            try
+            {
+                return Context.Instancia.CarritoDeCompras.FirstOrDefault(c => c.Cliente.IdCliente == cliente.IdCliente);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener el carrito: " + ex.Message);
+            }
+        }
+        public CarritoDeCompra ObtenerCarritoActivo(Entidades.EntidadesClientes.Cliente cliente)
+        {
+            try
+            {
+                return Context.Instancia.CarritoDeCompras
+                    .FirstOrDefault(c => c.Cliente.IdCliente == cliente.IdCliente && c.Estado == true);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener el carrito activo: " + ex.Message);
+            }
+        }
+
         public ReadOnlyCollection<CarritoDeCompra> RecuperarCarrito()
         {
             try
@@ -76,7 +113,7 @@ namespace Controladoras.Cliente
             }
         }
 
-        public string AgregarProductoCarrito(CarritoDeCompra carritoDeCompra)
+        public string ActualizarCarrito(CarritoDeCompra carritoDeCompra)
         {
             try
             {
@@ -88,15 +125,17 @@ namespace Controladoras.Cliente
                     Context.Instancia.CarritoDeCompras.Update(carritoDeCompra);
                     int insertados = Context.Instancia.SaveChanges();
 
-                    return $"El producto se agrego correctamente";
+                    return $"El carrito se actualizo correctamente";
                 }
-                return $"El producto no se ha podido agregar";
+                return $"El carrito no se ha podido actualizar";
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al agregar el producto: " + ex.Message);
+                throw new Exception("Error al actualizo el carrito: " + ex.Message);
             }
 
         }
+        
+
     }
 }

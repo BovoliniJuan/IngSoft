@@ -137,19 +137,19 @@
             toolStripSplitButton1.ImageTransparentColor = Color.Magenta;
             toolStripSplitButton1.Name = "toolStripSplitButton1";
             toolStripSplitButton1.Size = new Size(32, 25);
-            toolStripSplitButton1.Text = "toolStripSplitButton1";
+            toolStripSplitButton1.Text = "Perfil";
             // 
             // toolMiPerfil
             // 
             toolMiPerfil.Name = "toolMiPerfil";
-            toolMiPerfil.Size = new Size(157, 22);
+            toolMiPerfil.Size = new Size(180, 22);
             toolMiPerfil.Text = "Mi Perfil";
             toolMiPerfil.Click += toolMiPerfil_Click;
             // 
             // toolCerrarSesion
             // 
             toolCerrarSesion.Name = "toolCerrarSesion";
-            toolCerrarSesion.Size = new Size(157, 22);
+            toolCerrarSesion.Size = new Size(180, 22);
             toolCerrarSesion.Text = "Cerrar Sesion";
             toolCerrarSesion.Click += toolCerrarSesion_Click;
             // 

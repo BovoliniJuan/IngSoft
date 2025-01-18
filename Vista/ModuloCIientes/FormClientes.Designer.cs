@@ -64,15 +64,17 @@
             // 
             // toolMiPerfil
             // 
+            toolMiPerfil.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             toolMiPerfil.Name = "toolMiPerfil";
-            toolMiPerfil.Size = new Size(174, 26);
+            toolMiPerfil.Size = new Size(180, 24);
             toolMiPerfil.Text = "Mi perfil";
             toolMiPerfil.Click += toolMiPerfil_Click;
             // 
             // toolCerrarSesion
             // 
+            toolCerrarSesion.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             toolCerrarSesion.Name = "toolCerrarSesion";
-            toolCerrarSesion.Size = new Size(174, 26);
+            toolCerrarSesion.Size = new Size(180, 24);
             toolCerrarSesion.Text = "Cerrar Sesion";
             toolCerrarSesion.Click += toolCerrarSesion_Click;
             // 
@@ -86,6 +88,7 @@
             toolCarrito.Name = "toolCarrito";
             toolCarrito.Size = new Size(23, 25);
             toolCarrito.Text = "toolStripButton1";
+            toolCarrito.Click += toolCarrito_Click;
             // 
             // toolPublicaciones
             // 

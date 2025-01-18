@@ -12,7 +12,7 @@ using Modelo;
 namespace Modelo.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250116214815_inicial")]
+    [Migration("20250118212735_inicial")]
     partial class inicial
     {
         /// <inheritdoc />
@@ -158,6 +158,9 @@ namespace Modelo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPublicacion"));
 
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CarritoDeCompraIdCarritoDeCompras")
                         .HasColumnType("int");
 
@@ -176,6 +179,9 @@ namespace Modelo.Migrations
 
                     b.Property<int>("IdProducto")
                         .HasColumnType("int");
+
+                    b.Property<float>("Precio")
+                        .HasColumnType("real");
 
                     b.Property<int>("VendedorIdPersona")
                         .HasColumnType("int");

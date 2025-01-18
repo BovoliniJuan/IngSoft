@@ -57,7 +57,8 @@ namespace Controladoras.Vendedor
         {
             try
             {
-                return new ReadOnlyCollection<Publicacion>(Context.Instancia.Publicaciones.ToList().AsReadOnly());
+                var publicacionesActivas = Context.Instancia.Publicaciones.Where(p => p.Estado == true).ToList();
+                return new ReadOnlyCollection<Publicacion>(publicacionesActivas.AsReadOnly());
             }
             catch (Exception ex)
             {
@@ -69,7 +70,7 @@ namespace Controladoras.Vendedor
             try
             {
                 var publicacionesFiltradas = Context.Instancia.Publicaciones
-                    .Where(p => p.Producto.Nombre.Contains(nombreProducto))
+                    .Where(p => p.Producto.Nombre.Contains(nombreProducto) && p.Estado == true)
                     .ToList();
 
                 return new ReadOnlyCollection<Publicacion>(publicacionesFiltradas.AsReadOnly());

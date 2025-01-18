@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Entidades.EntidadesVendedores;
 
 namespace Controladoras.Seguridad
 {
@@ -30,7 +31,20 @@ namespace Controladoras.Seguridad
             }
         }
 
-
+        public ReadOnlyCollection<Usuario> RecuperarUsuariosSesion(Sesion sesion)
+        {
+            try
+            {
+              var usuariosSesiion = Context.Instancia.Usuarios
+                        .Where(u => u.IdUsuario != null && u.IdUsuario == sesion.UsuarioSesion.IdUsuario)
+                        .ToList();
+                    return new ReadOnlyCollection<Usuario>(usuariosSesiion);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al recuperar Usuarios: " + ex.Message);
+            }
+        }
 
         public ControladoraGestionUsuarios()
         {

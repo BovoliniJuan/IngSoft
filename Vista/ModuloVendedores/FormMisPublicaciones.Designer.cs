@@ -31,16 +31,16 @@
             groupBox1 = new GroupBox();
             dgvPublicaciones = new DataGridView();
             groupBox2 = new GroupBox();
+            chkMayorPrec = new CheckBox();
+            chkMenorPrec = new CheckBox();
+            chkMayorCant = new CheckBox();
+            chkMenorCant = new CheckBox();
+            chkMayorAnt = new CheckBox();
+            chkMenorAnt = new CheckBox();
             groupBox3 = new GroupBox();
             btnSalir = new Button();
             btnPausar = new Button();
             btnEliminar = new Button();
-            chkMenorAnt = new CheckBox();
-            chkMayorAnt = new CheckBox();
-            chkMenorCant = new CheckBox();
-            chkMayorCant = new CheckBox();
-            chkMenorPrec = new CheckBox();
-            chkMayorPrec = new CheckBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPublicaciones).BeginInit();
             groupBox2.SuspendLayout();
@@ -82,6 +82,78 @@
             groupBox2.TabIndex = 1;
             groupBox2.TabStop = false;
             groupBox2.Text = "Filtros";
+            // 
+            // chkMayorPrec
+            // 
+            chkMayorPrec.AutoSize = true;
+            chkMayorPrec.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            chkMayorPrec.Location = new Point(179, 59);
+            chkMayorPrec.Name = "chkMayorPrec";
+            chkMayorPrec.Size = new Size(120, 24);
+            chkMayorPrec.TabIndex = 5;
+            chkMayorPrec.Text = "Mayor Precio";
+            chkMayorPrec.UseVisualStyleBackColor = true;
+            chkMayorPrec.CheckedChanged += chkMayorPrec_CheckedChanged;
+            // 
+            // chkMenorPrec
+            // 
+            chkMenorPrec.AutoSize = true;
+            chkMenorPrec.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            chkMenorPrec.Location = new Point(179, 28);
+            chkMenorPrec.Name = "chkMenorPrec";
+            chkMenorPrec.Size = new Size(121, 24);
+            chkMenorPrec.TabIndex = 4;
+            chkMenorPrec.Text = "Menor Precio";
+            chkMenorPrec.UseVisualStyleBackColor = true;
+            chkMenorPrec.CheckedChanged += chkMenorPrec_CheckedChanged;
+            // 
+            // chkMayorCant
+            // 
+            chkMayorCant.AutoSize = true;
+            chkMayorCant.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            chkMayorCant.Location = new Point(6, 121);
+            chkMayorCant.Name = "chkMayorCant";
+            chkMayorCant.Size = new Size(139, 24);
+            chkMayorCant.TabIndex = 3;
+            chkMayorCant.Text = "Mayor Cantidad";
+            chkMayorCant.UseVisualStyleBackColor = true;
+            chkMayorCant.CheckedChanged += chkMayorCant_CheckedChanged;
+            // 
+            // chkMenorCant
+            // 
+            chkMenorCant.AutoSize = true;
+            chkMenorCant.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            chkMenorCant.Location = new Point(6, 90);
+            chkMenorCant.Name = "chkMenorCant";
+            chkMenorCant.Size = new Size(140, 24);
+            chkMenorCant.TabIndex = 2;
+            chkMenorCant.Text = "Menor Cantidad";
+            chkMenorCant.UseVisualStyleBackColor = true;
+            chkMenorCant.CheckedChanged += chkMenorCant_CheckedChanged;
+            // 
+            // chkMayorAnt
+            // 
+            chkMayorAnt.AutoSize = true;
+            chkMayorAnt.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            chkMayorAnt.Location = new Point(6, 59);
+            chkMayorAnt.Name = "chkMayorAnt";
+            chkMayorAnt.Size = new Size(159, 24);
+            chkMayorAnt.TabIndex = 1;
+            chkMayorAnt.Text = "Mayor Antiguedad";
+            chkMayorAnt.UseVisualStyleBackColor = true;
+            chkMayorAnt.CheckedChanged += chkMayorAnt_CheckedChanged;
+            // 
+            // chkMenorAnt
+            // 
+            chkMenorAnt.AutoSize = true;
+            chkMenorAnt.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            chkMenorAnt.Location = new Point(6, 28);
+            chkMenorAnt.Name = "chkMenorAnt";
+            chkMenorAnt.Size = new Size(160, 24);
+            chkMenorAnt.TabIndex = 0;
+            chkMenorAnt.Text = "Menor Antiguedad";
+            chkMenorAnt.UseVisualStyleBackColor = true;
+            chkMenorAnt.CheckedChanged += chkMenorAnt_CheckedChanged;
             // 
             // groupBox3
             // 
@@ -127,78 +199,6 @@
             btnEliminar.UseVisualStyleBackColor = true;
             btnEliminar.Click += btnEliminar_Click;
             // 
-            // chkMenorAnt
-            // 
-            chkMenorAnt.AutoSize = true;
-            chkMenorAnt.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            chkMenorAnt.Location = new Point(6, 28);
-            chkMenorAnt.Name = "chkMenorAnt";
-            chkMenorAnt.Size = new Size(160, 24);
-            chkMenorAnt.TabIndex = 0;
-            chkMenorAnt.Text = "Menor Antiguedad";
-            chkMenorAnt.UseVisualStyleBackColor = true;
-            chkMenorAnt.CheckedChanged += chkMenorAnt_CheckedChanged;
-            // 
-            // chkMayorAnt
-            // 
-            chkMayorAnt.AutoSize = true;
-            chkMayorAnt.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            chkMayorAnt.Location = new Point(6, 59);
-            chkMayorAnt.Name = "chkMayorAnt";
-            chkMayorAnt.Size = new Size(159, 24);
-            chkMayorAnt.TabIndex = 1;
-            chkMayorAnt.Text = "Mayor Antiguedad";
-            chkMayorAnt.UseVisualStyleBackColor = true;
-            chkMayorAnt.CheckedChanged += chkMayorAnt_CheckedChanged;
-            // 
-            // chkMenorCant
-            // 
-            chkMenorCant.AutoSize = true;
-            chkMenorCant.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            chkMenorCant.Location = new Point(6, 90);
-            chkMenorCant.Name = "chkMenorCant";
-            chkMenorCant.Size = new Size(140, 24);
-            chkMenorCant.TabIndex = 2;
-            chkMenorCant.Text = "Menor Cantidad";
-            chkMenorCant.UseVisualStyleBackColor = true;
-            chkMenorCant.CheckedChanged += chkMenorCant_CheckedChanged;
-            // 
-            // chkMayorCant
-            // 
-            chkMayorCant.AutoSize = true;
-            chkMayorCant.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            chkMayorCant.Location = new Point(6, 121);
-            chkMayorCant.Name = "chkMayorCant";
-            chkMayorCant.Size = new Size(139, 24);
-            chkMayorCant.TabIndex = 3;
-            chkMayorCant.Text = "Mayor Cantidad";
-            chkMayorCant.UseVisualStyleBackColor = true;
-            chkMayorCant.CheckedChanged += chkMayorCant_CheckedChanged;
-            // 
-            // chkMenorPrec
-            // 
-            chkMenorPrec.AutoSize = true;
-            chkMenorPrec.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            chkMenorPrec.Location = new Point(179, 28);
-            chkMenorPrec.Name = "chkMenorPrec";
-            chkMenorPrec.Size = new Size(121, 24);
-            chkMenorPrec.TabIndex = 4;
-            chkMenorPrec.Text = "Menor Precio";
-            chkMenorPrec.UseVisualStyleBackColor = true;
-            chkMenorPrec.CheckedChanged += chkMenorPrec_CheckedChanged;
-            // 
-            // chkMayorPrec
-            // 
-            chkMayorPrec.AutoSize = true;
-            chkMayorPrec.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            chkMayorPrec.Location = new Point(179, 59);
-            chkMayorPrec.Name = "chkMayorPrec";
-            chkMayorPrec.Size = new Size(120, 24);
-            chkMayorPrec.TabIndex = 5;
-            chkMayorPrec.Text = "Mayor Precio";
-            chkMayorPrec.UseVisualStyleBackColor = true;
-            chkMayorPrec.CheckedChanged += chkMayorPrec_CheckedChanged;
-            // 
             // FormMisPublicaciones
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -209,7 +209,7 @@
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Name = "FormMisPublicaciones";
-            Text = "FormPublicaciones";
+            Text = "Mis Publicaciones";
             groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvPublicaciones).EndInit();
             groupBox2.ResumeLayout(false);

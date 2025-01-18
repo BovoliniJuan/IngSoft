@@ -354,6 +354,8 @@ namespace Modelo.Migrations
                     FechaFin = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Estado = table.Column<bool>(type: "bit", nullable: false),
                     IdProducto = table.Column<int>(type: "int", nullable: false),
+                    Cantidad = table.Column<int>(type: "int", nullable: false),
+                    Precio = table.Column<float>(type: "real", nullable: false),
                     VendedorIdPersona = table.Column<int>(type: "int", nullable: false),
                     CarritoDeCompraIdCarritoDeCompras = table.Column<int>(type: "int", nullable: true)
                 },
