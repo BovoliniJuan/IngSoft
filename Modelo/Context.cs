@@ -34,7 +34,6 @@ namespace Modelo
         public DbSet<CarritoDeCompra> CarritoDeCompras { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Pago> Pagos { get; set; }
-        public DbSet<EstadoPedido> EstadoPedidos { get; set; }
         public DbSet<MetodoDePago> MetodoDePagos { get; set; }
 
         //Seguridad
@@ -107,13 +106,7 @@ namespace Modelo
                 .HasForeignKey(p => p.CarritoDeCompraIdCarritoDeCompras)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Relación Pedido -> EstadoPedido
-            modelBuilder.Entity<Pedido>()
-                .HasOne(p => p.EstadoPedido)
-                .WithMany()
-                .HasForeignKey(p => p.EstadoPedidoIdEstadoPedido)
-                .OnDelete(DeleteBehavior.Restrict);
-
+         
             // Configuración adicional para Pago
             modelBuilder.Entity<Pedido>()
                 .HasOne(p => p.Pago)

@@ -100,11 +100,13 @@ namespace Vista.ModuloVendedores
 
             // Filtrar por menor precio
             if (chkMenorPrec.Checked)
-                publicacionesFiltradas = publicacionesFiltradas.OrderBy(p => p.Precio);
+                publicacionesFiltradas = publicacionesFiltradas.OrderByDescending(p => p.Precio);
+
 
             // Filtrar por mayor precio
             if (chkMayorPrec.Checked)
-                publicacionesFiltradas = publicacionesFiltradas.OrderByDescending(p => p.Precio);
+                publicacionesFiltradas = publicacionesFiltradas.OrderBy(p => p.Precio);
+
 
             // Actualizar el DataSource con los datos filtrados
             dgvPublicaciones.DataSource = publicacionesFiltradas.ToList();
