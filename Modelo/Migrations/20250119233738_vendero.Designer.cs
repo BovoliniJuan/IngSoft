@@ -12,8 +12,8 @@ using Modelo;
 namespace Modelo.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250118212735_inicial")]
-    partial class inicial
+    [Migration("20250119233738_vendero")]
+    partial class vendero
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -135,17 +135,17 @@ namespace Modelo.Migrations
                     b.Property<float>("Precio")
                         .HasColumnType("real");
 
-                    b.Property<int>("VendedorIdPersona")
+                    b.Property<int?>("VendedorIdVendedor")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VendedorIdVendedor")
+                    b.Property<int>("idVendedor")
                         .HasColumnType("int");
 
                     b.HasKey("IdProducto");
 
-                    b.HasIndex("VendedorIdPersona");
-
                     b.HasIndex("VendedorIdVendedor");
+
+                    b.HasIndex("idVendedor");
 
                     b.ToTable("Productos");
                 });
@@ -183,7 +183,7 @@ namespace Modelo.Migrations
                     b.Property<float>("Precio")
                         .HasColumnType("real");
 
-                    b.Property<int>("VendedorIdPersona")
+                    b.Property<int>("idVendedor")
                         .HasColumnType("int");
 
                     b.HasKey("IdPublicacion");
@@ -192,7 +192,7 @@ namespace Modelo.Migrations
 
                     b.HasIndex("IdProducto");
 
-                    b.HasIndex("VendedorIdPersona");
+                    b.HasIndex("idVendedor");
 
                     b.ToTable("Publicaciones");
                 });
@@ -230,23 +230,6 @@ namespace Modelo.Migrations
                     b.HasIndex("UsuarioIdUsuario");
 
                     b.ToTable("Vendedores");
-                });
-
-            modelBuilder.Entity("Entidades.EntidadesVenta.EstadoPedido", b =>
-                {
-                    b.Property<int>("IdEstadoPedido")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEstadoPedido"));
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IdEstadoPedido");
-
-                    b.ToTable("EstadoPedidos");
                 });
 
             modelBuilder.Entity("Entidades.EntidadesVenta.MetodoDePago", b =>
@@ -315,14 +298,9 @@ namespace Modelo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPedido"));
 
-                    b.Property<int>("CarritoDeCompraIdCarritoDeCompras")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClienteIdPersona")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EstadoPedidoIdEstadoPedido")
-                        .HasColumnType("int");
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FechaEntrega")
                         .HasColumnType("datetime2");
@@ -330,21 +308,28 @@ namespace Modelo.Migrations
                     b.Property<DateTime>("FechaPedido")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("PublicacionIdPublicacion")
+                        .HasColumnType("int");
+
                     b.Property<float>("Total")
                         .HasColumnType("real");
 
-                    b.Property<int>("VendedorIdPersona")
+                    b.Property<int>("idCarrito")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idCliente")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idVendedor")
                         .HasColumnType("int");
 
                     b.HasKey("IdPedido");
 
-                    b.HasIndex("CarritoDeCompraIdCarritoDeCompras");
+                    b.HasIndex("PublicacionIdPublicacion");
 
-                    b.HasIndex("ClienteIdPersona");
+                    b.HasIndex("idCliente");
 
-                    b.HasIndex("EstadoPedidoIdEstadoPedido");
-
-                    b.HasIndex("VendedorIdPersona");
+                    b.HasIndex("idVendedor");
 
                     b.ToTable("Pedidos");
                 });
@@ -567,15 +552,15 @@ namespace Modelo.Migrations
 
             modelBuilder.Entity("Entidades.EntidadesVendedores.Producto", b =>
                 {
-                    b.HasOne("Entidades.EntidadesVendedores.Vendedor", "Vendedor")
-                        .WithMany()
-                        .HasForeignKey("VendedorIdPersona")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Entidades.EntidadesVendedores.Vendedor", null)
                         .WithMany("Productos")
                         .HasForeignKey("VendedorIdVendedor");
+
+                    b.HasOne("Entidades.EntidadesVendedores.Vendedor", "Vendedor")
+                        .WithMany()
+                        .HasForeignKey("idVendedor")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Vendedor");
                 });
@@ -594,7 +579,7 @@ namespace Modelo.Migrations
 
                     b.HasOne("Entidades.EntidadesVendedores.Vendedor", "Vendedor")
                         .WithMany()
-                        .HasForeignKey("VendedorIdPersona")
+                        .HasForeignKey("idVendedor")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -643,35 +628,27 @@ namespace Modelo.Migrations
 
             modelBuilder.Entity("Entidades.EntidadesVenta.Pedido", b =>
                 {
-                    b.HasOne("Entidades.EntidadesClientes.CarritoDeCompra", "CarritoDeCompra")
+                    b.HasOne("Entidades.EntidadesVendedores.Publicacion", "Publicacion")
                         .WithMany()
-                        .HasForeignKey("CarritoDeCompraIdCarritoDeCompras")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("PublicacionIdPublicacion")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Entidades.EntidadesClientes.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("ClienteIdPersona")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Entidades.EntidadesVenta.EstadoPedido", "EstadoPedido")
-                        .WithMany()
-                        .HasForeignKey("EstadoPedidoIdEstadoPedido")
+                        .HasForeignKey("idCliente")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Entidades.EntidadesVendedores.Vendedor", "Vendedor")
                         .WithMany()
-                        .HasForeignKey("VendedorIdPersona")
+                        .HasForeignKey("idVendedor")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("CarritoDeCompra");
-
                     b.Navigation("Cliente");
 
-                    b.Navigation("EstadoPedido");
+                    b.Navigation("Publicacion");
 
                     b.Navigation("Vendedor");
                 });

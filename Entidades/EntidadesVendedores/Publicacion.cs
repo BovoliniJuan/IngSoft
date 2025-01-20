@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entidades;
+using Entidades.EntidadesVenta;
 
 namespace Entidades.EntidadesVendedores
 {
@@ -19,6 +20,8 @@ namespace Entidades.EntidadesVendedores
         private Vendedor vendedor;
         private int cantidad;
         private float precio;
+        public bool vendido;
+
 
         [Key]
         public int IdPublicacion { get {  return idPublicacion; } set {  idPublicacion = value; } }
@@ -30,11 +33,12 @@ namespace Entidades.EntidadesVendedores
         public Producto Producto { get {  return producto; } set {  producto = value; } }
         public int Cantidad { get { return cantidad; } set { cantidad = value; } }
         public float Precio { get { return precio; } set { precio = value; } }
-        public int VendedorIdPersona { get; set; }
+        public int idVendedor { get; set; }
         public Vendedor Vendedor { get {  return vendedor; } set {  vendedor = value; } }
+        
+        public bool Vendido { get { return vendido; } set { vendido = value; } }
         public Publicacion() { }
         
-        public void HabilitarPublicacion() { }
       
     }
 }

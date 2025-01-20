@@ -17,29 +17,29 @@ namespace Entidades.EntidadesVenta
         private DateTime fechaPedido;
         private DateTime fechaEntrega;
         private Cliente cliente;
-        private CarritoDeCompra carrito;
         private IPedidoState estadoPedido;
         private string estado;
         private float total;
+        private Publicacion publicacion;
         private Vendedor vendedor;
+
         private Pago pago;
 
         [Key]
         public int IdPedido { get { return idPedido; } set { idPedido = value; } }
         public DateTime FechaPedido { get { return fechaPedido; } set { fechaPedido = value; } }
         public DateTime FechaEntrega { get { return fechaEntrega; } set { fechaEntrega = value; } }
-        public int ClienteIdPersona { get; set; }
+        public int idCliente { get; set; }
 
         public Cliente Cliente { get { return cliente; } set { cliente = value; } }
-        public int CarritoDeCompraIdCarritoDeCompras { get; set; }
-
-        public CarritoDeCompra CarritoDeCompra { get { return carrito; } set { carrito = value; } }
+        public Publicacion Publicacion { get { return publicacion; } set { publicacion = value; } }
         [NotMapped]
         public IPedidoState EstadoPedido { get { return estadoPedido; } set { estadoPedido = value; Estado = ObtenerNombreEstado(estadoPedido); } }
-        public string Estado { get { return estado; } set { estadoPedido = AsignarEstado(estado); } }
+        public string Estado { get { return estado; } set { estadoPedido = AsignarEstado(value);estado = value;  } }
 
         public float Total { get { return total; } set { total = value; } }
-        public int VendedorIdPersona { get; set; }
+        public int idVendedor { get; set; }
+
         public Vendedor Vendedor { get { return vendedor; } set { vendedor = value; } }
         public Pago Pago { get { return pago; } set { pago = value; } }
 
@@ -61,7 +61,7 @@ namespace Entidades.EntidadesVenta
             EstadoPedido = nuevoEstado;
         }
         public void AgregarPago(Pago pago) { }
-        private string ObtenerNombreEstado(IPedidoState estado)
+        public string ObtenerNombreEstado(IPedidoState estado)
         {
             if (estado is EstadoEntregado)
                 return "Entregado";
@@ -78,6 +78,8 @@ namespace Entidades.EntidadesVenta
         }
         public IPedidoState AsignarEstado(string estado)
         {
+            Console.WriteLine($"Intentando asignar el estado: {estado}");
+
             switch (estado)
             {
                 case "Confirmado":
@@ -91,8 +93,11 @@ namespace Entidades.EntidadesVenta
                 case "Entregado":
                     return new EstadoEntregado();
                 default:
-                    throw new InvalidOperationException("Estado desconocido");
+                    throw new InvalidOperationException($"Estado desconocido: {estado}");
             }
         }
+
+
+
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Modelo;
 
@@ -11,9 +12,11 @@ using Modelo;
 namespace Modelo.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20250119230157_inicial")]
+    partial class inicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,9 +183,6 @@ namespace Modelo.Migrations
                     b.Property<float>("Precio")
                         .HasColumnType("real");
 
-                    b.Property<bool>("Vendido")
-                        .HasColumnType("bit");
-
                     b.Property<int>("idVendedor")
                         .HasColumnType("int");
 
@@ -314,19 +314,22 @@ namespace Modelo.Migrations
                     b.Property<float>("Total")
                         .HasColumnType("real");
 
-                    b.Property<int>("idCliente")
+                    b.Property<int>("VendedorIdPersona")
                         .HasColumnType("int");
 
-                    b.Property<int>("idVendedor")
+                    b.Property<int>("idCarrito")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idCliente")
                         .HasColumnType("int");
 
                     b.HasKey("IdPedido");
 
                     b.HasIndex("PublicacionIdPublicacion");
 
-                    b.HasIndex("idCliente");
+                    b.HasIndex("VendedorIdPersona");
 
-                    b.HasIndex("idVendedor");
+                    b.HasIndex("idCliente");
 
                     b.ToTable("Pedidos");
                 });
@@ -631,15 +634,15 @@ namespace Modelo.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entidades.EntidadesClientes.Cliente", "Cliente")
+                    b.HasOne("Entidades.EntidadesVendedores.Vendedor", "Vendedor")
                         .WithMany()
-                        .HasForeignKey("idCliente")
+                        .HasForeignKey("VendedorIdPersona")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Entidades.EntidadesVendedores.Vendedor", "Vendedor")
+                    b.HasOne("Entidades.EntidadesClientes.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("idVendedor")
+                        .HasForeignKey("idCliente")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

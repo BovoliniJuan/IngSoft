@@ -27,9 +27,6 @@ namespace Entidades.EntidadesClientes
 
         public CarritoDeCompra() { }
 
-        public void AgregarPublicacion(Publicacion publicacion) { }
-        public void EliminarPublicacion(Publicacion publicacion) { }
-        public void VaciarCarrito() { }
 
     }
 }

@@ -142,7 +142,8 @@ namespace Vista.ModuloCIientes
 
         private void btnComprar_Click(object sender, EventArgs e)
         {
-
+            FormCompra formCompra = new FormCompra(_sesion);
+            formCompra.ShowDialog();
         }
     }
 }

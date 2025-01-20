@@ -1,5 +1,6 @@
 ﻿using Entidades;
 using Entidades.EntidadesClientes;
+using Entidades.EntidadesVenta;
 using Microsoft.EntityFrameworkCore;
 using Modelo;
 using System;
@@ -29,6 +30,17 @@ namespace Controladoras.Cliente
                 return instancia;
             }
         }
+        public ReadOnlyCollection<MetodoDePago> RecuperarMetodosPago()
+        {
+            try
+            {
+                return new ReadOnlyCollection<MetodoDePago>(Context.Instancia.MetodoDePagos.ToList());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al recuperar metodos de pago: " + ex.Message);
+            }
+        }
         public Entidades.EntidadesClientes.Cliente ObtenerClientePorUsuario(Usuario usuario)
         {
             try
@@ -44,7 +56,7 @@ namespace Controladoras.Cliente
         {
             try
             {
-                return Context.Instancia.CarritoDeCompras.FirstOrDefault(c => c.Cliente.IdCliente == cliente.IdCliente);
+                return Context.Instancia.CarritoDeCompras.FirstOrDefault(c => c.Cliente.IdCliente == cliente.IdCliente && c.Estado == true);
             }
             catch (Exception ex)
             {
@@ -63,7 +75,22 @@ namespace Controladoras.Cliente
                 throw new Exception("Error al obtener el carrito activo: " + ex.Message);
             }
         }
-
+        public Entidades.EntidadesVendedores.Vendedor ObtenerVendedorPorId(int idVendedor)
+        {
+            try
+            {
+                var vendedor = Context.Instancia.Vendedores.FirstOrDefault(v => v.IdVendedor == idVendedor);
+                if (vendedor == null)
+                {
+                    throw new Exception($"No se encontró un vendedor con el Id {idVendedor}");
+                }
+                return vendedor;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener el vendedor por Id: {ex.Message}");
+            }
+        }
         public ReadOnlyCollection<CarritoDeCompra> RecuperarCarrito()
         {
             try
@@ -135,7 +162,19 @@ namespace Controladoras.Cliente
             }
 
         }
-        
+        public void AgregarPedido(Pedido pedido, Pago pago)
+        {
+            try
+            {                
+               Context.Instancia.Pedidos.Add(pedido);
+               Context.Instancia.Pagos.Add(pago);
+               Context.Instancia.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al agregar el pedido: " + ex.Message);
+            }
+        }
 
     }
 }

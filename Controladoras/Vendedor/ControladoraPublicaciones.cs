@@ -39,7 +39,7 @@ namespace Controladoras.Vendedor
                 if (buscarVendedor != null)
                 {
                     var productosVendedor = Context.Instancia.Publicaciones
-                        .Where(p => p.Vendedor != null && p.Vendedor.IdVendedor == buscarVendedor.IdVendedor)
+                        .Where(p => p.Vendedor != null && p.Vendedor.IdVendedor == buscarVendedor.IdVendedor && p.Vendido == false)
                         .ToList();
 
                     return new ReadOnlyCollection<Publicacion>(productosVendedor);

@@ -5,6 +5,7 @@ using Modelo;
 using Controladoras.Seguridad;
 using Entidades.EntidadesVendedores;
 using Microsoft.EntityFrameworkCore;
+using Entidades.EntidadesVenta;
 
 namespace Vista
 {
@@ -19,7 +20,7 @@ namespace Vista
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            //InicializarDatosBase();  
+            InicializarDatosBase();  
             Application.Run(new FormInicioSesion());
         }
         private static void InicializarDatosBase()
@@ -204,11 +205,21 @@ namespace Vista
 
             if (!Context.Instancia.Grupos.Any(g => g.Nombre == grupoVendedor.Nombre))
                 Context.Instancia.Grupos.Add(grupoVendedor);
-            // Guardar cambios
-            Context.Instancia.SaveChanges();
 
-                Console.WriteLine("Usuario Administrador creado correctamente con acceso al Formulario Administrador.");
-            
+            var metodoDepago1 = new MetodoDePago
+            {
+                Descripcion = "Transferencia"
+            };
+            var metodoDepago2 = new MetodoDePago
+            {
+                Descripcion = "Tarjeta"
+            };
+            if (!Context.Instancia.MetodoDePagos.Any(a => a.Descripcion == metodoDepago1.Descripcion))
+                Context.Instancia.MetodoDePagos.Add(metodoDepago1);
+            if (!Context.Instancia.MetodoDePagos.Any(a => a.Descripcion == metodoDepago2.Descripcion))
+                Context.Instancia.MetodoDePagos.Add(metodoDepago2);
+            // Guardar cambios
+            Context.Instancia.SaveChanges();   
             
         }
        

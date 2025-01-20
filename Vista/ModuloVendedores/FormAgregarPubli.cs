@@ -97,7 +97,8 @@ namespace Vista.ModuloVendedores
                         Precio = precio,
                         Estado = true, // habilitar la publicación
                         Vendedor = producto.Vendedor, 
-                        IdProducto = producto.IdProducto
+                        IdProducto = producto.IdProducto,
+                        Vendido = false 
                     };
 
                     var resultado = ControladoraPublicaciones.Instancia.GuardarPublicacion(nuevaPublicacion);

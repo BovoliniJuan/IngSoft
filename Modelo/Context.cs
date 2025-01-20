@@ -76,35 +76,35 @@ namespace Modelo
             modelBuilder.Entity<Publicacion>()
                 .HasOne(p => p.Vendedor)
                 .WithMany()
-                .HasForeignKey(p => p.VendedorIdPersona)
+                .HasForeignKey(p => p.idVendedor)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Relación Producto -> Vendedor
             modelBuilder.Entity<Producto>()
                 .HasOne(p => p.Vendedor)
                 .WithMany()
-                .HasForeignKey(p => p.VendedorIdPersona)
+                .HasForeignKey(p => p.idVendedor)
                 .OnDelete(DeleteBehavior.Restrict);
             // Relación Pedido -> Cliente
             modelBuilder.Entity<Pedido>()
                 .HasOne(p => p.Cliente)
                 .WithMany()
-                .HasForeignKey(p => p.ClienteIdPersona)
-                .OnDelete(DeleteBehavior.Restrict); // Cambiar a Restrict para evitar cascadas
+                .HasForeignKey(p => p.idCliente)
+                .OnDelete(DeleteBehavior.Restrict); 
 
             // Relación Pedido -> Vendedor
             modelBuilder.Entity<Pedido>()
                 .HasOne(p => p.Vendedor)
                 .WithMany()
-                .HasForeignKey(p => p.VendedorIdPersona)
+                .HasForeignKey(p => p.idVendedor)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Relación Pedido -> CarritoDeCompra
-            modelBuilder.Entity<Pedido>()
+            /*modelBuilder.Entity<Pedido>()
                 .HasOne(p => p.CarritoDeCompra)
                 .WithMany()
-                .HasForeignKey(p => p.CarritoDeCompraIdCarritoDeCompras)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(p => p.idCliente)
+                .OnDelete(DeleteBehavior.Restrict);*/
 
          
             // Configuración adicional para Pago
@@ -114,7 +114,6 @@ namespace Modelo
                 .HasForeignKey<Pago>(p => p.PedidoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //Configuración adicional para relaciones de grupos y componentes
             modelBuilder.Entity<Grupo>().HasMany(g => g.Componentes).WithMany(c => c.Grupos).UsingEntity<Dictionary<string, object>>(
                 "ComponenteGrupo",
                 j => j

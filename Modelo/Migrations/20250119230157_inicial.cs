@@ -12,19 +12,6 @@ namespace Modelo.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "EstadoPedidos",
-                columns: table => new
-                {
-                    IdEstadoPedido = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EstadoPedidos", x => x.IdEstadoPedido);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "EstadosGrupo",
                 columns: table => new
                 {
@@ -233,23 +220,23 @@ namespace Modelo.Migrations
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cantidad = table.Column<int>(type: "int", nullable: false),
                     Precio = table.Column<float>(type: "real", nullable: false),
-                    VendedorIdPersona = table.Column<int>(type: "int", nullable: false),
+                    idVendedor = table.Column<int>(type: "int", nullable: false),
                     VendedorIdVendedor = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Productos", x => x.IdProducto);
                     table.ForeignKey(
-                        name: "FK_Productos_Vendedores_VendedorIdPersona",
-                        column: x => x.VendedorIdPersona,
-                        principalTable: "Vendedores",
-                        principalColumn: "IdVendedor",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Productos_Vendedores_VendedorIdVendedor",
                         column: x => x.VendedorIdVendedor,
                         principalTable: "Vendedores",
                         principalColumn: "IdVendedor");
+                    table.ForeignKey(
+                        name: "FK_Productos_Vendedores_idVendedor",
+                        column: x => x.idVendedor,
+                        principalTable: "Vendedores",
+                        principalColumn: "IdVendedor",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -301,49 +288,6 @@ namespace Modelo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pedidos",
-                columns: table => new
-                {
-                    IdPedido = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FechaPedido = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FechaEntrega = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ClienteIdPersona = table.Column<int>(type: "int", nullable: false),
-                    CarritoDeCompraIdCarritoDeCompras = table.Column<int>(type: "int", nullable: false),
-                    EstadoPedidoIdEstadoPedido = table.Column<int>(type: "int", nullable: false),
-                    Total = table.Column<float>(type: "real", nullable: false),
-                    VendedorIdPersona = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Pedidos", x => x.IdPedido);
-                    table.ForeignKey(
-                        name: "FK_Pedidos_CarritoDeCompras_CarritoDeCompraIdCarritoDeCompras",
-                        column: x => x.CarritoDeCompraIdCarritoDeCompras,
-                        principalTable: "CarritoDeCompras",
-                        principalColumn: "IdCarritoDeCompras",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Pedidos_Clientes_ClienteIdPersona",
-                        column: x => x.ClienteIdPersona,
-                        principalTable: "Clientes",
-                        principalColumn: "IdCliente",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Pedidos_EstadoPedidos_EstadoPedidoIdEstadoPedido",
-                        column: x => x.EstadoPedidoIdEstadoPedido,
-                        principalTable: "EstadoPedidos",
-                        principalColumn: "IdEstadoPedido",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Pedidos_Vendedores_VendedorIdPersona",
-                        column: x => x.VendedorIdPersona,
-                        principalTable: "Vendedores",
-                        principalColumn: "IdVendedor",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Publicaciones",
                 columns: table => new
                 {
@@ -356,7 +300,7 @@ namespace Modelo.Migrations
                     IdProducto = table.Column<int>(type: "int", nullable: false),
                     Cantidad = table.Column<int>(type: "int", nullable: false),
                     Precio = table.Column<float>(type: "real", nullable: false),
-                    VendedorIdPersona = table.Column<int>(type: "int", nullable: false),
+                    idVendedor = table.Column<int>(type: "int", nullable: false),
                     CarritoDeCompraIdCarritoDeCompras = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -374,7 +318,45 @@ namespace Modelo.Migrations
                         principalColumn: "IdProducto",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Publicaciones_Vendedores_VendedorIdPersona",
+                        name: "FK_Publicaciones_Vendedores_idVendedor",
+                        column: x => x.idVendedor,
+                        principalTable: "Vendedores",
+                        principalColumn: "IdVendedor",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Pedidos",
+                columns: table => new
+                {
+                    IdPedido = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FechaPedido = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FechaEntrega = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    idCliente = table.Column<int>(type: "int", nullable: false),
+                    idCarrito = table.Column<int>(type: "int", nullable: false),
+                    PublicacionIdPublicacion = table.Column<int>(type: "int", nullable: false),
+                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Total = table.Column<float>(type: "real", nullable: false),
+                    VendedorIdPersona = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pedidos", x => x.IdPedido);
+                    table.ForeignKey(
+                        name: "FK_Pedidos_Clientes_idCliente",
+                        column: x => x.idCliente,
+                        principalTable: "Clientes",
+                        principalColumn: "IdCliente",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Pedidos_Publicaciones_PublicacionIdPublicacion",
+                        column: x => x.PublicacionIdPublicacion,
+                        principalTable: "Publicaciones",
+                        principalColumn: "IdPublicacion",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Pedidos_Vendedores_VendedorIdPersona",
                         column: x => x.VendedorIdPersona,
                         principalTable: "Vendedores",
                         principalColumn: "IdVendedor",
@@ -475,19 +457,14 @@ namespace Modelo.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pedidos_CarritoDeCompraIdCarritoDeCompras",
+                name: "IX_Pedidos_idCliente",
                 table: "Pedidos",
-                column: "CarritoDeCompraIdCarritoDeCompras");
+                column: "idCliente");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pedidos_ClienteIdPersona",
+                name: "IX_Pedidos_PublicacionIdPublicacion",
                 table: "Pedidos",
-                column: "ClienteIdPersona");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pedidos_EstadoPedidoIdEstadoPedido",
-                table: "Pedidos",
-                column: "EstadoPedidoIdEstadoPedido");
+                column: "PublicacionIdPublicacion");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pedidos_VendedorIdPersona",
@@ -495,9 +472,9 @@ namespace Modelo.Migrations
                 column: "VendedorIdPersona");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Productos_VendedorIdPersona",
+                name: "IX_Productos_idVendedor",
                 table: "Productos",
-                column: "VendedorIdPersona");
+                column: "idVendedor");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Productos_VendedorIdVendedor",
@@ -515,9 +492,9 @@ namespace Modelo.Migrations
                 column: "IdProducto");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Publicaciones_VendedorIdPersona",
+                name: "IX_Publicaciones_idVendedor",
                 table: "Publicaciones",
-                column: "VendedorIdPersona");
+                column: "idVendedor");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_EstadoUsuarioId",
@@ -543,9 +520,6 @@ namespace Modelo.Migrations
                 name: "Pagos");
 
             migrationBuilder.DropTable(
-                name: "Publicaciones");
-
-            migrationBuilder.DropTable(
                 name: "Componente");
 
             migrationBuilder.DropTable(
@@ -555,28 +529,28 @@ namespace Modelo.Migrations
                 name: "Pedidos");
 
             migrationBuilder.DropTable(
-                name: "Productos");
-
-            migrationBuilder.DropTable(
                 name: "EstadosGrupo");
 
             migrationBuilder.DropTable(
                 name: "Formularios");
 
             migrationBuilder.DropTable(
-                name: "CarritoDeCompras");
-
-            migrationBuilder.DropTable(
-                name: "EstadoPedidos");
-
-            migrationBuilder.DropTable(
-                name: "Vendedores");
+                name: "Publicaciones");
 
             migrationBuilder.DropTable(
                 name: "Modulos");
 
             migrationBuilder.DropTable(
+                name: "CarritoDeCompras");
+
+            migrationBuilder.DropTable(
+                name: "Productos");
+
+            migrationBuilder.DropTable(
                 name: "Clientes");
+
+            migrationBuilder.DropTable(
+                name: "Vendedores");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
