@@ -35,7 +35,7 @@ namespace Entidades.EntidadesVenta
         public Publicacion Publicacion { get { return publicacion; } set { publicacion = value; } }
         [NotMapped]
         public IPedidoState EstadoPedido { get { return estadoPedido; } set { estadoPedido = value; Estado = ObtenerNombreEstado(estadoPedido); } }
-        public string Estado { get { return estado; } set { estadoPedido = AsignarEstado(value);estado = value;  } }
+        public string Estado { get { return estado; } set { estado = value; estadoPedido = AsignarEstado(value);  } }
 
         public float Total { get { return total; } set { total = value; } }
         public int idVendedor { get; set; }
@@ -45,7 +45,7 @@ namespace Entidades.EntidadesVenta
 
         public Pedido() { }
         public void ConfirmarPedido() 
-        { 
+        {
             EstadoPedido.Confirmar(this);
         }
         public void CancelarPedido() 

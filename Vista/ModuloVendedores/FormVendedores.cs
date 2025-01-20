@@ -42,7 +42,7 @@ namespace Vista
 
         private void toolPedidos_Click(object sender, EventArgs e)
         {
-            FormPedidos formPedidos = new FormPedidos();
+            FormPedidos formPedidos = new FormPedidos(_sesion);
             formPedidos.ShowDialog();
         }
 
