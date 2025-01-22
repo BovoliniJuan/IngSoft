@@ -36,13 +36,15 @@
             toolCarrito = new ToolStripButton();
             toolPublicaciones = new ToolStripButton();
             label1 = new Label();
+            toolStripSeparator1 = new ToolStripSeparator();
+            toolPedidos = new ToolStripButton();
             toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // toolStrip1
             // 
             toolStrip1.BackColor = Color.FromArgb(64, 64, 64);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolPerfil, toolCarrito, toolPublicaciones });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolPerfil, toolCarrito, toolPublicaciones, toolStripSeparator1, toolPedidos });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(800, 28);
@@ -66,7 +68,7 @@
             // 
             toolMiPerfil.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             toolMiPerfil.Name = "toolMiPerfil";
-            toolMiPerfil.Size = new Size(180, 24);
+            toolMiPerfil.Size = new Size(171, 24);
             toolMiPerfil.Text = "Mi perfil";
             toolMiPerfil.Click += toolMiPerfil_Click;
             // 
@@ -74,7 +76,7 @@
             // 
             toolCerrarSesion.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             toolCerrarSesion.Name = "toolCerrarSesion";
-            toolCerrarSesion.Size = new Size(180, 24);
+            toolCerrarSesion.Size = new Size(171, 24);
             toolCerrarSesion.Text = "Cerrar Sesion";
             toolCerrarSesion.Click += toolCerrarSesion_Click;
             // 
@@ -111,6 +113,22 @@
             label1.TabIndex = 2;
             label1.Text = "AgroGestion Clientes";
             // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(6, 28);
+            // 
+            // toolPedidos
+            // 
+            toolPedidos.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolPedidos.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            toolPedidos.Image = (Image)resources.GetObject("toolPedidos.Image");
+            toolPedidos.ImageTransparentColor = Color.Magenta;
+            toolPedidos.Name = "toolPedidos";
+            toolPedidos.Size = new Size(75, 25);
+            toolPedidos.Text = "Pedidos";
+            toolPedidos.Click += toolPedidos_Click;
+            // 
             // FormClientes
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -136,5 +154,7 @@
         private ToolStripButton toolCarrito;
         private ToolStripButton toolPublicaciones;
         private Label label1;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripButton toolPedidos;
     }
 }

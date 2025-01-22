@@ -22,5 +22,9 @@ namespace Entidades.EntidadesVenta.EstadosPedidos
         {
             pedido.CambiarEstado(new EstadoCancelado());
         }
+        public void Recibido(Pedido pedido)
+        {
+            throw new InvalidOperationException("El pedido todavia no fue confirmado");
+        }
     }
 }

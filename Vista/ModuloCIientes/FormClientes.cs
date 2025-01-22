@@ -69,7 +69,7 @@ namespace Vista
                                 Cliente = cliente,
                                 FechaCreacion = DateTime.Now,
                                 Total = 0,
-                                Estado = true 
+                                Estado = true
                             };
 
                             ControladoraCarrito.Instancia.AgregarCarrito(nuevoCarrito);
@@ -82,6 +82,10 @@ namespace Vista
             }
         }
 
-
+        private void toolPedidos_Click(object sender, EventArgs e)
+        {
+            FormMisPedidos formMisPedidos = new FormMisPedidos(_sesion);
+            formMisPedidos.ShowDialog();
+        }
     }
 }

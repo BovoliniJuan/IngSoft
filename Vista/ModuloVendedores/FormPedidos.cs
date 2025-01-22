@@ -121,7 +121,7 @@ namespace Vista.ModuloVendedores
                 {
                     try
                     {
-                        ControladoraPedidos.Instancia.CancelarPedido(pedido);
+                        ControladoraPedidos.Instancia.CancelarPedido2(pedido);
                         MessageBox.Show("Pedido cancelado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         LlenarGrilla(); // Refrescar la grilla
                     }

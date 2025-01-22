@@ -23,5 +23,9 @@ namespace Entidades.EntidadesVenta.EstadosPedidos
             throw new InvalidOperationException("No puedes cancelar un pedido enviado.");
 
         }
+        public void Recibido(Pedido pedido)
+        {
+            pedido.CambiarEstado(new EstadoEntregado());
+        }
     }
 }

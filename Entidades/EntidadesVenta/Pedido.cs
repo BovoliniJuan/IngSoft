@@ -56,11 +56,14 @@ namespace Entidades.EntidadesVenta
         {
             EstadoPedido.Enviar(this);
         }
+        public void RecibirPedido()
+        {
+            EstadoPedido.Recibido(this);
+        }
         public void CambiarEstado(IPedidoState nuevoEstado)
         {
             EstadoPedido = nuevoEstado;
         }
-        public void AgregarPago(Pago pago) { }
         public string ObtenerNombreEstado(IPedidoState estado)
         {
             if (estado is EstadoEntregado)

@@ -316,5 +316,12 @@ namespace Vista.ModuloCIientes
         {
             this.Close();
         }
+
+        private void btnComprar_Click(object sender, EventArgs e)
+        {
+            FormMiCarrito formMiCarrito = new FormMiCarrito(_sesion);
+            formMiCarrito.ShowDialog();
+            this.Close();
+        }
     }
 }

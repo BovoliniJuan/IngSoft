@@ -34,7 +34,34 @@ namespace Controladoras.Vendedor
                 return instancia;
             }
         }
+        public ReadOnlyCollection<Pedido> ObtenerPedidosClientes(Sesion sesion)
+        {
+            try
+            {
+                var listaClientes = Context.Instancia.Clientes.ToList().AsReadOnly();
+                var buscarCliente = listaClientes.FirstOrDefault(x => x.Usuario != null && x.Usuario.IdUsuario == sesion.UsuarioSesion.IdUsuario);
 
+                if (buscarCliente != null)
+                {
+                    var pedidosCliente = Context.Instancia.Pedidos
+                        .Include(p => p.Vendedor)
+                        .Include(p => p.Cliente) 
+                        .Include(p => p.Publicacion) 
+                        .Where(p => p.Cliente != null && p.Cliente.IdCliente == buscarCliente.IdCliente)
+                        .ToList();
+
+                    return new ReadOnlyCollection<Pedido>(pedidosCliente);
+                }
+                throw new Exception("No se encontró un vendedor asociado al usuario de la sesión.");
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error al recuperar pedidos: " + ex.Message);
+
+            }
+        }
         public ReadOnlyCollection<Pedido> ObtenerPedidos(Sesion sesion)
         {
             try
@@ -45,6 +72,7 @@ namespace Controladoras.Vendedor
                 if (buscarVendedor != null)
                 {
                     var pedidosVendedor = Context.Instancia.Pedidos
+                        .Include(p=> p.Vendedor)
                         .Include(p => p.Cliente) // Cargar cliente relacionado
                         .Include(p => p.Publicacion) // Cargar publicación relacionada
                         .Where(p => p.Vendedor != null && p.Vendedor.IdVendedor == buscarVendedor.IdVendedor)
@@ -101,6 +129,38 @@ namespace Controladoras.Vendedor
                 throw new Exception("Error al cancelar el pedido: " + ex.Message);
             }
         }
+        public void CancelarPedido2(Pedido pedido)
+        {
+            try
+            {
+                if (pedido.EstadoPedido == null)
+                {
+                    pedido.EstadoPedido = pedido.AsignarEstado(pedido.Estado);
+                }
+
+                pedido.CancelarPedido();
+
+                var publicacion = Context.Instancia.Publicaciones
+                    .FirstOrDefault(p => p.IdPublicacion == pedido.Publicacion.IdPublicacion); 
+
+                if (publicacion != null)
+                {
+                    publicacion.Estado = true;
+                    publicacion.Vendido = false;
+                    Context.Instancia.Publicaciones.Update(publicacion);
+                }
+
+                // Actualizar el pedido
+                Context.Instancia.Pedidos.Update(pedido);
+
+                // Guardar cambios
+                Context.Instancia.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al cancelar el pedido: " + ex.Message);
+            }
+        }
 
         public void EnviarPedido(Pedido pedido)
         {
@@ -119,6 +179,26 @@ namespace Controladoras.Vendedor
             catch (Exception ex)
             {
                 throw new Exception("Error al enviar el pedido: " + ex.Message);
+            }
+        }
+        public void RecibirPedido(Pedido pedido)
+        {
+            try
+            {
+                if (pedido.EstadoPedido == null)
+                {
+                    pedido.EstadoPedido = pedido.AsignarEstado(pedido.Estado);
+                }
+
+                pedido.RecibirPedido();
+                pedido.FechaEntrega = DateTime.Now;
+
+                Context.Instancia.Pedidos.Update(pedido);
+                Context.Instancia.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al recibir el pedido: " + ex.Message);
             }
         }
     }

@@ -23,5 +23,9 @@ namespace Entidades.EntidadesVenta.EstadosPedidos
             throw new InvalidOperationException("No puedes cancelar un pedido entregado.");
 
         }
+        public void Recibido(Pedido pedido)
+        {
+            throw new InvalidOperationException("El pedido ya fue recibido");
+        }
     }
 }

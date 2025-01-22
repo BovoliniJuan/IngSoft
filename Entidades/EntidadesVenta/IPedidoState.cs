@@ -11,6 +11,6 @@ namespace Entidades.EntidadesVenta
         void Confirmar(Pedido pedido);
         void Enviar(Pedido pedido);
         void Cancelar(Pedido pedido);
-
+        void Recibido (Pedido pedido);
     }
 }

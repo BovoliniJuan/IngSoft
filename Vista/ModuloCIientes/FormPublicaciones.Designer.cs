@@ -201,6 +201,7 @@
             btnComprar.TabIndex = 3;
             btnComprar.Text = "Comprar Carrito";
             btnComprar.UseVisualStyleBackColor = true;
+            btnComprar.Click += btnComprar_Click;
             // 
             // btnEliminar
             // 

@@ -22,5 +22,9 @@ namespace Entidades.EntidadesVenta.EstadosPedidos
             throw new InvalidOperationException("El pedido ya ha sido confirmado.");
 
         }
+        public void Recibido(Pedido pedido)
+        {
+            throw new InvalidOperationException("El pedido no fue enviado");
+        }
     }
 }
