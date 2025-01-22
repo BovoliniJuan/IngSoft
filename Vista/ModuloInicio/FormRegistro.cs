@@ -1,6 +1,11 @@
 ﻿using Controladoras;
+using Controladoras.Seguridad;
 using Entidades;
+using Entidades.EntidadesClientes;
+using Entidades.EntidadesVendedores;
 using Entidades.Seguridad;
+using Entidades.Seguridad2;
+using Microsoft.AspNetCore.Identity;
 using Modelo;
 using System;
 using System.Collections.Generic;
@@ -11,77 +16,114 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Vista
 {
     public partial class FormRegistro : Form
     {
-        private readonly ControladoraSeguridad _controladoraSeguridad;
 
         private FormInicioSesion formInicioSesion;
+        private readonly PasswordHasher<Usuario> _passwordHasher;
+
         public FormRegistro(FormInicioSesion formInicioSesion)
         {
             InitializeComponent();
             this.formInicioSesion = formInicioSesion;
-            _controladoraSeguridad = new ControladoraSeguridad(Context.Instancia);
+            pnlClientes.Visible = true;
+            pnlVendedores.Visible = false;
+
+        }
+
+
+        // Método auxiliar para validar el formato de email
+        private bool EsEmailValido(string email)
+        {
+            try
+            {
+                var mailAddress = new System.Net.Mail.MailAddress(email);
+                return mailAddress.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
-            string nombreUsuario = txtUsuario.Text.Trim();
-            string contrasenia = txtContrasenia.Text.Trim();
-            string email = txtEmail.Text.Trim();
-            bool esVendedor = chkVendedor.Checked;
-            bool esCliente = chkCliente.Checked;
-
-            // Validar campos vacíos
-            if (string.IsNullOrEmpty(nombreUsuario) || string.IsNullOrEmpty(contrasenia) || string.IsNullOrEmpty(email))
+            var nombreUsuario = txtNombreUsuario.Text.Trim();
+            var email = txtEmail.Text.Trim();
+            var contrasenia = txtContra.Text.Trim();
+            string nombreCompleto = txtNombre.Text.Trim();
+            var direccion = txtDireccion.Text.Trim();
+            //var dni = int.Parse(txtDni.Text.Trim());
+            var dni = (int)numDNI.Value;
+            var esVendedor = chkVendedor.Checked;
+            if (!EsEmailValido(email))
             {
-                MessageBox.Show("Por favor, complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("El formato del email no es válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            // Crear un nuevo usuario sin grupo asignado
-            Usuario nuevoUsuario = new Usuario
+            if (string.IsNullOrWhiteSpace(nombreCompleto))
             {
-                NombreUsuario = nombreUsuario,
-                Contrasenia = contrasenia,
-                Email = email
-            };
+                MessageBox.Show("El nombre completo es obligatorio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            string resultado;
 
-            // Crear un grupo de permisos para el usuario
-            PermisoGrupo grupoTemporal = new PermisoGrupo();
+            Usuario usuario = new Usuario();
+            usuario.NombreUsuario = nombreUsuario;
+            usuario.Contrasenia = contrasenia;
+            usuario.Email = email;
+            usuario.EstadoUsuario =  new EstadoUsuario { EstadoUsuarioNombre = "Pendiente" };
+
+            ControladoraRegistro.Instancia.CrearUsuario(usuario,contrasenia);
 
             if (esVendedor)
             {
-                grupoTemporal.Agregar(new Permiso("Vendedor", true));
+                var nombreEmpresa = txtNombreEmpresa.Text.Trim();
+                var telefonoE = long.Parse(txtTelEmpresa.Text.Trim());
+                Vendedor vendedor = new Vendedor();
+                vendedor.NombreCompleto = nombreCompleto;
+                vendedor.NombreEmpresa = nombreEmpresa;
+                vendedor.DNI = dni;
+                vendedor.Direccion = direccion;
+                vendedor.TelefonoEmpresa = telefonoE;
+                vendedor.Usuario = usuario;
+                resultado = ControladoraRegistro.Instancia.RegistrarVendedor(vendedor);
+            }
+            else
+            {
+           
+                var telefonoP =(long)numTelefP.Value;
+                Cliente cliente = new Cliente();
+                cliente.Telefono = telefonoP;
+                cliente.NombreCompleto = nombreCompleto;
+                cliente.DNI = dni;
+                cliente.Direccion = direccion;
+                cliente.Usuario = usuario;
+
+                resultado = ControladoraRegistro.Instancia.RegistrarCliente(cliente);
             }
 
-            if (esCliente)
-            {
-                grupoTemporal.Agregar(new Permiso("Cliente", true));
-            }
+            MessageBox.Show(resultado, "Registro de Usuario", MessageBoxButtons.OK, MessageBoxIcon.Information);
+           this.Close();
+        }
 
-            // Asignar el grupo temporal al usuario
-            Grupo grupo = new Grupo
+        private void chkVendedor_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkVendedor.Checked) 
             {
-                NombreGrupo = "Temporal",
-                Permisos = grupoTemporal
-            };
-
-            nuevoUsuario.Grupo = grupo;
-
-            try
-            {
-                _controladoraSeguridad.RegistrarUsuario(nuevoUsuario);
-                MessageBox.Show("Usuario registrado exitosamente. Pendiente de aprobación del administrador.",
-                    "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close(); // Cerrar el formulario después de registrar
+                pnlClientes.Visible = false;
+                pnlVendedores.Visible = true;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Error al registrar el usuario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                pnlClientes.Visible = true;
+                pnlVendedores.Visible = false;
             }
+            
         }
     }
 

@@ -1,4 +1,6 @@
 ﻿using Controladoras;
+using Controladoras.Administrador;
+using Controladoras.Seguridad;
 using Entidades;
 using Entidades.Seguridad;
 using Modelo;
@@ -16,33 +18,109 @@ namespace Vista
 {
     public partial class FormGrupos : Form
     {
-        private readonly ControladoraSeguridad _controladoraSeguridad;
         public FormGrupos()
         {
             InitializeComponent();
-            _controladoraSeguridad = new ControladoraSeguridad(Context.Instancia);
-            CargarUsuariosPendientes();
+            CargarGrupos();
+            CargarUsuarios();
+        }
+        private void CargarGrupos()
+        {
+            // Obtener los grupos desde la base de datos y cargarlos en el ComboBox
+            //var grupos = ControladoraGestionGrupos.Instancia.RecuperarGrupos();
+
+            cmbGrupos.DataSource = ControladoraGestionGrupos.Instancia.RecuperarGrupos();
+            /*cmbGrupos.DisplayMember = "NombreGrupo"; 
+            cmbGrupos.ValueMember = "IdGrupo";*/
+
+        }
+      
+        private void CargarUsuarios()
+        {
+            // Cargar todos los usuarios inicialmente
+            var usuarios = ControladoraAdministrador.Instancia.ObtenerTodosLosUsuarios();
+            dgvUsuarios.DataSource = usuarios.Select(u => new
+            {
+                u.IdUsuario,
+                u.NombreUsuario,
+                u.Email,
+                TieneGrupo = u.Componentes.OfType<Grupo>().Any() ? "Sí" : "No"
+            }).ToList();
         }
 
-        private void CargarUsuariosPendientes()
+        private void AplicarFiltros()
         {
-            var usuariosPendientes = _controladoraSeguridad.ObtenerUsuariosConGrupoTemporal();
-            dgvUsuarios.DataSource = usuariosPendientes; // Asumimos que tienes un DataGridView
+            // Obtener los usuarios de la base de datos
+            var usuarios = ControladoraAdministrador.Instancia.ObtenerTodosLosUsuarios();
+
+            // Aplicar filtros según el estado de los CheckBoxes
+            if (chkSinGrupo.Checked && !chkConGrupo.Checked)
+            {
+                // Filtrar usuarios que no tienen grupo o que están en el grupo "Pendiente"
+                usuarios = usuarios.Where(u =>
+                    !u.Componentes.OfType<Grupo>().Any() ||
+                    u.Componentes.OfType<Grupo>().All(g => g.Nombre == "Pendiente")
+                ).ToList();
+            }
+            else if (!chkSinGrupo.Checked && chkConGrupo.Checked)
+            {
+                // Filtrar usuarios que tienen al menos un grupo y que no sea únicamente el grupo "Pendiente"
+                usuarios = usuarios.Where(u =>
+                    u.Componentes.OfType<Grupo>().Any() &&
+                    !u.Componentes.OfType<Grupo>().All(g => g.Nombre == "Pendiente")
+                ).ToList();
+            }
+
+            // Asignar los datos al DataGridView
+            dgvUsuarios.DataSource = usuarios.Select(u => new
+            {
+                u.IdUsuario,
+                u.NombreUsuario,
+                u.Email,
+                TieneGrupo = u.Componentes.OfType<Grupo>().Any()
+                    ? string.Join(", ", u.Componentes.OfType<Grupo>().Select(g => g.Nombre))
+                    : "No"
+            }).ToList();
         }
 
-        private void btnAprobar_Click(object sender, EventArgs e)
+
+
+        private void btnAsignarGrupo_Click(object sender, EventArgs e)
         {
-            var usuarioSeleccionado = (Usuario)dgvUsuarios.CurrentRow.DataBoundItem;
-            var grupoFinal = CrearGrupoFinal(); // Lógica para seleccionar el grupo
-            _controladoraSeguridad.AsignarGrupo(usuarioSeleccionado, grupoFinal);
-            MessageBox.Show("Usuario aprobado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            CargarUsuariosPendientes();
+            // Validar selección de usuario
+            if (dgvUsuarios.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Seleccione un usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validar selección de grupo
+            if (cmbGrupos.SelectedItem == null)
+            {
+                MessageBox.Show("Seleccione un grupo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Obtener datos seleccionados
+            var idUsuario = (int)dgvUsuarios.SelectedRows[0].Cells["IdUsuario"].Value;
+            var grupoSeleccionado = (Grupo)cmbGrupos.SelectedItem;
+
+            // Asignar grupo al usuario
+            var resultado = ControladoraAdministrador.Instancia.AsignarGrupoAUsuario(idUsuario, grupoSeleccionado);
+            MessageBox.Show(resultado, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Refrescar la lista de usuarios
+            CargarUsuarios();
         }
 
-        private Grupo CrearGrupoFinal()
+        private void chkSinGrupo_CheckedChanged(object sender, EventArgs e)
         {
-            // Lógica para asignar un grupo final según el rol del usuario
-            return new Grupo { NombreGrupo = "Final", Permisos = new PermisoGrupo() }; // Ejemplo
+            AplicarFiltros();
+        }
+
+        private void chkConGrupo_CheckedChanged(object sender, EventArgs e)
+        {
+            AplicarFiltros();
         }
     }
 }
