@@ -323,5 +323,10 @@ namespace Vista.ModuloCIientes
             formMiCarrito.ShowDialog();
             this.Close();
         }
+
+        
+
+        
+       
     }
 }

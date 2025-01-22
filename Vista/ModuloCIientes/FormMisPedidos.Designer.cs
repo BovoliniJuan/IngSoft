@@ -31,8 +31,11 @@
             groupBox1 = new GroupBox();
             dgvPedidos = new DataGridView();
             groupBox2 = new GroupBox();
-            label1 = new Label();
-            txtBuscador = new TextBox();
+            chkPendiente = new CheckBox();
+            chkEntregado = new CheckBox();
+            chkEnviado = new CheckBox();
+            chkConfirmado = new CheckBox();
+            chkCancelado = new CheckBox();
             groupBox3 = new GroupBox();
             btnSalir = new Button();
             btnRecibir = new Button();
@@ -64,8 +67,11 @@
             // groupBox2
             // 
             groupBox2.BackColor = Color.Gray;
-            groupBox2.Controls.Add(label1);
-            groupBox2.Controls.Add(txtBuscador);
+            groupBox2.Controls.Add(chkPendiente);
+            groupBox2.Controls.Add(chkEntregado);
+            groupBox2.Controls.Add(chkEnviado);
+            groupBox2.Controls.Add(chkConfirmado);
+            groupBox2.Controls.Add(chkCancelado);
             groupBox2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             groupBox2.Location = new Point(483, 12);
             groupBox2.Name = "groupBox2";
@@ -74,21 +80,60 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Filtros";
             // 
-            // label1
+            // chkPendiente
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(6, 31);
-            label1.Name = "label1";
-            label1.Size = new Size(80, 21);
-            label1.TabIndex = 1;
-            label1.Text = "Buscador";
+            chkPendiente.AutoSize = true;
+            chkPendiente.Location = new Point(6, 152);
+            chkPendiente.Name = "chkPendiente";
+            chkPendiente.Size = new Size(97, 25);
+            chkPendiente.TabIndex = 4;
+            chkPendiente.Text = "Pediente";
+            chkPendiente.UseVisualStyleBackColor = true;
+            chkPendiente.CheckedChanged += chkPendiente_CheckedChanged;
             // 
-            // txtBuscador
+            // chkEntregado
             // 
-            txtBuscador.Location = new Point(6, 55);
-            txtBuscador.Name = "txtBuscador";
-            txtBuscador.Size = new Size(205, 29);
-            txtBuscador.TabIndex = 0;
+            chkEntregado.AutoSize = true;
+            chkEntregado.Location = new Point(6, 121);
+            chkEntregado.Name = "chkEntregado";
+            chkEntregado.Size = new Size(108, 25);
+            chkEntregado.TabIndex = 3;
+            chkEntregado.Text = "Entregado";
+            chkEntregado.UseVisualStyleBackColor = true;
+            chkEntregado.CheckedChanged += chkEntregado_CheckedChanged;
+            // 
+            // chkEnviado
+            // 
+            chkEnviado.AutoSize = true;
+            chkEnviado.Location = new Point(6, 90);
+            chkEnviado.Name = "chkEnviado";
+            chkEnviado.Size = new Size(91, 25);
+            chkEnviado.TabIndex = 2;
+            chkEnviado.Text = "Enviado";
+            chkEnviado.UseVisualStyleBackColor = true;
+            chkEnviado.CheckedChanged += chkEnviado_CheckedChanged;
+            // 
+            // chkConfirmado
+            // 
+            chkConfirmado.AutoSize = true;
+            chkConfirmado.Location = new Point(6, 59);
+            chkConfirmado.Name = "chkConfirmado";
+            chkConfirmado.Size = new Size(120, 25);
+            chkConfirmado.TabIndex = 1;
+            chkConfirmado.Text = "Confirmado";
+            chkConfirmado.UseVisualStyleBackColor = true;
+            chkConfirmado.CheckedChanged += chkConfirmado_CheckedChanged;
+            // 
+            // chkCancelado
+            // 
+            chkCancelado.AutoSize = true;
+            chkCancelado.Location = new Point(6, 28);
+            chkCancelado.Name = "chkCancelado";
+            chkCancelado.Size = new Size(109, 25);
+            chkCancelado.TabIndex = 0;
+            chkCancelado.Text = "Cancelado";
+            chkCancelado.UseVisualStyleBackColor = true;
+            chkCancelado.CheckedChanged += chkCancelado_CheckedChanged;
             // 
             // groupBox3
             // 
@@ -147,10 +192,13 @@
         private GroupBox groupBox1;
         private DataGridView dgvPedidos;
         private GroupBox groupBox2;
-        private Label label1;
-        private TextBox txtBuscador;
         private GroupBox groupBox3;
         private Button btnSalir;
         private Button btnRecibir;
+        private CheckBox chkPendiente;
+        private CheckBox chkEntregado;
+        private CheckBox chkEnviado;
+        private CheckBox chkConfirmado;
+        private CheckBox chkCancelado;
     }
 }

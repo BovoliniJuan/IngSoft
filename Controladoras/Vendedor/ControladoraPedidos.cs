@@ -201,6 +201,22 @@ namespace Controladoras.Vendedor
                 throw new Exception("Error al recibir el pedido: " + ex.Message);
             }
         }
+        public ReadOnlyCollection<Pedido> FiltrarPedidossPorNombre(string nombrePedido)
+        {
+            try
+            {
+                var pedidosFiltrados = Context.Instancia.Pedidos
+                    .Where(p => p.Publicacion.Descripcion.Contains(nombrePedido) )
+                    .ToList();
+
+                return new ReadOnlyCollection<Pedido>(pedidosFiltrados.AsReadOnly());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al filtrar publicaciones: " + ex.Message);
+            }
+        }
+
     }
 
 }
