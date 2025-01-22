@@ -12,13 +12,12 @@ namespace Entidades
     public class Grupo:Componente
     {
         private int idGrupo;
-        private string nombreGrupo;
+        //private string nombreGrupo;
         private EstadoGrupo estadoGrupo;
         private List<Componente> componentes;
 
-     
         public int IdGrupo {get { return idGrupo;} set { idGrupo = value; } }
-        public string NombreGrupo { get { return nombreGrupo; }set {nombreGrupo = value; } }
+       // public string NombreGrupo { get { return nombreGrupo; }set {nombreGrupo = value; } }
 
         public EstadoGrupo EstadoGrupo
         {

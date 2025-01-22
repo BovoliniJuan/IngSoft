@@ -30,7 +30,7 @@ namespace Vista
                 // Crear estado para el grupo y usuario
                 var estadoGrupoActivo = new EstadoGrupo { EstadoGrupoNombre = "Activo" };
                 var estadoUsuarioActivo = new EstadoUsuario { EstadoUsuarioNombre = "Activo" };
-
+                var estadoGrupoInactivo = new EstadoGrupo { EstadoGrupoNombre = "Inactivo" };
                 // Crear módulo de administrador
                 var moduloAdministrador = new Modulo
                 {
@@ -90,7 +90,8 @@ namespace Vista
                 // Verificar y agregar datos al contexto si no existen
                 if (!Context.Instancia.EstadosGrupo.Any(e => e.EstadoGrupoNombre == estadoGrupoActivo.EstadoGrupoNombre))
                     Context.Instancia.EstadosGrupo.Add(estadoGrupoActivo);
-
+            if (!Context.Instancia.EstadosGrupo.Any(e => e.EstadoGrupoNombre == estadoGrupoInactivo.EstadoGrupoNombre))
+                Context.Instancia.EstadosGrupo.Add(estadoGrupoInactivo);
                 if (!Context.Instancia.EstadosUsuario.Any(e => e.EstadoUsuarioNombre == estadoUsuarioActivo.EstadoUsuarioNombre))
                     Context.Instancia.EstadosUsuario.Add(estadoUsuarioActivo);
 

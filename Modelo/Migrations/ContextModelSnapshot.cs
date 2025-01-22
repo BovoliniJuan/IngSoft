@@ -469,10 +469,6 @@ namespace Modelo.Migrations
                     b.Property<int>("IdGrupo")
                         .HasColumnType("int");
 
-                    b.Property<string>("NombreGrupo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasIndex("EstadoGrupoId");
 
                     b.HasDiscriminator().HasValue("Grupo");

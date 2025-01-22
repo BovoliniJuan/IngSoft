@@ -59,7 +59,7 @@ namespace Vista
                 // Filtrar usuarios que no tienen grupo o que están en el grupo "Pendiente"
                 usuarios = usuarios.Where(u =>
                     !u.Componentes.OfType<Grupo>().Any() ||
-                    u.Componentes.OfType<Grupo>().All(g => g.NombreGrupo == "Pendiente")
+                    u.Componentes.OfType<Grupo>().All(g => g.Nombre == "Pendiente")
                 ).ToList();
             }
             else if (!chkSinGrupo.Checked && chkConGrupo.Checked)
@@ -67,7 +67,7 @@ namespace Vista
                 // Filtrar usuarios que tienen al menos un grupo y que no sea únicamente el grupo "Pendiente"
                 usuarios = usuarios.Where(u =>
                     u.Componentes.OfType<Grupo>().Any() &&
-                    !u.Componentes.OfType<Grupo>().All(g => g.NombreGrupo == "Pendiente")
+                    !u.Componentes.OfType<Grupo>().All(g => g.Nombre == "Pendiente")
                 ).ToList();
             }
 
@@ -78,7 +78,7 @@ namespace Vista
                 u.NombreUsuario,
                 u.Email,
                 TieneGrupo = u.Componentes.OfType<Grupo>().Any()
-                    ? string.Join(", ", u.Componentes.OfType<Grupo>().Select(g => g.NombreGrupo))
+                    ? string.Join(", ", u.Componentes.OfType<Grupo>().Select(g => g.Nombre))
                     : "No"
             }).ToList();
         }

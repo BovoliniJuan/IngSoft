@@ -62,7 +62,7 @@ namespace Controladoras.Administrador
                 usuario.EstadoUsuario = estado;
                 Context.Instancia.Usuarios.Update(usuario);
                 Context.Instancia.SaveChanges();
-                Mensajeria.ControladoraMails.Instancia.NotificarAsignacionGrupo(usuario.Email,usuario.NombreUsuario, grupo.NombreGrupo);
+                Mensajeria.ControladoraMails.Instancia.NotificarAsignacionGrupo(usuario.Email,usuario.NombreUsuario, grupo.Nombre);
                 return "Grupo asignado exitosamente.";
             }
             catch (Exception ex)

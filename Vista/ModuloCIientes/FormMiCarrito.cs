@@ -144,6 +144,7 @@ namespace Vista.ModuloCIientes
         {
             FormCompra formCompra = new FormCompra(_sesion);
             formCompra.ShowDialog();
+            this.Close();
         }
     }
 }

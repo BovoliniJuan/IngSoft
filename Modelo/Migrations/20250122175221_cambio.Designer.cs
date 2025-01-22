@@ -12,8 +12,8 @@ using Modelo;
 namespace Modelo.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250119233738_vendero")]
-    partial class vendero
+    [Migration("20250122175221_cambio")]
+    partial class cambio
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -183,6 +183,9 @@ namespace Modelo.Migrations
                     b.Property<float>("Precio")
                         .HasColumnType("real");
 
+                    b.Property<bool>("Vendido")
+                        .HasColumnType("bit");
+
                     b.Property<int>("idVendedor")
                         .HasColumnType("int");
 
@@ -313,9 +316,6 @@ namespace Modelo.Migrations
 
                     b.Property<float>("Total")
                         .HasColumnType("real");
-
-                    b.Property<int>("idCarrito")
-                        .HasColumnType("int");
 
                     b.Property<int>("idCliente")
                         .HasColumnType("int");
@@ -471,10 +471,6 @@ namespace Modelo.Migrations
 
                     b.Property<int>("IdGrupo")
                         .HasColumnType("int");
-
-                    b.Property<string>("NombreGrupo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasIndex("EstadoGrupoId");
 

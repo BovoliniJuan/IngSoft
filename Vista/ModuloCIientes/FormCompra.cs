@@ -105,7 +105,7 @@ namespace Vista.ModuloCIientes
                         ControladoraCarrito.Instancia.ActualizarCarrito(carrito);
 
                         MessageBox.Show("La compra se ha confirmado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        CrearCarrito();
+                        CrearCarrito();                      
                         // Cerrar el formulario
                         this.Close();
                     }

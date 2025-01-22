@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Modelo.Migrations
 {
     /// <inheritdoc />
-    public partial class inicial : Migration
+    public partial class camibos : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -301,6 +301,7 @@ namespace Modelo.Migrations
                     Cantidad = table.Column<int>(type: "int", nullable: false),
                     Precio = table.Column<float>(type: "real", nullable: false),
                     idVendedor = table.Column<int>(type: "int", nullable: false),
+                    Vendido = table.Column<bool>(type: "bit", nullable: false),
                     CarritoDeCompraIdCarritoDeCompras = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -334,11 +335,10 @@ namespace Modelo.Migrations
                     FechaPedido = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEntrega = table.Column<DateTime>(type: "datetime2", nullable: false),
                     idCliente = table.Column<int>(type: "int", nullable: false),
-                    idCarrito = table.Column<int>(type: "int", nullable: false),
                     PublicacionIdPublicacion = table.Column<int>(type: "int", nullable: false),
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Total = table.Column<float>(type: "real", nullable: false),
-                    VendedorIdPersona = table.Column<int>(type: "int", nullable: false)
+                    idVendedor = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -356,8 +356,8 @@ namespace Modelo.Migrations
                         principalColumn: "IdPublicacion",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Pedidos_Vendedores_VendedorIdPersona",
-                        column: x => x.VendedorIdPersona,
+                        name: "FK_Pedidos_Vendedores_idVendedor",
+                        column: x => x.idVendedor,
                         principalTable: "Vendedores",
                         principalColumn: "IdVendedor",
                         onDelete: ReferentialAction.Restrict);
@@ -462,14 +462,14 @@ namespace Modelo.Migrations
                 column: "idCliente");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Pedidos_idVendedor",
+                table: "Pedidos",
+                column: "idVendedor");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Pedidos_PublicacionIdPublicacion",
                 table: "Pedidos",
                 column: "PublicacionIdPublicacion");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pedidos_VendedorIdPersona",
-                table: "Pedidos",
-                column: "VendedorIdPersona");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Productos_idVendedor",

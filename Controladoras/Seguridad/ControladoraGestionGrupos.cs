@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Entidades.EntidadesVendedores;
 
 namespace Controladoras.Seguridad
 {
@@ -88,7 +89,7 @@ namespace Controladoras.Seguridad
 
                         if (accionExistente != null)
                         {
-                            grupo.Componentes[i] = accionExistente; // Reemplazar con la instancia rastreada
+                            grupo.Componentes[i] = accionExistente; 
                         }
                     }
                 }
@@ -275,7 +276,21 @@ namespace Controladoras.Seguridad
             }
         }
 
+        public ReadOnlyCollection<Grupo> FiltrarGruposPorNombre(string nombreGrupo)
+        {
+            try
+            {
+                var gruposFiltrados = Context.Instancia.Grupos
+                    .Where(p => p.Nombre.Contains(nombreGrupo))
+                    .ToList();
 
+                return new ReadOnlyCollection<Grupo>(gruposFiltrados.AsReadOnly());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al filtrar grupos: " + ex.Message);
+            }
+        }
 
         public ReadOnlyCollection<Componente> ObtenerComponentesDelGrupo(int grupoId)
         {

@@ -35,6 +35,8 @@
             toolUsuariosTotales = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             toolCrearGrupos = new ToolStripSplitButton();
+            toolAgregarGrupos = new ToolStripMenuItem();
+            toolGestionarGrupos = new ToolStripMenuItem();
             toolStripSeparator2 = new ToolStripSeparator();
             toolPerfil = new ToolStripSplitButton();
             toolCerrarSesion = new ToolStripMenuItem();
@@ -85,12 +87,27 @@
             // toolCrearGrupos
             // 
             toolCrearGrupos.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolCrearGrupos.DropDownItems.AddRange(new ToolStripItem[] { toolAgregarGrupos, toolGestionarGrupos });
             toolCrearGrupos.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             toolCrearGrupos.Image = (Image)resources.GetObject("toolCrearGrupos.Image");
             toolCrearGrupos.ImageTransparentColor = Color.Magenta;
             toolCrearGrupos.Name = "toolCrearGrupos";
             toolCrearGrupos.Size = new Size(80, 25);
             toolCrearGrupos.Text = "Grupos";
+            // 
+            // toolAgregarGrupos
+            // 
+            toolAgregarGrupos.Name = "toolAgregarGrupos";
+            toolAgregarGrupos.Size = new Size(198, 26);
+            toolAgregarGrupos.Text = "Agregar grupos";
+            toolAgregarGrupos.Click += toolAgregarGrupos_Click;
+            // 
+            // toolGestionarGrupos
+            // 
+            toolGestionarGrupos.Name = "toolGestionarGrupos";
+            toolGestionarGrupos.Size = new Size(198, 26);
+            toolGestionarGrupos.Text = "Gestion grupos";
+            toolGestionarGrupos.Click += toolGestionarGrupos_Click;
             // 
             // toolStripSeparator2
             // 
@@ -107,6 +124,7 @@
             toolPerfil.Name = "toolPerfil";
             toolPerfil.Size = new Size(32, 25);
             toolPerfil.Text = "toolStripSplitButton1";
+            toolPerfil.ToolTipText = "Perfil";
             // 
             // toolCerrarSesion
             // 
@@ -152,5 +170,7 @@
         private Label label1;
         private ToolStripMenuItem toolCerrarSesion;
         private ToolStripSeparator toolStripSeparator2;
+        private ToolStripMenuItem toolAgregarGrupos;
+        private ToolStripMenuItem toolGestionarGrupos;
     }
 }

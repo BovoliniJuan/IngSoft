@@ -39,6 +39,16 @@ namespace Vista.ModuloSeguridad
             formInicioSesion.Show();
         }
 
-     
+        private void toolAgregarGrupos_Click(object sender, EventArgs e)
+        {
+            FormCrearGrupos formCrear = new FormCrearGrupos();
+            formCrear.ShowDialog();
+        }
+
+        private void toolGestionarGrupos_Click(object sender, EventArgs e)
+        {
+            FormGestionarGrupos formGestionarGrupos = new FormGestionarGrupos();
+            formGestionarGrupos.ShowDialog();
+        }
     }
 }
