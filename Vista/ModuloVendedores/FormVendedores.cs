@@ -30,7 +30,7 @@ namespace Vista
 
         private void toolMisPublicaciones_Click(object sender, EventArgs e)
         {
-            FormMisPublicaciones formPublicacions = new FormMisPublicaciones(_sesion);   
+            FormMisPublicaciones formPublicacions = new FormMisPublicaciones(_sesion);
             formPublicacions.ShowDialog();
         }
 
@@ -63,6 +63,12 @@ namespace Vista
         {
             FormAgregarProd formAgregarProd = new FormAgregarProd(_sesion);
             formAgregarProd.ShowDialog();
+        }
+
+        private void toolReportes_Click(object sender, EventArgs e)
+        {
+            FormReportes formReportes = new FormReportes(_sesion);
+            formReportes.ShowDialog();
         }
     }
 }

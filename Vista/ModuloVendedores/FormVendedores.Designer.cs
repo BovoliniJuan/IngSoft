@@ -43,13 +43,15 @@
             toolMiPerfil = new ToolStripMenuItem();
             toolCerrarSesion = new ToolStripMenuItem();
             label1 = new Label();
+            toolStripSeparator3 = new ToolStripSeparator();
+            toolReportes = new ToolStripButton();
             toolHome.SuspendLayout();
             SuspendLayout();
             // 
             // toolHome
             // 
             toolHome.BackColor = Color.Gray;
-            toolHome.Items.AddRange(new ToolStripItem[] { toolProductos, toolStripSeparator1, toolPublicaciones, toolStripSeparator2, toolPedidos, toolStripSplitButton1 });
+            toolHome.Items.AddRange(new ToolStripItem[] { toolProductos, toolStripSeparator1, toolPublicaciones, toolStripSeparator2, toolPedidos, toolStripSplitButton1, toolStripSeparator3, toolReportes });
             toolHome.Location = new Point(0, 0);
             toolHome.Name = "toolHome";
             toolHome.Size = new Size(800, 28);
@@ -142,14 +144,14 @@
             // toolMiPerfil
             // 
             toolMiPerfil.Name = "toolMiPerfil";
-            toolMiPerfil.Size = new Size(180, 22);
+            toolMiPerfil.Size = new Size(157, 22);
             toolMiPerfil.Text = "Mi Perfil";
             toolMiPerfil.Click += toolMiPerfil_Click;
             // 
             // toolCerrarSesion
             // 
             toolCerrarSesion.Name = "toolCerrarSesion";
-            toolCerrarSesion.Size = new Size(180, 22);
+            toolCerrarSesion.Size = new Size(157, 22);
             toolCerrarSesion.Text = "Cerrar Sesion";
             toolCerrarSesion.Click += toolCerrarSesion_Click;
             // 
@@ -162,6 +164,22 @@
             label1.Size = new Size(337, 37);
             label1.TabIndex = 1;
             label1.Text = "AgroGestion Vendedores";
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new Size(6, 28);
+            // 
+            // toolReportes
+            // 
+            toolReportes.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolReportes.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            toolReportes.Image = (Image)resources.GetObject("toolReportes.Image");
+            toolReportes.ImageTransparentColor = Color.Magenta;
+            toolReportes.Name = "toolReportes";
+            toolReportes.Size = new Size(81, 25);
+            toolReportes.Text = "Reportes";
+            toolReportes.Click += toolReportes_Click;
             // 
             // FormVendedores
             // 
@@ -195,5 +213,7 @@
         private ToolStripMenuItem toolCerrarSesion;
         private ToolStripMenuItem toolAgregarProd;
         private Label label1;
+        private ToolStripSeparator toolStripSeparator3;
+        private ToolStripButton toolReportes;
     }
 }
