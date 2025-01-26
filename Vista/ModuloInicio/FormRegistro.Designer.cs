@@ -288,7 +288,7 @@
             ClientSize = new Size(302, 484);
             Controls.Add(groupBox1);
             Name = "FormRegistro";
-            Text = "FormRegistro";
+            Text = "Registro";
             pnlVendedores.ResumeLayout(false);
             pnlVendedores.PerformLayout();
             pnlClientes.ResumeLayout(false);

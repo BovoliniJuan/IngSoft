@@ -98,7 +98,7 @@ namespace Vista.ModuloVendedores
                     {
                         ControladoraPedidos.Instancia.ConfirmarPedido(pedido);
                         MessageBox.Show("Pedido confirmado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LlenarGrilla(); 
+                        LlenarGrilla();
                     }
                     catch (Exception ex)
                     {
@@ -165,6 +165,60 @@ namespace Vista.ModuloVendedores
         private void btnSalir_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+        private void AplicarFiltros()
+        {
+            // Obtener los filtros seleccionados por el usuario
+            bool filtrarPendiente = chkPendiente.Checked;
+            bool filtrarConfirmado = chkConfirmado.Checked;
+            bool filtrarEnviado = chkEnviado.Checked;
+
+            // Filtrar los pedidos en función de los estados seleccionados
+            var pedidosFiltrados = _pedidosOriginales.Where(p =>
+                (filtrarPendiente && p.Estado == "Pendiente") ||
+                (filtrarConfirmado && p.Estado == "Confirmado") ||
+                (filtrarEnviado && p.Estado == "En Proceso")
+            ).ToList();
+
+            // Si ningún filtro está activado, mostrar todos los pedidos
+            if (!filtrarPendiente && !filtrarConfirmado && !filtrarEnviado)
+            {
+                pedidosFiltrados = _pedidosOriginales;
+            }
+
+            // Actualizar la grilla con los pedidos filtrados
+            var viewModel = pedidosFiltrados.Select(p => new PedidoViewModel
+            {
+                FechaPedido = p.FechaPedido,
+                NombreCliente = p.Cliente.NombreCompleto,
+                DescripcionPublicacion = p.Publicacion.Descripcion,
+                Estado = p.Estado,
+                Total = p.Total
+            }).ToList();
+
+            dgvPedidos.Rows.Clear();
+
+            foreach (var pedidoView in viewModel)
+            {
+                var rowIndex = dgvPedidos.Rows.Add();
+                dgvPedidos.Rows[rowIndex].SetValues(pedidoView.FechaPedido, pedidoView.NombreCliente, pedidoView.DescripcionPublicacion, pedidoView.Estado, pedidoView.Total);
+                dgvPedidos.Rows[rowIndex].Tag = _pedidosOriginales.First(p => p.FechaPedido == pedidoView.FechaPedido && p.Cliente.NombreCompleto == pedidoView.NombreCliente); // Asignar el pedido original
+            }
+        }
+
+        private void chkPendiente_CheckedChanged(object sender, EventArgs e)
+        {
+            AplicarFiltros();
+        }
+
+        private void chkConfirmado_CheckedChanged(object sender, EventArgs e)
+        {
+            AplicarFiltros();
+        }
+
+        private void chkEnviado_CheckedChanged(object sender, EventArgs e)
+        {
+            AplicarFiltros();
         }
     }
 }

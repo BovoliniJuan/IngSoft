@@ -191,7 +191,7 @@
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Name = "FormGestionarGrupos";
-            Text = "FormGestionarGrupos";
+            Text = "Gestion de Grupos";
             groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvGrupos).EndInit();
             groupBox2.ResumeLayout(false);

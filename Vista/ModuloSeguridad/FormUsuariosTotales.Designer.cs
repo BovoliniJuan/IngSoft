@@ -30,8 +30,8 @@
         {
             dgvUsuarios = new DataGridView();
             groupBox1 = new GroupBox();
-            chkVendedores = new CheckBox();
             chkClientes = new CheckBox();
+            chkVendedores = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).BeginInit();
             groupBox1.SuspendLayout();
             SuspendLayout();
@@ -47,6 +47,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.BackColor = Color.Gray;
             groupBox1.Controls.Add(chkClientes);
             groupBox1.Controls.Add(chkVendedores);
             groupBox1.Location = new Point(578, 21);
@@ -55,17 +56,6 @@
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Filtros";
-            // 
-            // chkVendedores
-            // 
-            chkVendedores.AutoSize = true;
-            chkVendedores.Location = new Point(6, 22);
-            chkVendedores.Name = "chkVendedores";
-            chkVendedores.Size = new Size(87, 19);
-            chkVendedores.TabIndex = 0;
-            chkVendedores.Text = "Vendedores";
-            chkVendedores.UseVisualStyleBackColor = true;
-            chkVendedores.CheckedChanged += chkVendedores_CheckedChanged;
             // 
             // chkClientes
             // 
@@ -78,15 +68,27 @@
             chkClientes.UseVisualStyleBackColor = true;
             chkClientes.CheckedChanged += chkClientes_CheckedChanged;
             // 
+            // chkVendedores
+            // 
+            chkVendedores.AutoSize = true;
+            chkVendedores.Location = new Point(6, 22);
+            chkVendedores.Name = "chkVendedores";
+            chkVendedores.Size = new Size(87, 19);
+            chkVendedores.TabIndex = 0;
+            chkVendedores.Text = "Vendedores";
+            chkVendedores.UseVisualStyleBackColor = true;
+            chkVendedores.CheckedChanged += chkVendedores_CheckedChanged;
+            // 
             // FormUsuariosTotales
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.DarkGreen;
             ClientSize = new Size(757, 379);
             Controls.Add(groupBox1);
             Controls.Add(dgvUsuarios);
             Name = "FormUsuariosTotales";
-            Text = "FormUsuariosTotales";
+            Text = "Usuarios";
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

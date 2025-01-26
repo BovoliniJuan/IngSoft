@@ -101,6 +101,7 @@
             // 
             // panel1
             // 
+            panel1.BackColor = Color.Gray;
             panel1.Controls.Add(btnValidarCodigo);
             panel1.Controls.Add(txtCodigo);
             panel1.Controls.Add(label2);
@@ -168,11 +169,12 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.DarkGreen;
             ClientSize = new Size(349, 231);
             Controls.Add(panel1);
             Controls.Add(panel2);
             Name = "FormRecuperarClave";
-            Text = "FormRecuperarClave";
+            Text = "Recuperacion de Clave";
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             panel1.ResumeLayout(false);

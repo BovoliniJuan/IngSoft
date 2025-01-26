@@ -129,7 +129,7 @@
             // toolCerrarSesion
             // 
             toolCerrarSesion.Name = "toolCerrarSesion";
-            toolCerrarSesion.Size = new Size(180, 22);
+            toolCerrarSesion.Size = new Size(143, 22);
             toolCerrarSesion.Text = "Cerrar Sesion";
             toolCerrarSesion.Click += toolCerrarSesion_Click;
             // 
@@ -137,11 +137,11 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
-            label1.Location = new Point(0, 143);
+            label1.Location = new Point(60, 141);
             label1.Name = "label1";
-            label1.Size = new Size(398, 25);
+            label1.Size = new Size(259, 25);
             label1.TabIndex = 4;
-            label1.Text = "Bienvenido al apartado de Administradores";
+            label1.Text = "AgroGestion Administrador";
             // 
             // FormAdministrador
             // 
@@ -152,7 +152,7 @@
             Controls.Add(label1);
             Controls.Add(toolStrip1);
             Name = "FormAdministrador";
-            Text = "Form1";
+            Text = "Adminstrador";
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             ResumeLayout(false);

@@ -1,4 +1,5 @@
 ﻿using Controladoras.Cliente;
+using Controladoras.Mensajeria;
 using Entidades.EntidadesVendedores;
 using Entidades.EntidadesVenta;
 using Entidades.Seguridad2;
@@ -173,14 +174,35 @@ namespace Controladoras.Vendedor
 
                 pedido.EnviarPedido();
 
+                // Guardar cambios en la base de datos
                 Context.Instancia.Pedidos.Update(pedido);
                 Context.Instancia.SaveChanges();
+
+                // Enviar notificación al cliente
+                if (pedido.Cliente != null && !string.IsNullOrEmpty(pedido.Cliente.Usuario.Email))
+                {
+                    var email = pedido.Cliente.Usuario.Email;
+                    var nombreCliente = pedido.Cliente.NombreCompleto;
+                    var mensaje = $@"
+                    <div style='font-family: Arial, sans-serif; color: #333;'>
+                    <h2 style='color: #2e7d32;'>Pedido Enviado</h2>
+                    <p>Hola <b>{nombreCliente}</b>,</p>
+                    <p>Nos complace informarte que tu pedido:</p>
+                    <p style='font-size: 18px; font-weight: bold; color: #2e7d32;'>{pedido.Publicacion.Descripcion}</p>
+                    <p>ha sido enviado con éxito.</p>
+                    <p>Gracias por elegir nuestros servicios.</p>
+                    <p style='color: #2e7d32;'>Equipo AgroGestion</p>
+                    </div>";
+
+                    ControladoraMails.Instancia.EnviarCorreo(email, "Notificación de Envío de Pedido", mensaje, true);
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Error al enviar el pedido: " + ex.Message);
             }
         }
+
         public void RecibirPedido(Pedido pedido)
         {
             try
