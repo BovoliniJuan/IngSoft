@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Controladoras.Seguridad;
+using Entidades;
+using Entidades.Seguridad2;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,9 +16,11 @@ namespace Vista.ModuloSeguridad
 {
     public partial class FormAdministrador : Form
     {
-        public FormAdministrador()
+        Sesion? _sesion;
+        public FormAdministrador(Sesion sesion)
         {
             InitializeComponent();
+            _sesion = sesion;
         }
 
 
@@ -35,6 +40,7 @@ namespace Vista.ModuloSeguridad
         private void toolCerrarSesion_Click(object sender, EventArgs e)
         {
             this.Close();
+            RegistrarAuditoriaSesion(_sesion.UsuarioSesion.IdUsuario, "Logout");
             FormInicioSesion formInicioSesion = new FormInicioSesion();
             formInicioSesion.Show();
         }
@@ -49,6 +55,24 @@ namespace Vista.ModuloSeguridad
         {
             FormGestionarGrupos formGestionarGrupos = new FormGestionarGrupos();
             formGestionarGrupos.ShowDialog();
+        }
+        private void RegistrarAuditoriaSesion(int usuarioId, string tipoMovimiento)
+        {
+            AuditoriaSesion auditoria = new AuditoriaSesion
+            {
+                UsuarioId = usuarioId,
+                FechaMovimiento = DateTime.Now,
+                TipoMovimiento = tipoMovimiento
+            };
+
+            // Aquí agregas la lógica para insertar la auditoría en la base de datos
+            ControladoraInicioSesion.Instancia.Registrar(auditoria);
+        }
+
+        private void toolBackUp_Click(object sender, EventArgs e)
+        {
+            FormBackUp formBackUp = new FormBackUp();
+            formBackUp.ShowDialog();
         }
     }
 }

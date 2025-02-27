@@ -83,31 +83,23 @@ namespace Controladoras.Seguridad
         {
             try
             {
-                // Verificamos si el usuario ya existe en la base de datos
                 var usuarioExistente = Buscar(usuario.NombreUsuario);
 
                 if (usuarioExistente == null)
                 {
-                    // Obtener el estado del usuario desde la base de datos
                     var estadoUsuario = Context.Instancia.EstadosUsuario.FirstOrDefault(e => e.EstadoUsuarioId == usuario.EstadoUsuario.EstadoUsuarioId);
 
-                    // Asignar el estado al usuario
                     usuario.EstadoUsuario = estadoUsuario;
 
-                    // Obtener los IDs de los componentes (acciones y grupos)
                     var componentesIds = usuario.Componentes.Select(c => c.Id).ToList();
 
-                    // Obtener todas las acciones y grupos correspondientes a los IDs
                     var acciones = Context.Instancia.Acciones.Where(a => componentesIds.Contains(a.Id)).ToList();
                     var grupos = Context.Instancia.Grupos.Where(g => componentesIds.Contains(g.Id)).ToList();
 
-                    // Combinar las acciones y grupos en una sola lista de componentes
                     var componentes = acciones.Cast<Componente>().Concat(grupos.Cast<Componente>()).ToList();
 
-                    // Asignar los componentes recuperados al usuario
                     usuario.Componentes = componentes;
 
-                    // Guardar el usuario en la base de datos
                     Context.Instancia.Usuarios.Add(usuario);
                     Context.Instancia.SaveChanges();
 

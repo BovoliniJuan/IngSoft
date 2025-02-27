@@ -41,13 +41,14 @@
             toolPerfil = new ToolStripSplitButton();
             toolCerrarSesion = new ToolStripMenuItem();
             label1 = new Label();
+            toolBackUp = new ToolStripButton();
             toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // toolStrip1
             // 
             toolStrip1.BackColor = Color.FromArgb(64, 64, 64);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolUsuarios, toolStripSeparator1, toolCrearGrupos, toolStripSeparator2, toolPerfil });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolUsuarios, toolStripSeparator1, toolCrearGrupos, toolStripSeparator2, toolPerfil, toolBackUp });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(403, 28);
@@ -143,6 +144,17 @@
             label1.TabIndex = 4;
             label1.Text = "AgroGestion Administrador";
             // 
+            // toolBackUp
+            // 
+            toolBackUp.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolBackUp.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            toolBackUp.Image = (Image)resources.GetObject("toolBackUp.Image");
+            toolBackUp.ImageTransparentColor = Color.Magenta;
+            toolBackUp.Name = "toolBackUp";
+            toolBackUp.Size = new Size(79, 25);
+            toolBackUp.Text = "BackUps";
+            toolBackUp.Click += toolBackUp_Click;
+            // 
             // FormAdministrador
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -172,5 +184,6 @@
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripMenuItem toolAgregarGrupos;
         private ToolStripMenuItem toolGestionarGrupos;
+        private ToolStripButton toolBackUp;
     }
 }

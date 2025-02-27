@@ -1,4 +1,6 @@
 ﻿using Controladoras.Cliente;
+using Controladoras.Seguridad;
+using Entidades;
 using Entidades.EntidadesClientes;
 using Entidades.Seguridad2;
 using System;
@@ -40,6 +42,7 @@ namespace Vista
         private void toolCerrarSesion_Click(object sender, EventArgs e)
         {
             this.Close();
+            RegistrarAuditoriaSesion(_sesion.UsuarioSesion.IdUsuario, "Logout");
             FormInicioSesion formInicioSesion = new FormInicioSesion();
             formInicioSesion.Show();
         }
@@ -86,6 +89,18 @@ namespace Vista
         {
             FormMisPedidos formMisPedidos = new FormMisPedidos(_sesion);
             formMisPedidos.ShowDialog();
+        }
+        private void RegistrarAuditoriaSesion(int usuarioId, string tipoMovimiento)
+        {
+            AuditoriaSesion auditoria = new AuditoriaSesion
+            {
+                UsuarioId = usuarioId,
+                FechaMovimiento = DateTime.Now,
+                TipoMovimiento = tipoMovimiento
+            };
+
+            // Aquí agregas la lógica para insertar la auditoría en la base de datos
+            ControladoraInicioSesion.Instancia.Registrar(auditoria);
         }
     }
 }

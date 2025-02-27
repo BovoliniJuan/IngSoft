@@ -33,7 +33,6 @@ namespace Controladoras.Mensajeria
         }
 
         private ControladoraMails() { }
-        // Servicio de envío de correos
         public void EnviarCorreo(string destinatario, string asunto, string cuerpo, bool esHtml = false)
         {
             using (var client = new SmtpClient())

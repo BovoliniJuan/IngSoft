@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using iText.Commons.Actions.Contexts;
 
 namespace Controladoras.Seguridad
 {
@@ -164,18 +165,17 @@ namespace Controladoras.Seguridad
 
 
 
-        /* public void Registrar(AuditoriaSesion auditoriaSesion)
-         {
-             try
-             {
-                 // Agregar la auditoría de sesión a la base de datos
-                 Context.Instancia.AuditoriasSesiones.Add(auditoriaSesion);
-                 Context.Instancia.SaveChanges();
-             }
-             catch (Exception ex)
-             {
-                 throw; // Manejo de excepciones en caso de algún error
-             }
-         }*/
+        public void Registrar(AuditoriaSesion auditoriaSesion)
+        {
+            try
+            {
+                Context.Instancia.AuditoriasSesiones.Add(auditoriaSesion);
+                Context.Instancia.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw; 
+            }
+        }
     }
 }

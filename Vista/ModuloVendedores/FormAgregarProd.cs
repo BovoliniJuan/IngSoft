@@ -26,7 +26,7 @@ namespace Vista.ModuloVendedores
             InitializeComponent();
             _sesion = sesion;
         }
-        public FormAgregarProd(Producto productoSeleccionado)
+        public FormAgregarProd(Producto productoSeleccionado, Sesion sesion)
         {
             InitializeComponent();
             this.producto = productoSeleccionado;
@@ -35,6 +35,7 @@ namespace Vista.ModuloVendedores
             txtDescripcion.Text = producto.Descripcion;
             numCantidad.Value = producto.Cantidad;
             txtPrecio.Text = producto.Precio.ToString();
+            _sesion = sesion;
         }
 
 
@@ -61,7 +62,7 @@ namespace Vista.ModuloVendedores
             if (modificar)
             {
                 producto.IdProducto = this.producto.IdProducto;
-                resultado = ControladoraProductos.Instancia.ModificarProducto(producto);
+                resultado = ControladoraProductos.Instancia.ModificarProducto(producto,_sesion);
             }
             else
             {

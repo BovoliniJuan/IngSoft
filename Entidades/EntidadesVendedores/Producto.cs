@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entidades;
+using Entidades.EntidadesVenta.EstadosPedidos;
 
 namespace Entidades.EntidadesVendedores
 {
@@ -16,16 +17,14 @@ namespace Entidades.EntidadesVendedores
         private float precio;
         private int cantidad;
         private Vendedor vendedor;
-
         [Key]
-        public int IdProducto {get { return idProducto;} set { idProducto = value; } }
-        public string Nombre { get {  return nombre; } set {  nombre = value; } }
-        public string Descripcion { get {  return descripcion; } set {  descripcion = value; } }
-        public int Cantidad { get { return cantidad; }set { cantidad = value; } }
-        public float Precio { get {  return precio; } set {  precio = value; } }
+        public int IdProducto { get { return idProducto; } set { idProducto = value; } }
+        public string Nombre { get { return nombre; } set { nombre = value; } }
+        public string Descripcion { get { return descripcion; } set { descripcion = value; } }
+        public int Cantidad { get { return cantidad; } set { cantidad = value; } }
+        public float Precio { get { return precio; } set { precio = value; } }
         public int idVendedor { get; set; }
-
-        public Vendedor Vendedor { get {  return vendedor; } set {  vendedor = value; } }
+        public Vendedor Vendedor { get { return vendedor; } set { vendedor = value; } }
         public Producto() { }
 
     }

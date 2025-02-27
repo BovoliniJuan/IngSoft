@@ -70,7 +70,7 @@ namespace Vista.ModuloVendedores
             if (dgvProductos.CurrentRow != null)
             {
                 var productoSeleccionado = (Producto)dgvProductos.CurrentRow.DataBoundItem;
-                var formModificar = new FormAgregarProd(productoSeleccionado);
+                var formModificar = new FormAgregarProd(productoSeleccionado,_sesion);
                 formModificar.ShowDialog();
                 CargarProductos();
             }
@@ -85,7 +85,7 @@ namespace Vista.ModuloVendedores
             if (dgvProductos.CurrentRow != null)
             {
                 var productoSeleccionado = (Producto)dgvProductos.CurrentRow.DataBoundItem;
-                var resultado = ControladoraProductos.Instancia.EliminarProducto(productoSeleccionado);
+                var resultado = ControladoraProductos.Instancia.EliminarProducto(productoSeleccionado, _sesion);
                 CargarProductos();
                 MessageBox.Show(resultado, "Eliminar Producto", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

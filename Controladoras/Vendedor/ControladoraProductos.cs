@@ -3,6 +3,9 @@ using Entidades;
 using System.Collections.ObjectModel;
 using Entidades.EntidadesVendedores;
 using Entidades.Seguridad2;
+using iText.Commons.Actions.Contexts;
+using Modelo.Migrations;
+using System.IO;
 
 namespace Controladoras.Vendedor
 {
@@ -66,7 +69,6 @@ namespace Controladoras.Vendedor
         {
             try
             {
-                // Buscar el producto en el contexto usando su ID
                 return Context.Instancia.Productos.FirstOrDefault(p => p.IdProducto == idProducto);
             }
             catch (Exception ex)
@@ -92,6 +94,8 @@ namespace Controladoras.Vendedor
                         producto.Vendedor = buscarVendedor;
                         Context.Instancia.Productos.Add(producto);
                         Context.Instancia.SaveChanges();
+
+                        RegistrarAuditoria(producto, sesion, "Alta");
                         return "El producto se agregó correctamente.";
                     }
                     
@@ -105,7 +109,8 @@ namespace Controladoras.Vendedor
             }
         }
        
-        public string EliminarProducto(Producto producto)
+
+        public string EliminarProducto(Producto producto, Sesion sesion)
         {
             try
             {
@@ -113,8 +118,9 @@ namespace Controladoras.Vendedor
                 var productoEncontrado = listaProductos.FirstOrDefault(x => x.IdProducto == producto.IdProducto);
                 if (productoEncontrado != null)
                 {
-                    Context.Instancia.Productos.Remove(producto);
+                    Context.Instancia.Productos.Remove(producto);                    
                     Context.Instancia.SaveChanges();
+                    RegistrarAuditoria(productoEncontrado, sesion, "Baja");
                     return $"El producto se elimino correctamente";
                 }
                 return $"El producto no se pudo eliminar correctamente";
@@ -126,7 +132,7 @@ namespace Controladoras.Vendedor
         }
 
        
-        public string ModificarProducto(Producto producto)
+        public string ModificarProducto(Producto producto, Sesion sesion)
         {
             try
             {
@@ -140,7 +146,7 @@ namespace Controladoras.Vendedor
                     productoEncontrado.Precio = producto.Precio;
 
                     int cambios = Context.Instancia.SaveChanges();
-
+                    RegistrarAuditoria(productoEncontrado, sesion, "Modificación");
                     return cambios > 0 ? "El producto se modificó correctamente" : "No se realizaron cambios en el producto";
                 }
 
@@ -151,7 +157,7 @@ namespace Controladoras.Vendedor
                 throw new Exception("Error al modificar el producto: " + ex.Message);
             }
         }
-        public bool ActualizarProducto(Producto producto)
+        public bool ActualizarProducto(Producto producto, Sesion sesion)
         {
             try
             {
@@ -159,14 +165,39 @@ namespace Controladoras.Vendedor
                 if (productoExistente != null)
                 {
                     productoExistente.Cantidad = producto.Cantidad; 
-                    Context.Instancia.SaveChanges(); 
+                    Context.Instancia.SaveChanges();
+                    RegistrarAuditoria(productoExistente, sesion, "Actualización");
                     return true;
+
                 }
                 throw new Exception("Producto no encontrado.");
             }
             catch (Exception ex)
             {
                 throw new Exception("Error al actualizar el producto: " + ex.Message);
+            }
+        }
+        private void RegistrarAuditoria(Producto producto, Sesion sesion, string tipoMovimiento)
+        {
+            try
+            {
+                var auditoria = new AuditoriaProducto
+                {
+                    ProductoId = producto.IdProducto,
+                    UsuarioId = sesion.UsuarioSesion.IdUsuario,
+                    NombreProducto = producto.Nombre,
+                    DescripcionProducto = producto.Descripcion,
+                    CantidadProducto = producto.Cantidad,
+                    Fecha_Auditoria = DateTime.Now,
+                    TipoMovimiento = tipoMovimiento
+                };
+
+                Context.Instancia.AuditoriasProductos.Add(auditoria);
+                Context.Instancia.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al registrar auditoría: " + ex.Message);
             }
         }
 

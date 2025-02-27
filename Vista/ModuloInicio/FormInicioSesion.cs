@@ -49,12 +49,9 @@ namespace Vista
                     MessageBox.Show("El usuario no tiene acciones asignadas.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                /*if (!VerificarPermisos(sesion))
-                {
-                    MessageBox.Show("No tiene permisos para acceder al sistema.");
-                    return;
-                }*/
-               AbrirFormulariosSegunAcciones(acciones, sesion);
+                RegistrarAuditoriaSesion(usuario.IdUsuario, "Login");
+
+                AbrirFormulariosSegunAcciones(acciones, sesion);
 
             }
             catch (Exception ex)
@@ -70,8 +67,18 @@ namespace Vista
                 SesionPerfil = usuario.Componentes.OfType<Accion>().ToList()
             };
         }
-        
-        
+
+        private void RegistrarAuditoriaSesion(int usuarioId, string tipoMovimiento)
+        {
+            AuditoriaSesion auditoria = new AuditoriaSesion
+            {
+                UsuarioId = usuarioId,
+                FechaMovimiento = DateTime.Now,
+                TipoMovimiento = tipoMovimiento
+            };
+
+            ControladoraInicioSesion.Instancia.Registrar(auditoria);
+        }
 
         private void AbrirFormulariosSegunAcciones(List<Accion> acciones, Sesion sesion)
         {
@@ -79,7 +86,7 @@ namespace Vista
             {
             { "FormularioVendedor", () => new FormVendedores(sesion) },
             { "FormularioCliente", () => new FormClientes(sesion) },
-            { "FormularioAdministrador",() => new FormAdministrador() },
+            { "FormularioAdministrador",() => new FormAdministrador(sesion) },
             };
 
             foreach (var accion in acciones)

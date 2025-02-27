@@ -140,7 +140,7 @@ namespace Vista.ModuloVendedores
                     if (producto != null)
                     {
                         producto.Cantidad += cantidadDevuelta; // Devolver la cantidad al stock
-                        ControladoraProductos.Instancia.ActualizarProducto(producto);
+                        ControladoraProductos.Instancia.ActualizarProducto(producto,_sesion);
                     }
 
                     MessageBox.Show("Publicación eliminada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);

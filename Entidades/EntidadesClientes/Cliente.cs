@@ -21,8 +21,5 @@ namespace Entidades.EntidadesClientes
         public long Telefono { get { return telefono; } set { telefono = value ; } }
         public ICollection<Pago> Pagos { get; set; } = new List<Pago>();
 
-        public void VerCarrito() { }
-        public void RealizarPedido() { }
-        public void AgregarPago() { }
     }
 }

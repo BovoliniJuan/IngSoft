@@ -21,7 +21,7 @@ namespace Controladoras.Vendedor
 
         private ControladoraPedidos()
         {
-            pedidos = new List<Pedido>(); // Simula datos
+            pedidos = new List<Pedido>(); 
         }
 
         public static ControladoraPedidos Instancia

@@ -151,13 +151,9 @@ namespace Vista.ModuloVendedores
 
             return System.IO.Path.Combine(subfolderPath, fileName);
         }
-        // Métodos para agregar tablas y encabezados (sin cambios)
 
 
 
-
-
-        // Método para agregar el encabezado al documento
         private void AgregarEncabezado(Document document)
         {
             var title = new Paragraph("CineManager")
@@ -221,7 +217,6 @@ namespace Vista.ModuloVendedores
         }
         private void AgregarGraficoProductosMasVendidos(Document document, ReadOnlyCollection<(Producto, int)> productosMasVendidos)
         {
-            // Crear el gráfico con estilo modernizado
             Chart chart = new Chart
             {
                 Width = 600,
@@ -230,17 +225,17 @@ namespace Vista.ModuloVendedores
 
             var chartArea = new ChartArea("MainArea")
             {
-                BackColor = Color.White, // Fondo blanco para un estilo limpio
+                BackColor = Color.White, 
                 AxisX =
                 {
                     Interval = 1,
                     LabelStyle = { Font = new Font("Arial", 10, FontStyle.Bold), ForeColor = Color.Gray },
-                    LineColor = Color.LightGray // Color gris claro para el eje X
+                    LineColor = Color.LightGray 
                 },
                 AxisY =
                 {
                     LabelStyle = { Font = new Font("Arial", 10), ForeColor = Color.Gray },
-                    LineColor = Color.LightGray // Color gris claro para el eje Y
+                    LineColor = Color.LightGray 
                 }
             };
             chart.ChartAreas.Add(chartArea);
@@ -248,36 +243,31 @@ namespace Vista.ModuloVendedores
             var series = new Series("Ventas")
             {
                 ChartType = SeriesChartType.Bar,
-                Color = Color.FromArgb(102, 204, 255), // Color azul suave para las barras
+                Color = Color.FromArgb(102, 204, 255), 
                 BorderWidth = 0,
-                IsValueShownAsLabel = true, // Mostrar los valores encima de cada barra
-                LabelForeColor = Color.DimGray, // Color gris oscuro para las etiquetas de valores
+                IsValueShownAsLabel = true, 
+                LabelForeColor = Color.DimGray, 
                 Font = new Font("Arial", 10, FontStyle.Bold)
             };
             chart.Series.Add(series);
 
-            // Agregar degradado de color para un efecto más moderno
             series.BackGradientStyle = GradientStyle.LeftRight;
-            series.BackSecondaryColor = Color.FromArgb(51, 153, 255); // Azul más oscuro para el gradiente
+            series.BackSecondaryColor = Color.FromArgb(51, 153, 255); 
 
-            // Agregar datos al gráfico
             foreach (var producto in productosMasVendidos)
             {
                 series.Points.AddXY(producto.Item1.Nombre, producto.Item2);
             }
 
-            // Guardar el gráfico como imagen
             string imagePath = Path.Combine(Path.GetTempPath(), "grafico_productos_mas_vendidos.png");
             chart.SaveImage(imagePath, ChartImageFormat.Png);
 
-            // Agregar la imagen al PDF
             ImageData imageData = ImageDataFactory.Create(imagePath);
             iText.Layout.Element.Image pdfImage = new iText.Layout.Element.Image(imageData)
                 .SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER)
-                .SetMarginTop(20); // Espacio entre la tabla y el gráfico
+                .SetMarginTop(20); 
             document.Add(pdfImage);
 
-            // Borrar el archivo temporal de imagen
             if (File.Exists(imagePath))
             {
                 File.Delete(imagePath);
@@ -286,7 +276,6 @@ namespace Vista.ModuloVendedores
 
         private void MostrarProductosMasVendidas()
         {
-            // Llama al método para recuperar las películas más vendidas y asigna los datos al DataGridView
             var productosMasVendidas = ControladoraReportes.Instancia.RecuperarProductosMasVendidos(_sesion)
                 .Select(p => new
                 {
@@ -296,13 +285,12 @@ namespace Vista.ModuloVendedores
                 })
                 .ToList();
 
-            dgvReportes.DataSource = null; // Limpia el DataGridView
+            dgvReportes.DataSource = null; 
             dgvReportes.DataSource = productosMasVendidas;
         }
 
         private void MostrarProductosMenosVendidos()
         {
-            // Llama al método para recuperar los proveedores con órdenes pendientes y asigna los datos al DataGridView
             var productosMenosVendidas = ControladoraReportes.Instancia.RecuperarProductosMenosVendidos(_sesion)
                 .Select(p => new
                 {
@@ -312,30 +300,28 @@ namespace Vista.ModuloVendedores
                 })
                 .ToList();
 
-            dgvReportes.DataSource = null; // Limpia el DataGridView
+            dgvReportes.DataSource = null; 
             dgvReportes.DataSource = productosMenosVendidas;
         }
 
 
         private void MostrarProductosMasRentables()
         {
-            // Llama al método para recuperar las películas con baja disponibilidad y asigna los datos al DataGridView
             var peliculasConBajaDisponibilidad = ControladoraReportes.Instancia.RecuperarProductosMasRentables(_sesion)
                 .Select(p => new
                 {
                     Nombre = p.Item1?.Nombre ?? "Desconocido",
                     Descripcion = p.Item1?.Descripcion ?? "Sin descripcion",
-                    CantidadInventario = p.Item2 // Accede directamente a la propiedad de la entidad Pelicula
+                    CantidadInventario = p.Item2 
                 })
                 .ToList();
 
-            dgvReportes.DataSource = null; // Limpia el DataGridView
+            dgvReportes.DataSource = null; 
             dgvReportes.DataSource = peliculasConBajaDisponibilidad;
         }
 
         private void cmbTipoReporte_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Usar SelectedIndex para verificar la selección en el ComboBox
             switch (cmbTipoReporte.SelectedIndex)
             {
                 case 0:

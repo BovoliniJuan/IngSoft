@@ -131,7 +131,6 @@ namespace Controladoras.Vendedor
                 var publicacionExistente = Context.Instancia.Publicaciones.FirstOrDefault(p => p.IdPublicacion == publicacion.IdPublicacion);
                 if (publicacionExistente == null) throw new Exception("Publicación no encontrada.");
 
-                // Actualizar propiedades
                 publicacionExistente.Estado = publicacion.Estado;
                 Context.Instancia.SaveChanges();
                 return true;

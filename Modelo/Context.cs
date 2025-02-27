@@ -44,8 +44,10 @@ namespace Modelo
         public DbSet<Modulo> Modulos { get; set; }
         public DbSet<EstadoUsuario> EstadosUsuario { get; set; }
         public DbSet<EstadoGrupo> EstadosGrupo { get; set; }
-       
 
+        //Auditorias
+        public DbSet<AuditoriaProducto> AuditoriasProductos { get; set; }
+        public DbSet<AuditoriaSesion> AuditoriasSesiones { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AgroGestion;
@@ -54,16 +56,7 @@ namespace Modelo
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            /*
-            modelBuilder.Entity<Persona>()
-                .HasDiscriminator<string>("TipoPersona")
-                .HasValue<Cliente>("Cliente")
-                .HasValue<Vendedor>("Vendedor");*/
-           /* modelBuilder.Entity<Usuario>()
-                .HasOne(u => u.EstadoUsuario)
-                .WithMany()
-                .HasForeignKey(u => u.EstadoUsuarioId)
-                .OnDelete(DeleteBehavior.Restrict); */
+        
 
             // Relación Publicacion -> Producto
             modelBuilder.Entity<Publicacion>()

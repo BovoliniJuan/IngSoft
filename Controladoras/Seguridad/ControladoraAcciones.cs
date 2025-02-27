@@ -56,12 +56,11 @@ namespace Controladoras.Seguridad
 
         public List<Accion> ObtenerAccionesPorGrupos(List<Grupo> gruposSeleccionados)
         {
-            // Obtener las acciones asociadas a los grupos seleccionados
             var acciones = Context.Instancia.Grupos
                 .Where(g => gruposSeleccionados.Select(grupo => grupo.Id).Contains(g.Id))
                 .SelectMany(g => g.Componentes)
-                .OfType<Accion>() // Filtrar solo acciones
-                .Distinct() // Eliminar duplicados
+                .OfType<Accion>() 
+                .Distinct() 
                 .ToList();
 
             return acciones;
@@ -73,9 +72,8 @@ namespace Controladoras.Seguridad
         {
             try
             {
-                // Obtener las acciones relacionadas con el módulo especificado
                 var acciones = Context.Instancia.Acciones.Include(a => a.Formulario)
-                                      .ThenInclude(f => f.Modulo)  // Incluimos la relación con Modulo
+                                      .ThenInclude(f => f.Modulo)  
                                       .Where(a => a.Formulario.Modulo.NombreModulo == nombreModulo)
                                       .ToList();
 
@@ -84,7 +82,6 @@ namespace Controladoras.Seguridad
             }
             catch (Exception ex)
             {
-                // Manejo de errores
                 Console.WriteLine("Error al obtener las acciones del módulo: " + ex.Message);
                 return new List<Accion>(); // Retorna una lista vacía en caso de error
             }
@@ -107,15 +104,13 @@ namespace Controladoras.Seguridad
 
         public List<Accion> ObtenerAccionesGrupo(Grupo grupo)
         {
-            // Obtener el grupo desde la base de datos con sus componentes
             var grupoExistente = Context.Instancia.Grupos
-                .Include(g => g.Componentes) // Incluir componentes asociados
+                .Include(g => g.Componentes) 
                 .FirstOrDefault(g => g.Id == grupo.Id);
 
-            // Obtener las acciones personalizadas asociadas al grupo
             var acciones = grupoExistente.Componentes
-                .OfType<Accion>() // Filtrar solo acciones
-                .Distinct() // Eliminar duplicados
+                .OfType<Accion>() 
+                .Distinct() 
                 .ToList();
 
             return acciones;

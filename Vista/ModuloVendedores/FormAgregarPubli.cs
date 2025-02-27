@@ -105,7 +105,7 @@ namespace Vista.ModuloVendedores
 
                     // Reducir el stock del producto
                     producto.Cantidad -= cantidad;
-                    ControladoraProductos.Instancia.ActualizarProducto(producto);
+                    ControladoraProductos.Instancia.ActualizarProducto(producto, _sesion);
 
                     if (resultado)
                     {
@@ -122,6 +122,7 @@ namespace Vista.ModuloVendedores
                     MessageBox.Show("Ocurrió un error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
         }
+     
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {

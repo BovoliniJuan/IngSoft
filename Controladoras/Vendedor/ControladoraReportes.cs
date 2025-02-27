@@ -93,7 +93,7 @@ namespace Controladoras.Vendedor
             var productosRentables = Context.Instancia.Pedidos
                 .OfType<Pedido>()
                 .Include(p => p.Publicacion.Producto)
-                .Include(p => p.Publicacion.Vendedor) // Asegurarse de incluir el vendedor
+                .Include(p => p.Publicacion.Vendedor) 
                 .Where(p =>
                     p.Estado != null &&
                     p.Estado != "Cancelado" &&
