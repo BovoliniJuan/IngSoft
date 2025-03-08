@@ -57,7 +57,7 @@ namespace Vista
         private void toolCerrarSesion_Click(object sender, EventArgs e)
         {
             this.Close();
-            RegistrarAuditoriaSesion(_sesion.UsuarioSesion.IdUsuario, "Logout");
+            RegistrarAuditoriaSesion(_sesion.UsuarioSesion.IdUsuario, "Logout", _sesion.UsuarioSesion.NombreUsuario);
             FormInicioSesion formInicioSesion = new FormInicioSesion();
             formInicioSesion.Show();
         }
@@ -73,16 +73,15 @@ namespace Vista
             FormReportes formReportes = new FormReportes(_sesion);
             formReportes.ShowDialog();
         }
-        private void RegistrarAuditoriaSesion(int usuarioId, string tipoMovimiento)
+        private void RegistrarAuditoriaSesion(int usuarioId, string tipoMovimiento, string nombreUsuario)
         {
             AuditoriaSesion auditoria = new AuditoriaSesion
             {
                 UsuarioId = usuarioId,
+                NombreUsuario = nombreUsuario,
                 FechaMovimiento = DateTime.Now,
                 TipoMovimiento = tipoMovimiento
             };
-
-            // Aquí agregas la lógica para insertar la auditoría en la base de datos
             ControladoraInicioSesion.Instancia.Registrar(auditoria);
         }
     }

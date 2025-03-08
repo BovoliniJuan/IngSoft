@@ -49,7 +49,7 @@ namespace Vista
                     MessageBox.Show("El usuario no tiene acciones asignadas.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                RegistrarAuditoriaSesion(usuario.IdUsuario, "Login");
+                RegistrarAuditoriaSesion(usuario.IdUsuario, "Login", usuario.NombreUsuario);
 
                 AbrirFormulariosSegunAcciones(acciones, sesion);
 
@@ -68,11 +68,12 @@ namespace Vista
             };
         }
 
-        private void RegistrarAuditoriaSesion(int usuarioId, string tipoMovimiento)
+        private void RegistrarAuditoriaSesion(int usuarioId, string tipoMovimiento,string nombreUsuario)
         {
             AuditoriaSesion auditoria = new AuditoriaSesion
             {
                 UsuarioId = usuarioId,
+                NombreUsuario = nombreUsuario,
                 FechaMovimiento = DateTime.Now,
                 TipoMovimiento = tipoMovimiento
             };

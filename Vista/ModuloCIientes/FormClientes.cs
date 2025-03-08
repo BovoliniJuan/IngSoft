@@ -42,7 +42,7 @@ namespace Vista
         private void toolCerrarSesion_Click(object sender, EventArgs e)
         {
             this.Close();
-            RegistrarAuditoriaSesion(_sesion.UsuarioSesion.IdUsuario, "Logout");
+            RegistrarAuditoriaSesion(_sesion.UsuarioSesion.IdUsuario, "Logout", _sesion.UsuarioSesion.NombreUsuario);
             FormInicioSesion formInicioSesion = new FormInicioSesion();
             formInicioSesion.Show();
         }
@@ -90,11 +90,12 @@ namespace Vista
             FormMisPedidos formMisPedidos = new FormMisPedidos(_sesion);
             formMisPedidos.ShowDialog();
         }
-        private void RegistrarAuditoriaSesion(int usuarioId, string tipoMovimiento)
+        private void RegistrarAuditoriaSesion(int usuarioId, string tipoMovimiento,string nombreUsuario)
         {
             AuditoriaSesion auditoria = new AuditoriaSesion
             {
                 UsuarioId = usuarioId,
+                NombreUsuario = nombreUsuario,
                 FechaMovimiento = DateTime.Now,
                 TipoMovimiento = tipoMovimiento
             };

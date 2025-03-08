@@ -40,18 +40,22 @@
             toolStripSeparator2 = new ToolStripSeparator();
             toolPerfil = new ToolStripSplitButton();
             toolCerrarSesion = new ToolStripMenuItem();
-            label1 = new Label();
             toolBackUp = new ToolStripButton();
+            label1 = new Label();
+            toolStripSeparator3 = new ToolStripSeparator();
+            toolAuditorias = new ToolStripSplitButton();
+            toolAudSesion = new ToolStripMenuItem();
+            toolAudProductos = new ToolStripMenuItem();
             toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // toolStrip1
             // 
             toolStrip1.BackColor = Color.FromArgb(64, 64, 64);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolUsuarios, toolStripSeparator1, toolCrearGrupos, toolStripSeparator2, toolPerfil, toolBackUp });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolUsuarios, toolStripSeparator1, toolCrearGrupos, toolStripSeparator2, toolPerfil, toolBackUp, toolStripSeparator3, toolAuditorias });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(403, 28);
+            toolStrip1.Size = new Size(445, 28);
             toolStrip1.TabIndex = 3;
             toolStrip1.Text = "toolStrip1";
             // 
@@ -134,16 +138,6 @@
             toolCerrarSesion.Text = "Cerrar Sesion";
             toolCerrarSesion.Click += toolCerrarSesion_Click;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
-            label1.Location = new Point(60, 141);
-            label1.Name = "label1";
-            label1.Size = new Size(259, 25);
-            label1.TabIndex = 4;
-            label1.Text = "AgroGestion Administrador";
-            // 
             // toolBackUp
             // 
             toolBackUp.DisplayStyle = ToolStripItemDisplayStyle.Text;
@@ -155,12 +149,52 @@
             toolBackUp.Text = "BackUps";
             toolBackUp.Click += toolBackUp_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
+            label1.Location = new Point(60, 141);
+            label1.Name = "label1";
+            label1.Size = new Size(259, 25);
+            label1.TabIndex = 4;
+            label1.Text = "AgroGestion Administrador";
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new Size(6, 28);
+            // 
+            // toolAuditorias
+            // 
+            toolAuditorias.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            toolAuditorias.DropDownItems.AddRange(new ToolStripItem[] { toolAudSesion, toolAudProductos });
+            toolAuditorias.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            toolAuditorias.Image = (Image)resources.GetObject("toolAuditorias.Image");
+            toolAuditorias.ImageTransparentColor = Color.Magenta;
+            toolAuditorias.Name = "toolAuditorias";
+            toolAuditorias.Size = new Size(105, 25);
+            toolAuditorias.Text = "Auditorias";
+            // 
+            // toolAudSesion
+            // 
+            toolAudSesion.Name = "toolAudSesion";
+            toolAudSesion.Size = new Size(180, 26);
+            toolAudSesion.Text = "Sesiones";
+            toolAudSesion.Click += toolAudSesion_Click;
+            // 
+            // toolAudProductos
+            // 
+            toolAudProductos.Name = "toolAudProductos";
+            toolAudProductos.Size = new Size(180, 26);
+            toolAudProductos.Text = "Productos";
+            toolAudProductos.Click += toolAudProductos_Click;
+            // 
             // FormAdministrador
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkGreen;
-            ClientSize = new Size(403, 301);
+            ClientSize = new Size(445, 301);
             Controls.Add(label1);
             Controls.Add(toolStrip1);
             Name = "FormAdministrador";
@@ -185,5 +219,9 @@
         private ToolStripMenuItem toolAgregarGrupos;
         private ToolStripMenuItem toolGestionarGrupos;
         private ToolStripButton toolBackUp;
+        private ToolStripSeparator toolStripSeparator3;
+        private ToolStripSplitButton toolAuditorias;
+        private ToolStripMenuItem toolAudSesion;
+        private ToolStripMenuItem toolAudProductos;
     }
 }

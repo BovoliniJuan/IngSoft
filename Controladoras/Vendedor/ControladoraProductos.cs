@@ -185,6 +185,7 @@ namespace Controladoras.Vendedor
                 {
                     ProductoId = producto.IdProducto,
                     UsuarioId = sesion.UsuarioSesion.IdUsuario,
+                    NombreUsuario = sesion.UsuarioSesion.NombreUsuario,
                     NombreProducto = producto.Nombre,
                     DescripcionProducto = producto.Descripcion,
                     CantidadProducto = producto.Cantidad,

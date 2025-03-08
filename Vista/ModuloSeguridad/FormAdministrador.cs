@@ -40,7 +40,7 @@ namespace Vista.ModuloSeguridad
         private void toolCerrarSesion_Click(object sender, EventArgs e)
         {
             this.Close();
-            RegistrarAuditoriaSesion(_sesion.UsuarioSesion.IdUsuario, "Logout");
+            RegistrarAuditoriaSesion(_sesion.UsuarioSesion.IdUsuario, "Logout", _sesion.UsuarioSesion.NombreUsuario);
             FormInicioSesion formInicioSesion = new FormInicioSesion();
             formInicioSesion.Show();
         }
@@ -56,11 +56,12 @@ namespace Vista.ModuloSeguridad
             FormGestionarGrupos formGestionarGrupos = new FormGestionarGrupos();
             formGestionarGrupos.ShowDialog();
         }
-        private void RegistrarAuditoriaSesion(int usuarioId, string tipoMovimiento)
+        private void RegistrarAuditoriaSesion(int usuarioId, string tipoMovimiento,string nombreUsuario)
         {
             AuditoriaSesion auditoria = new AuditoriaSesion
             {
                 UsuarioId = usuarioId,
+                NombreUsuario = nombreUsuario,
                 FechaMovimiento = DateTime.Now,
                 TipoMovimiento = tipoMovimiento
             };
@@ -73,6 +74,18 @@ namespace Vista.ModuloSeguridad
         {
             FormBackUp formBackUp = new FormBackUp();
             formBackUp.ShowDialog();
+        }
+
+        private void toolAudSesion_Click(object sender, EventArgs e)
+        {
+            FormAudSesiones formAudSesiones = new FormAudSesiones();
+            formAudSesiones.ShowDialog();
+        }
+
+        private void toolAudProductos_Click(object sender, EventArgs e)
+        {
+            FormAudProductos formAudProductos = new FormAudProductos();
+            formAudProductos.ShowDialog();
         }
     }
 }

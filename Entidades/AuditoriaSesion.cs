@@ -13,6 +13,7 @@ namespace Entidades
         private int usuarioId;
         private DateTime fechaMovimiento;
         private string tipoMovimiento;
+        private string nombre_Usuario;
 
         [Key]
         public int AuditoriaSesionId
@@ -26,6 +27,7 @@ namespace Entidades
             get { return usuarioId; }
             set { usuarioId = value; }
         }
+        public string NombreUsuario { get { return nombre_Usuario; } set { nombre_Usuario = value; } }
 
         public DateTime FechaMovimiento
         {
